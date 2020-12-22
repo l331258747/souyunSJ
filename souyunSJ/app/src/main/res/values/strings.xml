@@ -1,0 +1,184 @@
+<resources>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="app_name">16飕云司机版</string>
+    <string name="detail_tab">明细</string>
+    <string name="category_report_tab">类别报表</string>
+    <string name="add">添加</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="save">保存</string>
+    <string name="title_receipt">常用发票</string>
+    <string name="hint_please_select">请选择</string>
+
+    <string name="toast_network_exception">网络异常</string>
+    <string name="empty" />
+
+    <string name="pms_notify_download_completed">下载完成</string>
+    <string name="pms_notify_download_error">下载失败</string>
+    <string name="pms_notify_downloading">正在下载</string>
+    <string name="pms_notify_download_url_error">下载地址错误</string>
+
+    <string name="pms_downloading">开始下载，请在通知栏中查看进度</string>
+    <string name="pms_downloading_donotworry">正在下载，不要着急</string>
+    <string name="pms_download">开始下载</string>
+    <string name="pms_download_url_error">下载地址错误</string>
+    <string name="pms_download_cancel">取消下载</string>
+    <string name="pms_download_completed">下载完成</string>
+
+    <string name="retryview_loading_text">16飕云</string><!-- 正在加载中的文字 -->
+    <string name="retryview_failed_text">点击屏幕，重新加载</string>
+
+    <string name="loading_version">版本号：%1$s</string>
+
+    <string name="title_login">用户登录</string>
+    <string name="title_register">注  册</string>
+    <string name="title_friendadd">添加好友</string>
+    <string name="title_orderconfirm">订单确认</string>
+    <string name="title_meinfo">个人信息</string>
+    <string name="title_orderdetail">订单详情</string>
+    <string name="title_history">历史交易</string>
+    <string name="title_auth">实名认证</string>
+    <string name="title_addbank">绑定银行卡</string>
+    <string name="title_mianduimianjianqun">企业订单</string>
+    <string name="title_password">忘记密码</string>
+    <string name="title_address">常用地址</string>
+
+    <string name="login_logining">正在登录...</string>
+
+    <string name="friendadd_header_select_all">全选</string>
+    <string name="friend_search_hint">请输入姓名</string>
+
+    <string name="publish_category_short">同城零担</string>
+    <string name="publish_category_zhuanche">同城专车</string>
+    <string name="publish_category_longtotal">长途整车</string>
+    <string name="publish_category_longzero">长途零担</string>
+    <string name="publish_category_Mineral">矿产运输</string>
+    <string name="publish_category_railway">铁路运输</string>
+    <string name="publish_category_aviation">航空运输</string>
+    <string name="publish_category_hint">请先选择车型</string>
+    <string name="publish_longtotal_hit">您还没有发长途整车的权限，请您前往认证页面进行认证。</string>
+    <string name="publish_category_capacity">载重：%1$s</string>
+    <string name="publish_truck_area">%1$s*%2$s*%3$s</string>
+    <string name="publish_truck_remark">%1$s元（%2$s公里） 超公里收费%3$s元/公里</string>
+    <string name="publish_confirm_fullreduce">首次注册送您一张9.5折优惠卷只限同城</string>
+
+    <string-array name="jiancheng">
+        <item>晋</item>
+        <item>京</item>
+        <item>津</item>
+        <item>冀</item>
+        <item>蒙</item>
+        <item>黑</item>
+        <item>吉</item>
+        <item>辽</item>
+        <item>浙</item>
+        <item>苏</item>
+        <item>沪</item>
+        <item>皖</item>
+        <item>闽</item>
+        <item>赣</item>
+        <item>鲁</item>
+        <item>豫</item>
+        <item>鄂</item>
+        <item>湘</item>
+        <item>粤</item>
+        <item>桂</item>
+        <item>琼</item>
+        <item>云</item>
+        <item>贵</item>
+        <item>川</item>
+        <item>渝</item>
+        <item>藏</item>
+        <item>甘</item>
+        <item>青</item>
+        <item>宁</item>
+        <item>新</item>
+        <item>港</item>
+        <item>澳</item>
+        <item>台</item>
+    </string-array>
+    <string-array name="zimu">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+
+
+    </string-array>
+
+    <string-array name="peisongleixinglo">
+        <item>同城零担</item>
+        <item>同城专车</item>
+        <item>长途零担</item>
+        <item>长途整车</item>
+        <item>大宗货物运输</item>
+    </string-array>
+    <string-array name="chexing">
+        <item>跑腿</item>
+        <item>三轮车</item>
+        <item>小型面包</item>
+        <item>金杯</item>
+        <item>小型平板</item>
+        <item>3.6米</item>
+        <item>3.8米</item>
+        <item>4.2米</item>
+        <item>6.8米</item>
+        <item>9.6米</item>
+        <item>13米</item>
+        <item>17.5米</item>
+        <item>矿车</item>
+    </string-array>
+    <string-array name="suoshuyinhang">
+        <item>中国建设银行</item>
+        <item>中国工商银行</item>
+        <item>中国农业银行</item>
+        <item>招商银行</item>
+        <item>中国银行</item>
+        <item>中国民生银行</item>
+        <item>中国光大银行</item>
+        <item>中信银行</item>
+        <item>交通银行</item>
+        <item>兴业银行</item>
+        <item>华夏银行</item>
+        <item>中国邮政储蓄银行</item>
+        <item>晋商银行</item>
+        <item>山西省农村信用社</item>
+
+    </string-array>
+    <string-array name="leixing">
+        <item>请选择</item>
+        <item>储蓄卡</item>
+        <item>信用卡</item>
+    </string-array>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>

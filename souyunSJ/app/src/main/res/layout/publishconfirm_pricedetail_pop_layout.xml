@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/pcPopLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#4f000000"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/default_dp15"
+        android:paddingEnd="@dimen/default_dp20"
+        android:paddingStart="@dimen/default_dp20"
+        android:paddingTop="@dimen/default_dp15">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="运    费"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/pcPopFreightTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_dp8"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="保    费"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/pcPopInsuranceTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_dp8"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="优惠券"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/pcPopCouponTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-50"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

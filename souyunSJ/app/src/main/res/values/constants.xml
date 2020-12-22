@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="shortbusmodel">
+        <item>三轮车</item>
+        <item>小型面包</item>
+        <item>小型平板</item>
+        <item>金杯</item>
+        <item>3.8米</item>
+        <item>厢货</item>
+        <item>大型平板</item>
+        <item>6.8米</item>
+        <item>7.2米</item>
+        <item>8.2米</item>
+        <item>9.6米</item>
+        <item>13米</item>
+        <item>16.5米</item>
+        <item>17.5米</item>
+    </array>
+    <array name="longbusmodel">
+
+    </array>
+    <array name="category">
+        <item>同城零担</item>
+        <item>同城专车</item>
+        <item>大宗货物</item>
+        <item>长途零担</item>
+        <item>长途整车</item>
+    </array>
+
+    <array name="publishRemarkTag">
+        <item>三不超</item>
+        <item>高价急走</item>
+        <item>需要雨布</item>
+        <item>货物重量为估算</item>
+    </array>
+</resources>

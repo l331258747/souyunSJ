@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/white">
+
+    <com.ldw.library.view.TitleView
+        android:id="@+id/baseTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:backImage="@drawable/ic_back"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
+        app:titleText="@string/title_orderconfirm"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_dp20"
+        android:paddingEnd="@dimen/default_dp20"
+        android:paddingTop="@dimen/default_dp15"
+        android:paddingBottom="@dimen/default_dp15">
+
+        <TextView
+            style="@style/DefaultTextStyle"
+            android:text="用车时间"/>
+
+        <TextView
+            android:id="@+id/ocDateTv"
+            style="@style/DefaultTextStyle"
+            android:layout_marginStart="@dimen/default_dp15"
+            android:text="2018-02-05"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/base_lineview_include"/>
+
+    <LinearLayout
+        android:id="@+id/ocTruckLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_dp20"
+        android:paddingEnd="@dimen/default_dp20"
+        android:paddingTop="@dimen/default_dp15"
+        android:paddingBottom="@dimen/default_dp15">
+
+        <TextView
+            style="@style/DefaultTextStyle"
+            android:text="车型        "/>
+
+        <TextView
+            android:id="@+id/ocTruckTv"
+            style="@style/DefaultTextStyle"
+            android:layout_marginStart="@dimen/default_dp15"
+            android:text="三轮车"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/base_lineview_include"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_dp20"
+        android:paddingEnd="@dimen/default_dp20"
+        android:paddingTop="@dimen/default_dp15"
+        android:paddingBottom="@dimen/default_dp15">
+
+        <TextView
+            android:id="@+id/ocStartLocationTv"
+            style="@style/DefaultTextStyle"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="东芦"/>
+
+        <TextView
+            style="@style/DefaultTextStyle"
+            android:text="→"/>
+
+        <TextView
+            android:id="@+id/ocEndLocationTv"
+            style="@style/DefaultTextStyle"
+            android:layout_marginStart="@dimen/default_dp15"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="16飕云"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/base_lineview_include"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/default_font16"
+        android:textColor="@color/gray"
+        android:gravity="center"
+        android:text="在结算时您可以使用以下支付方式"
+        android:padding="@dimen/default_dp15"/>
+
+    <CheckBox
+        android:id="@+id/ocOnlinePayCb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/default_font18"
+        android:layout_marginStart="@dimen/default_dp8"
+        android:textColor="@color/dark_gray"
+        android:checked="true"
+        android:text="线上支付"/>
+
+    <LinearLayout
+        android:id="@+id/ocPayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/default_dp8"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/ocWeixinPayLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="@dimen/default_dp10"
+            >
+
+            <ImageView
+                android:id="@+id/wxIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_weixin"/>
+
+            <TextView
+                android:id="@+id/wxTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/default_font12"
+                android:layout_toEndOf="@id/wxIv"
+                android:layout_marginStart="@dimen/default_dp4"
+                android:text="微信支付"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pay_recommend_bg"
+                android:textColor="@color/white"
+                android:layout_alignStart="@id/wxTv"
+                android:textSize="@dimen/default_font10"
+                android:text="推荐"
+                android:layout_below="@id/wxTv"
+                android:padding="1dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ocAliPayLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="@dimen/default_dp10"
+            android:layout_marginTop="@dimen/default_dp25"
+            >
+
+            <ImageView
+                android:id="@+id/aliPayIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_alipay"/>
+
+            <TextView
+                android:id="@+id/aliPayTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/default_font12"
+                android:layout_toEndOf="@id/aliPayIv"
+                android:layout_marginStart="@dimen/default_dp4"
+                android:text="支付宝支付"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pay_recommend_bg"
+                android:textColor="@color/white"
+                android:layout_alignStart="@id/aliPayTv"
+                android:textSize="@dimen/default_font10"
+                android:text="推荐"
+                android:layout_below="@id/aliPayTv"
+                android:padding="1dp"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/yinhangkazhifu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="@dimen/default_dp10"
+            android:layout_marginTop="@dimen/default_dp25"
+            >
+
+            <ImageView
+                android:id="@+id/aliPayIvs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/yinlian"/>
+
+            <TextView
+                android:id="@+id/aliPayTvs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_dp40"
+                android:text="银行卡支付"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/default_font12" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/ocOfflinePayCb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/default_font18"
+        android:layout_marginStart="@dimen/default_dp8"
+        android:layout_marginTop="@dimen/default_dp8"
+        android:textColor="@color/dark_gray"
+        android:text="货到现金线上支付"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="货主未在线上支付，直接付钱给司机，然后由司机在线上支付"
+        />
+
+    <Button
+        android:id="@+id/ocConfirmBtn"
+        style="@style/OrderDetailBtnStyle"
+        android:layout_marginStart="@dimen/default_dp10"
+        android:visibility="gone"
+        android:text="确定提交"/>
+
+</LinearLayout>

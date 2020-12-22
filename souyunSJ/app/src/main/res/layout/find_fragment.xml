@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_bg_color"
+    android:orientation="vertical">
+
+    <com.ldw.library.view.TitleView
+        android:id="@+id/baseTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        app:titleGravity="center"
+        app:titleTextColor="@color/white"/>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/white"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+        <RadioGroup
+            android:id="@+id/rg_tab_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <RadioButton
+                android:id="@+id/rb_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checked="true"
+                android:button="@null"
+                android:background="@drawable/radiobutton_background"
+                android:textColor="@color/radiobutton_textcolor"
+                android:textSize="@dimen/default_font18"
+                android:text="普通货源" />
+            <RadioButton
+                android:layout_marginLeft="20dp"
+                android:id="@+id/rb_driver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:background="@drawable/radiobutton_background"
+                android:textColor="@color/radiobutton_textcolor"
+                android:textSize="@dimen/default_font18"
+                android:text="企业订单" />
+        </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/miyaodingdan"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_dp45"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/default_dp45"
+            >
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_dp10"
+                android:layout_marginEnd="@dimen/default_dp15"
+                android:layout_marginStart="@dimen/default_dp15"
+                android:layout_marginTop="120dp"
+                android:drawablePadding="@dimen/default_dp10"
+                android:orientation="horizontal"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/login_ic_edit"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/default_font18"
+                    android:textColor="@color/black"
+                    android:background="@null"
+                    android:text="厂家密钥："/>
+                <EditText
+                    android:id="@+id/addBankNumEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_dp15"
+                    android:layout_marginStart="@dimen/default_dp15"
+
+                    android:background="@null"
+                    android:drawablePadding="@dimen/default_dp10"
+
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="19"
+                    android:hint="输入6位数密钥"
+                    />
+
+
+
+            </LinearLayout>
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_dp10"
+                android:layout_marginEnd="@dimen/default_dp15"
+                android:layout_marginStart="@dimen/default_dp15"
+                android:layout_marginTop="@dimen/default_dp15"
+                android:drawablePadding="@dimen/default_dp10"
+                android:orientation="horizontal"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/login_ic_edit"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/default_font18"
+                    android:textColor="@color/black"
+                    android:background="@null"
+                    android:text="司机电话："/>
+                <EditText
+                    android:id="@+id/drivertelEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/default_dp15"
+                    android:layout_marginStart="@dimen/default_dp15"
+
+                    android:background="@null"
+                    android:drawablePadding="@dimen/default_dp10"
+
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="19"
+                    android:hint="请输入电话号码"
+                    />
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+            <Button
+                android:id="@+id/addBtn"
+                style="@style/BaseBtnTheme"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_dp20"
+                android:layout_marginEnd="@dimen/default_dp25"
+                android:layout_marginStart="@dimen/default_dp25"
+                android:layout_marginTop="@dimen/default_dp20"
+                android:text="确认接活"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/putong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_dp60"
+        android:orientation="vertical"
+        >
+    <LinearLayout
+        android:id="@+id/findFilterLayout"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/default_dp30"
+        android:layout_height="@dimen/default_dp40"
+        android:layout_below="@id/baseTitleView"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/findStartLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/findStartTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lines="1"
+                android:text="全国"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_small_arrow"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/publish_ic_arrow"/>
+
+        <LinearLayout
+            android:id="@+id/sj1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:singleLine="true"
+                android:textSize="@dimen/default_dp12"
+                android:background="@null"
+                android:id="@+id/sj"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:lines="1"
+                android:text="全国"/>
+
+            <ImageView
+                android:id="@+id/zbb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_small_arrow"/>
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/findSearchLayout"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/findSearchTv"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center"-->
+<!--                android:lines="1"-->
+<!--                android:text="高级搜索"/>-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_small_arrow"/>-->
+
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/findFilterLayout"
+        android:background="@color/divider_color"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/baseRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/line">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/baseRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        layout="@layout/base_retryview_include"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/baseTitleView"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_bg_color"
+    android:orientation="vertical">
+
+    <com.ldw.library.view.TitleView
+        android:id="@+id/baseTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleText="@string/title_mianduimianjianqun"
+        app:backImage="@drawable/ic_back"/>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+
+        >
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_dp10"
+            android:layout_marginEnd="@dimen/default_dp15"
+            android:layout_marginStart="@dimen/default_dp15"
+            android:layout_marginTop="120dp"
+            android:drawablePadding="@dimen/default_dp10"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/login_ic_edit"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/default_font18"
+                android:textColor="@color/black"
+                android:background="@null"
+                android:text="厂家密钥："/>
+            <EditText
+                android:id="@+id/addBankNumEt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_dp15"
+                android:layout_marginStart="@dimen/default_dp15"
+
+                android:background="@null"
+                android:drawablePadding="@dimen/default_dp10"
+
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="19"
+                android:hint="输入6位数密钥"
+                />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_dp10"
+            android:layout_marginEnd="@dimen/default_dp15"
+            android:layout_marginStart="@dimen/default_dp15"
+            android:layout_marginTop="@dimen/default_dp15"
+            android:drawablePadding="@dimen/default_dp10"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/login_ic_edit"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/default_font18"
+                android:textColor="@color/black"
+                android:background="@null"
+                android:text="司机电话："/>
+            <EditText
+                android:id="@+id/drivertelEt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_dp15"
+                android:layout_marginStart="@dimen/default_dp15"
+
+                android:background="@null"
+                android:drawablePadding="@dimen/default_dp10"
+
+                android:inputType="number"
+                android:lines="1"
+                android:maxLength="19"
+                android:hint="请输入电话号码"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <Button
+            android:id="@+id/addBtn"
+            style="@style/BaseBtnTheme"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_dp20"
+            android:layout_marginEnd="@dimen/default_dp25"
+            android:layout_marginStart="@dimen/default_dp25"
+            android:layout_marginTop="@dimen/default_dp20"
+            android:text="确认接活"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

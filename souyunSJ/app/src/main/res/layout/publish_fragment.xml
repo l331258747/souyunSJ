@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.ldw.library.view.TitleView
+        android:id="@+id/baseTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        app:titleGravity="center"
+        app:titleTextColor="@color/white"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/publishCategoryLayout"
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_pslx"
+                    android:text="配送类型        "/>
+
+                <TextView
+                    android:id="@+id/publishCategoryTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:hint="点击选择"/>
+
+
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/authSpinner"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="@dimen/default_dp20"/>-->
+
+
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                android:id="@+id/publishTruckLayout"
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_yxcx"
+                    android:text="已选车型        "/>
+
+                <TextView
+                    android:id="@+id/publishTruckTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:hint="点击选择"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include android:id="@+id/truckLine" layout="@layout/base_lineview_include"/>
+
+            <!-- 始终点start 如果是长途整车 这里始终点有点不一样 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/publish_address_default_layout"/>
+
+                <include layout="@layout/publish_address_longtotal_layout"/>
+
+            </FrameLayout>
+            <!--始终点 end-->
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_hw"
+                    android:text="货物名称         "/>
+
+                <TextView
+                    android:id="@+id/publishProductTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:hint="点击选择"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/publish_product_default_layout"/>
+
+                <include layout="@layout/publish_product_longtotal_layout"/>
+
+            </FrameLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/baozhuang"
+                    android:text="货物包装         "/>
+
+                <EditText
+                    android:id="@+id/publishgoodspacking"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:background="@null"
+
+                    android:textSize="@dimen/default_font14"
+                    />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_dh"
+                    android:text="发货电话         "/>
+
+                <EditText
+                    android:id="@+id/publishStartPhoneEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:lines="1"
+                    android:maxLength="11"
+                    android:inputType="phone"
+                    android:textSize="@dimen/default_font14"
+                    android:hint="点击选择"/>
+
+                <ImageView
+                    android:id="@+id/publishStartPhoneIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_shr"
+                    android:text="收货人              "/>
+
+                <EditText
+                    android:id="@+id/publishGetPersonEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:lines="1"
+                    android:textSize="@dimen/default_font14"
+                    android:hint="点击选择"/>
+
+                <ImageView
+                    android:id="@+id/publishGetPersonIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_dh"
+                    android:text="收货电话         "/>
+
+                <EditText
+                    android:id="@+id/publishGetPhoneEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:lines="1"
+                    android:maxLength="11"
+                    android:inputType="phone"
+                    android:textSize="@dimen/default_font14"
+                    android:hint="点击选择"/>
+
+                <ImageView
+                    android:id="@+id/publishGetPhoneIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <LinearLayout
+                style="@style/PublishLayoutStyle">
+
+                <TextView
+                    style="@style/PublishIconStyle"
+                    android:drawableStart="@drawable/publish_ic_time"
+                    android:text="发货时间         "/>
+
+                <TextView
+                    android:id="@+id/publishTimeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_dp15"
+                    android:layout_weight="1"
+                    android:hint="点击选择"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_green_arrow"/>
+            </LinearLayout>
+
+            <include layout="@layout/base_lineview_include"/>
+
+            <include layout="@layout/add_showphotos_layout"/>
+
+            <Button
+                android:id="@+id/publishNextBtn"
+                style="@style/BaseBtnTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_dp15"
+                android:layout_marginEnd="@dimen/default_dp30"
+                android:layout_marginStart="@dimen/default_dp30"
+                android:layout_marginTop="@dimen/default_dp30"
+                android:text="下一步" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
