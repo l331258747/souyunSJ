@@ -1579,6 +1579,8 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        //------------3
+        postType = 3;
         Map<String, String> picMaps = new HashMap<>();
         Map<String, String> params = new HashMap<>();
         params.put("check", "0");
@@ -1911,7 +1913,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mBookIv.setVisibility(View.GONE);
             mBookPath = "";
             showToast("上传失败，请重新上传");
-        } else if(postType == 2){
+        } else if(postType == 3){
             handleError(entity);
         }
 
