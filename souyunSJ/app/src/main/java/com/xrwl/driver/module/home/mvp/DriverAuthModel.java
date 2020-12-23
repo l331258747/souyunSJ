@@ -2,6 +2,7 @@ package com.xrwl.driver.module.home.mvp;
 
 import com.ldw.library.bean.BaseEntity;
 import com.xrwl.driver.bean.Auth;
+import com.xrwl.driver.bean.GongAnAuth;
 import com.xrwl.driver.bean.MsgCode;
 import com.xrwl.driver.retrofit.OtherRetrofitFactory;
 import com.xrwl.driver.retrofit.RetrofitFactory;
@@ -41,5 +42,12 @@ public class DriverAuthModel implements DriverAuthContract.IModel {
     public Observable<BaseEntity<MsgCode>> getCode(Map<String, String> params) {
         return OtherRetrofitFactory.getInstance("http://distance.16souyun.com/").getCode(params).compose(RxSchedulers
                 .<BaseEntity<MsgCode>>compose());
+    }
+
+    @Override
+    //public/admin/idcar/cardids
+    public Observable<BaseEntity<GongAnAuth>> shenfenzheng(Map<String, String> params) {
+        return OtherRetrofitFactory.getInstance("http://distance.16souyun.com/").shenfenzheng(params).compose(RxSchedulers
+                .<BaseEntity<GongAnAuth>>compose());
     }
 }

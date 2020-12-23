@@ -7,4 +7,5 @@
 
     <color name="ul_notify_text_color">#ababaa</color>
     <color name="tab_unselected_color">#939393</color>
+    <color name="gray_33">#33aaaaaa</color>
 </resources>

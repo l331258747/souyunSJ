@@ -1,14 +1,19 @@
 package com.xrwl.driver.module.home.mvp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Base64;
 
 import com.ldw.library.bean.BaseEntity;
 import com.xrwl.driver.bean.Auth;
+import com.xrwl.driver.bean.GongAnAuth;
 import com.xrwl.driver.bean.MsgCode;
 import com.xrwl.driver.retrofit.BaseObserver;
 import com.xrwl.driver.retrofit.BaseSimpleObserver;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -150,6 +155,45 @@ public class DriverAuthPresenter extends DriverAuthContract.APresenter {
             @Override
             protected void onHandleError(Throwable e) {
                 mView.onPostError(e);
+            }
+        });
+    }
+
+    @Override
+    public void shenfenzheng(String face_cardimg,String fileType,String type) {
+        Bitmap bitmap = BitmapFactory.decodeFile(face_cardimg);
+        //Log.d(TAG, "bitmap width: " + bitmap.getWidth() + " height: " + bitmap.getHeight());
+        //convert to byte array
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        //base64 encode
+        byte[] encode = Base64.encode(bytes, Base64.DEFAULT);
+        String encodeString = new String(encode);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("token", "acd890f765efd007cbb5701fd1ac7ae0");
+        params.put("type", type);
+        params.put(fileType, encodeString);
+
+        mModel.shenfenzheng(params).subscribe(new BaseObserver<GongAnAuth>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addDisposable(d);
+            }
+
+            @Override
+            protected void onHandleSuccess(BaseEntity<GongAnAuth> entity) {
+                if (entity.isSuccess()) {
+                    mView.shenfenzhengSuccess(entity);
+                } else {
+                    mView.shenfenzhengError(entity);
+                }
+            }
+
+            @Override
+            protected void onHandleError(Throwable e) {
+                mView.onRefreshError(e);
             }
         });
     }

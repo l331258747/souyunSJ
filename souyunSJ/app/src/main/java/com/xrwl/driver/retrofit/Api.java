@@ -6,6 +6,7 @@ import com.xrwl.driver.bean.Address2;
 import com.xrwl.driver.bean.Auth;
 import com.xrwl.driver.bean.Business;
 import com.xrwl.driver.bean.Distance;
+import com.xrwl.driver.bean.GongAnAuth;
 import com.xrwl.driver.bean.HistoryOrder;
 import com.xrwl.driver.bean.MsgCode;
 import com.xrwl.driver.bean.New;
@@ -198,7 +199,7 @@ public interface Api {
 
     /** 司机提交实名认证信息 */
     @Multipart
-    @POST("User/DriverAuthentication")
+    @POST("User/DriverAuthor")
     Observable<BaseEntity> postDriverAuthInfo(@PartMap Map<String, RequestBody> params);
 
     /** 司机提交实名认证信息普通认证 */
@@ -340,6 +341,11 @@ public interface Api {
     /** 短信点击按钮操作模式--货主和司机相互点击 */
     @GET("api/map/type_sms")
     Observable<BaseEntity<MsgCode>> getCodeButton(@QueryMap Map<String, String> params);
+
+    /** 身份证 */
+    @FormUrlEncoded
+    @POST("admin/idcar/cardids")
+    Observable<BaseEntity<GongAnAuth>> shenfenzheng(@FieldMap Map<String, String> params);
 
 
 }

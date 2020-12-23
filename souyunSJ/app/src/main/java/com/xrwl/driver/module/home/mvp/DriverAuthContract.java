@@ -5,6 +5,7 @@ import android.content.Context;
 import com.ldw.library.bean.BaseEntity;
 import com.ldw.library.mvp.BaseMVP;
 import com.xrwl.driver.bean.Auth;
+import com.xrwl.driver.bean.GongAnAuth;
 import com.xrwl.driver.bean.MsgCode;
 import com.xrwl.driver.mvp.MyPresenter;
 
@@ -21,6 +22,9 @@ public interface DriverAuthContract {
         void onPostSuccess(BaseEntity entity);
         void onPostError(BaseEntity entity);
         void onPostError(Throwable e);
+
+        void shenfenzhengSuccess(BaseEntity<GongAnAuth> entity);
+        void shenfenzhengError(BaseEntity entity);
     }
 
     abstract class APresenter extends MyPresenter<IView> {
@@ -32,6 +36,7 @@ public interface DriverAuthContract {
         public abstract void postData(Map<String, String> picMaps, Map<String, String> params);
         public abstract void postputongData(Map<String, String> params);
         public abstract void postputongchexingData(Map<String, String> params);
+        public abstract void shenfenzheng(String face_cardimg,String fileType, String type);
         public abstract void getData();
         public abstract void getCode(String phone);
     }
@@ -42,5 +47,6 @@ public interface DriverAuthContract {
         Observable<BaseEntity> postputongData(Map<String, String> params);
         Observable<BaseEntity> postputongchexingData(Map<String, String> params);
         Observable<BaseEntity<MsgCode>> getCode(Map<String, String> params);
+        Observable<BaseEntity<GongAnAuth>> shenfenzheng(Map<String, String> params);
     }
 }

@@ -4,6 +4,7 @@ import com.ldw.library.bean.BaseEntity;
 import com.xrwl.driver.R;
 import com.xrwl.driver.base.BaseActivity;
 import com.xrwl.driver.bean.Auth;
+import com.xrwl.driver.bean.GongAnAuth;
 import com.xrwl.driver.module.home.mvp.DriverAuthContract;
 import com.xrwl.driver.module.home.mvp.DriverAuthPresenter;
 
@@ -45,6 +46,16 @@ public class Ad_listActivity extends BaseActivity<DriverAuthContract.IView, Driv
 
     @Override
     public void onPostError(Throwable e) {
+
+    }
+
+    @Override
+    public void shenfenzhengSuccess(BaseEntity<GongAnAuth> entity) {
+
+    }
+
+    @Override
+    public void shenfenzhengError(BaseEntity entity) {
 
     }
 

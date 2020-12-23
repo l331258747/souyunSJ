@@ -37,7 +37,7 @@
     <color name="default_cell_pressed_color">#c9c9c9</color>
 
     <color name="friend_search_btn_text_color">#989a9e</color>
-    <color name="friend_search_btn_bgcolor">#ededee</color>
+    <color name="friend_search_btn_bgcolor">#2B2B2B</color>
 
     <color name="publish_category_normal_color">#757575</color>
     <color name="publish_category_selected_color">#f16415</color>

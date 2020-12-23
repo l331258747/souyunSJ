@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -77,6 +77,7 @@
             android:layout_marginStart="@dimen/default_dp10"
             android:layout_marginEnd="@dimen/default_dp10"
             android:layout_height="215dp"
+            tools:visibility="gone"
             android:src="@drawable/weirenzheng" />
     </LinearLayout>
 
@@ -92,6 +93,7 @@
             android:layout_marginStart="@dimen/default_dp10"
             android:layout_marginEnd="@dimen/default_dp10"
             android:layout_height="215dp"
+            tools:visibility="gone"
             android:src="@drawable/yirenzheng" />
     </LinearLayout>
 
@@ -345,10 +347,11 @@
                 android:textColor="@color/white"
                 android:visibility="gone"
                 android:textSize="@dimen/default_font14" />
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/jiashiRlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_margin="@dimen/default_dp15">
 
 
@@ -421,6 +424,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone"
+                     tools:visibility="visible"
                     android:layout_marginTop="10dp" >
                     <TextView
                         android:layout_width="wrap_content"
@@ -449,6 +453,7 @@
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
                     android:layout_marginTop="10dp"
+                     tools:visibility="visible"
                      android:visibility="gone"
             android:orientation="horizontal">
                  <View
@@ -708,7 +713,7 @@
                         android:textSize="@dimen/default_font26"/>
 
                 </LinearLayout>
-               </RelativeLayout>
+               </LinearLayout>
 
 
 
