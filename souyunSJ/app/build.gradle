@@ -3,6 +3,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
+
+    signingConfigs {
+        newrelease {
+            keyAlias 'xrwl'
+            keyPassword '123456Aa'
+            storeFile file('xrwl.jks')
+            storePassword '123456Aa'
+        }
+    }
+
     compileSdkVersion appConfig.compileSdkVersion
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
@@ -21,8 +31,18 @@ android {
         versionCode = 20200215
     }
     buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.newrelease
+        }
         release {
             minifyEnabled false
+            signingConfig signingConfigs.newrelease
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,20 +51,20 @@ android {
             outputFileName = "${variant.name}-${variant.versionName}.apk"
         }
     }
-    signingConfigs {
-        debug {
-            keyAlias appConfig.keyAlias
-            keyPassword appConfig.keyPassword
-            storeFile file(appConfig.storeFile)
-            storePassword appConfig.storePassword
-        }
-        release {
-            keyAlias appConfig.keyAlias
-            keyPassword appConfig.keyPassword
-            storeFile file(appConfig.storeFile)
-            storePassword appConfig.storePassword
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            keyAlias appConfig.keyAlias
+//            keyPassword appConfig.keyPassword
+//            storeFile file(appConfig.storeFile)
+//            storePassword appConfig.storePassword
+//        }
+//        release {
+//            keyAlias appConfig.keyAlias
+//            keyPassword appConfig.keyPassword
+//            storeFile file(appConfig.storeFile)
+//            storePassword appConfig.storePassword
+//        }
+//    }
     productFlavors {
     }
     repositories {

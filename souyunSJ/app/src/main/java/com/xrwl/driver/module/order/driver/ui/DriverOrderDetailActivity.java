@@ -1,10 +1,5 @@
 package com.xrwl.driver.module.order.driver.ui;
 
-import android.os.Bundle;
-import android.widget.ScrollView;
-import android.widget.Toast;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,18 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -43,10 +32,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.services.route.RouteSearch;
-
-
-import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
@@ -55,20 +40,16 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
+import com.amap.api.services.route.DrivePath;
 import com.amap.api.services.route.DriveRouteResult;
 import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkPath;
 import com.amap.api.services.route.WalkRouteResult;
+import com.blankj.utilcode.util.AppUtils;
 import com.hdgq.locationlib.LocationOpenApi;
 import com.hdgq.locationlib.entity.ShippingNoteInfo;
 import com.hdgq.locationlib.listener.OnResultListener;
-import com.xrwl.driver.Frame.auxiliary.RetrofitManager;
-import com.xrwl.driver.Frame.retrofitapi.NetService;
-import com.xrwl.driver.bean.DhBenn;
-import com.xrwl.driver.module.order.driver.ui.util.AMapUtil;
-import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.PermissionUtils;
 import com.ldw.library.bean.BaseEntity;
 import com.ldw.library.view.GridSpacingItemDecoration;
 import com.ldw.library.view.dialog.LoadingProgress;
@@ -76,26 +57,26 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xrwl.driver.Frame.auxiliary.RetrofitManager;
+import com.xrwl.driver.Frame.retrofitapi.NetService;
 import com.xrwl.driver.R;
 import com.xrwl.driver.base.BaseActivity;
+import com.xrwl.driver.bean.DhBenn;
 import com.xrwl.driver.bean.Distance;
 import com.xrwl.driver.bean.MsgCode;
 import com.xrwl.driver.bean.OrderDetail;
 import com.xrwl.driver.event.DriverListRrefreshEvent;
 import com.xrwl.driver.event.DriverOrderListRrefreshEvent;
-import com.xrwl.driver.module.find.ui.FindFragment;
 import com.xrwl.driver.module.home.ui.CustomDialog;
 import com.xrwl.driver.module.home.ui.HongbaolistActivity;
 import com.xrwl.driver.module.home.ui.OnRedPacketDialogClickListener;
 import com.xrwl.driver.module.home.ui.RedPacketEntity;
 import com.xrwl.driver.module.home.ui.RedPacketViewHolder;
-
 import com.xrwl.driver.module.order.driver.mvp.DriverOrderContract;
 import com.xrwl.driver.module.order.driver.mvp.DriverOrderDetailPresenter;
-import com.xrwl.driver.module.order.driver.ui.ui.route.RouteActivity;
+import com.xrwl.driver.module.order.driver.ui.ui.route.DriveRouteOverlay;
 import com.xrwl.driver.module.order.driver.ui.ui.route.WalkRouteOverlay;
 import com.xrwl.driver.module.order.driver.ui.util.AMapUtil;
 import com.xrwl.driver.module.order.driver.ui.util.RandomUntil;
@@ -109,13 +90,11 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -141,6 +120,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     private Context mContext;
     private RouteSearch mRouteSearch;
     private WalkRouteResult mWalkRouteResult;
+    private DriveRouteResult mDriveRouteResult;
 
     public Double aalat;
     public Double aalon;
@@ -495,8 +475,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                 .position(AMapUtil.convertToLatLng(mEndPoint))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.end)));
 
-        searchRouteResult(ROUTE_TYPE_WALK, RouteSearch.WalkDefault);
-
+//        searchRouteResult(ROUTE_TYPE_WALK, RouteSearch.WalkDefault);
+        searchRouteResult(ROUTE_TYPE_WALK, RouteSearch.DRIVING_SINGLE_DEFAULT);
 
         readmylon = Double.parseDouble(od.endLon);
         readmylat = Double.parseDouble(od.endLat);
@@ -1927,8 +1907,10 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         final RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(
                 mStartPoint, mEndPoint);
         if (routeType == ROUTE_TYPE_WALK) {
-            RouteSearch.WalkRouteQuery query = new RouteSearch.WalkRouteQuery(fromAndTo, mode);
-            mRouteSearch.calculateWalkRouteAsyn(query);
+//            RouteSearch.WalkRouteQuery query = new RouteSearch.WalkRouteQuery(fromAndTo, mode);
+//            mRouteSearch.calculateWalkRouteAsyn(query);
+            RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, mode,null,null,"");
+            mRouteSearch.calculateDriveRouteAsyn(query);
         }
     }
 
@@ -1938,6 +1920,35 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
     @Override
     public void onDriveRouteSearched(DriveRouteResult result, int errorCode) {
+        dissmissProgressDialog();
+        aMap.clear();// 清理地图上的所有覆盖物
+        if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
+            if (result != null && result.getPaths() != null) {
+                if (result.getPaths().size() > 0) {
+                    mDriveRouteResult = result;
+                    final DrivePath walkPath = mDriveRouteResult.getPaths()
+                            .get(0);
+                    DriveRouteOverlay walkRouteOverlay = new DriveRouteOverlay(
+                            this, aMap, walkPath,
+                            mDriveRouteResult.getStartPos(),
+                            mDriveRouteResult.getTargetPos());
+                    walkRouteOverlay.getWalkColor();//轨迹颜色修改
+                    walkRouteOverlay.removeFromMap();
+                    walkRouteOverlay.addToMap();
+                    walkRouteOverlay.zoomToSpan();
+                    walkRouteOverlay.setNodeIconVisibility(false);//关闭行走图标轨迹
+                    int dis = (int) walkPath.getDistance();
+                    int dur = (int) walkPath.getDuration();
+                    String des = AMapUtil.getFriendlyTime(dur) + "(" + AMapUtil.getFriendlyLength(dis) + ")";
+                } else if (result != null && result.getPaths() == null) {
+                    Toast.makeText(this, R.string.no_result, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, R.string.no_result, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(this, errorCode, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
