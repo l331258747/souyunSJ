@@ -24,6 +24,7 @@ import com.ldw.library.view.TitleView;
 import com.xrwl.driver.R;
 import com.xrwl.driver.bean.Account;
 import com.xrwl.driver.utils.AccountUtil;
+import com.xrwl.driver.utils.ActivityCollect;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -83,6 +84,8 @@ public abstract class BaseActivity<V extends BaseMVP.IBaseView, P extends BaseMV
         initViews(savedInstanceState);
 
         handleEvents();
+
+        ActivityCollect.getAppCollect().addActivity(this);
     }
 
     public void setTitleText(String text) {
@@ -155,6 +158,7 @@ public abstract class BaseActivity<V extends BaseMVP.IBaseView, P extends BaseMV
         if (mUnBinder != null) {
             mUnBinder.unbind();
         }
+        ActivityCollect.getAppCollect().finishActivity(this);
     }
 
     public void handleError(BaseEntity entity) {
