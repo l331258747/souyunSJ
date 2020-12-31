@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -16,10 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.ldw.library.adapter.recycler.MultiItemTypeAdapter;
 import com.ldw.library.adapter.recycler.wrapper.LoadMoreWrapper;
 import com.ldw.library.bean.BaseEntity;
@@ -42,8 +41,6 @@ import com.xrwl.driver.module.order.driver.ui.DriverOrderDetailActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +54,10 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
  * 司机找货
  * Created by www.longdw.com on 2018/4/5 上午9:17.
  */
-public class FindFragment extends BaseEventFragment<FindContract.IView, FindPresenter> implements ChooseAddressDialog
-        .OnSelectListener, FindContract.IView, ProductSearchDialog.OnProductSearchListener {
+public class FindFragment extends BaseEventFragment<FindContract.IView, FindPresenter>
+        implements FindContract.IView {
+//public class FindFragment extends BaseEventFragment<FindContract.IView, FindPresenter> implements ChooseAddressDialog
+//        .OnSelectListener, FindContract.IView, ProductSearchDialog.OnProductSearchListener {
 
     @BindView(R.id.baseRv)
     RecyclerView mRv;
@@ -82,7 +81,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     EditText mNumEt;//厂家密钥
     @BindView(R.id.drivertelEt)
     EditText mdrivertelEt;//厂家密钥
-    Map<String, String> params = new HashMap<>();
+//    Map<String, String> params = new HashMap<>();
     @BindView(R.id.putong)
     LinearLayout mputong;
     private CityPicker mCP;
@@ -98,6 +97,11 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     private AMapLocationClientOption mLocationOption = null;
     private ProductSearch mProductSearch;
     private static String morendequ;
+
+    //字段
+    String canshu = "";
+    String locationStart = "全国";
+    String locationEnd = "全国";
 
     public static FindFragment newInstance(String title) {
 
@@ -147,19 +151,33 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         switch (v.getId()) {
             case R.id.findStartTv:
             case R.id.findStartIv:
-                mYunCityPicher(mEndTv);
+                mYunCityPicher(true);
                 mCP.show();
                 break;
             case R.id.findEndTv:
             case R.id.findEndIv:
-                mYunCityPicher(mStartTv);
+                mYunCityPicher(false);
                 mCP.show();
                 break;
         }
     }
 
+    @OnClick({R.id.rb_owner, R.id.rb_driver})
+    public void onTabClick(View v) {
+        switch (v.getId()) {
+            case R.id.rb_owner:
+                canshu = "";
+                getData();
+                break;
+            case R.id.rb_driver:
+                canshu = "0";
+                getData();
+                break;
+        }
+    }
+
     //这是三级联动
-    public void mYunCityPicher(TextView tv) {
+    public void mYunCityPicher(boolean isStart) {
         mCP = new CityPicker.Builder(getContext())
                 .textSize(20)
                 //地址选择
@@ -201,48 +219,55 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                 String district = citySelected[2];
                 //邮证编码
                 String code = citySelected[3];
-                tv.setText(province + city + district);
+
+                if(isStart){
+                    locationStart = province + city + district;
+                    mStartTv.setText(locationStart);
+                }else{
+                    locationEnd = province + city + district;
+                    mEndTv.setText(locationEnd);
+                }
+
+                getData();
             }
 
             @Override
             public void onCancel() {
-
-
             }
         });
     }
 
-
     private void initLocation() {
         mLocationClient = new AMapLocationClient(mContext);
         mLocationOption = new AMapLocationClientOption();
-        mLocationClient.setLocationListener(new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
-                if (aMapLocation.getErrorCode() == 0) {
-                    String city = aMapLocation.getCity();
-                    String chuangcity = aMapLocation.getCity();
-                    //aMapLocation.getLatitude();//获取经度
-                    //aMapLocation.getLongitude();//获取纬度;
-                    mStartTv.setText(city);
-                    params.put("start", city);
-                    String sijicity = null;
-                    try {
-                        sijicity = URLEncoder.encode(chuangcity, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    morendequ = sijicity;
-                    params.put("current_city", sijicity);
-                } else {
-                    params.put("start", "全国");
-                }
+        mLocationClient.setLocationListener(aMapLocation -> {
+            if (aMapLocation.getErrorCode() == 0) {
+                String province = aMapLocation.getProvince();
+                String city = aMapLocation.getCity();
+                String district = aMapLocation.getDistrict();
 
-                mLocationClient.stopLocation();
+                locationStart = province + city + district;
+                mStartTv.setText(locationStart);
 
-                getData();
-
+//                params.put("start", city);
+//                String sijicity = null;
+//                try {
+//                    sijicity = URLEncoder.encode(city, "UTF-8");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//                morendequ = sijicity;
+//                params.put("current_city", sijicity);
+            } else {
+//                params.put("start", "全国");
+                locationStart = "全国";
+                mStartTv.setText(locationStart);
             }
+
+            mLocationClient.stopLocation();
+
+            getData();
+
         });
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
@@ -260,12 +285,20 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
 
     @Override
     protected void getData() {
+        Map<String, String> params = new HashMap<>();
+        params.put("start_area", locationStart);
+        params.put("end_area", locationEnd);
+        if(!TextUtils.isEmpty(canshu))
+            params.put("canshu", canshu);
         mPresenter.getData(params);
     }
 
     private void getMoreData() {
         Map<String, String> params = new HashMap<>();
-        params.put("", "");//估计是这里的问题造成的
+        params.put("start_area", locationStart);
+        params.put("end_area", locationEnd);
+        if(!TextUtils.isEmpty(canshu))
+            params.put("canshu", canshu);
         mPresenter.getMoreData(params);
     }
 
@@ -324,112 +357,109 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
 //            startActivity(new Intent(mContext, DriverOrderActivity.class));
 //        }
 //    }
+//    /**
+//     * 起点单选回调
+//     */
+//    @Override
+//    public void onSingleSelect(Address address) {
+//        mStartTv.setText(address.getName());
+//
+//        String sijicity = null;
+//        try {
+//            sijicity = URLEncoder.encode(address.getName(), "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        params.put("start_area", sijicity);
+//        getData();
+//    }
+//    /**
+//     * 终点多选回调
+//     */
+//    @Override
+//    public void onMultiSelect(List<Address> datas) {
+//        mSelectedEndAddressList = datas;
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0, size = datas.size(); i < size; i++) {
+//            Address a = datas.get(i);
+//            sb.append(a.getName());
+//            if (i < size - 1) {
+//                sb.append(",");
+//            }
+//        }
+//        mEndTv.setText(sb.toString());
+//
+//
+//        String ends = sb.toString();
+//        try {
+//            ends = URLEncoder.encode(sb.toString(), "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        params.put("end_area", ends);
+//
+//        getData();
+//    }
 
-    /**
-     * 起点单选回调
-     */
-    @Override
-    public void onSingleSelect(Address address) {
-        mStartTv.setText(address.getName());
-
-
-        String sijicity = null;
-        try {
-            sijicity = URLEncoder.encode(address.getName(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        params.put("start_area", sijicity);
-        getData();
-    }
-
-    /**
-     * 终点多选回调
-     */
-    @Override
-    public void onMultiSelect(List<Address> datas) {
-        mSelectedEndAddressList = datas;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0, size = datas.size(); i < size; i++) {
-            Address a = datas.get(i);
-            sb.append(a.getName());
-            if (i < size - 1) {
-                sb.append(",");
-            }
-        }
-        mEndTv.setText(sb.toString());
-
-
-        String ends = sb.toString();
-        try {
-            ends = URLEncoder.encode(sb.toString(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        params.put("end_area", ends);
-
-        getData();
-    }
-
-    /**
-     * 高级搜索回调
-     */
-    @Override
-    public void onProductSearch(ProductSearch ps) {
-
-        String canshuo = "0";
-        String encodeParme = null;
-        try {
-            encodeParme = URLEncoder.encode(ps.productName, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        params.put("product_name", encodeParme);
-        params.put("short_truck", chexing(ps.shortTrucks));
-
-        params.put("long_truck", ps.longTrucks);
-
-        if ("0".equals(String.valueOf(ps.category + ""))) {
-            canshuo = "0";
-        } else if ("1".equals(String.valueOf(ps.category + ""))) {
-            canshuo = "5";
-        } else if ("2".equals(String.valueOf(ps.category + ""))) {
-            canshuo = "6";
-        } else if ("3".equals(String.valueOf(ps.category + ""))) {
-            canshuo = "1";
-        } else if ("4".equals(String.valueOf(ps.category + ""))) {
-            canshuo = "2";
-        }
-        params.put("pstype", canshuo);
-
-        params.put("start_date", ps.startDate);
-        params.put("end_date", ps.endDate);
-        mProductSearch = ps;
-        getData();
-    }
-
-    protected String leixing(String cs) {
-        String abcd = "";
-        if (cs == "0") {
-            abcd = "0";
-        } else if (cs == "1") {
-            abcd = "5";
-        } else if (cs == "2") {
-            abcd = "6";
-        } else if (cs == "3") {
-            abcd = "1";
-        } else if (cs == "4") {
-            abcd = "2";
-        }
-        return abcd;
-    }
-
-    @Override
-    public void onDialogDismiss() {
-        mStartAddressDialog = null;
-        mEndAddressDialog = null;
-        mProductSearchDialog = null;
-    }
+//    /**
+//     * 高级搜索回调
+//     */
+//    @Override
+//    public void onProductSearch(ProductSearch ps) {
+//
+//        String canshuo = "0";
+//        String encodeParme = null;
+//        try {
+//            encodeParme = URLEncoder.encode(ps.productName, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        params.put("product_name", encodeParme);
+//        params.put("short_truck", chexing(ps.shortTrucks));
+//
+//        params.put("long_truck", ps.longTrucks);
+//
+//        if ("0".equals(String.valueOf(ps.category + ""))) {
+//            canshuo = "0";
+//        } else if ("1".equals(String.valueOf(ps.category + ""))) {
+//            canshuo = "5";
+//        } else if ("2".equals(String.valueOf(ps.category + ""))) {
+//            canshuo = "6";
+//        } else if ("3".equals(String.valueOf(ps.category + ""))) {
+//            canshuo = "1";
+//        } else if ("4".equals(String.valueOf(ps.category + ""))) {
+//            canshuo = "2";
+//        }
+//        params.put("pstype", canshuo);
+//
+//        params.put("start_date", ps.startDate);
+//        params.put("end_date", ps.endDate);
+//        mProductSearch = ps;
+//        getData();
+//    }
+//
+//    protected String leixing(String cs) {
+//        String abcd = "";
+//        if (cs == "0") {
+//            abcd = "0";
+//        } else if (cs == "1") {
+//            abcd = "5";
+//        } else if (cs == "2") {
+//            abcd = "6";
+//        } else if (cs == "3") {
+//            abcd = "1";
+//        } else if (cs == "4") {
+//            abcd = "2";
+//        }
+//        return abcd;
+//    }
+//
+//    @Override
+//    public void onDialogDismiss() {
+//        mStartAddressDialog = null;
+//        mEndAddressDialog = null;
+//        mProductSearchDialog = null;
+//    }
 
     @Override
     public void onRefreshSuccess(final BaseEntity<List<Order>> entity) {
@@ -459,12 +489,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                     }
                 });
 
-                mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
-                    @Override
-                    public void onLoadMoreRequested() {
-                        getMoreData();
-                    }
-                });
+                mLoadMoreWrapper.setOnLoadMoreListener(() -> getMoreData());
             } else {
                 mAdapter.setDatas(entity.getData());
                 mLoadMoreWrapper.notifyDataSetChanged();

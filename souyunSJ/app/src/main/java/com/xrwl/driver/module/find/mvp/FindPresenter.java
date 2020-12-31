@@ -1,15 +1,11 @@
 package com.xrwl.driver.module.find.mvp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.ldw.library.bean.BaseEntity;
 import com.xrwl.driver.bean.Order;
 import com.xrwl.driver.bean.OrderDetail;
-import com.xrwl.driver.module.find.ui.FindFragment;
-import com.xrwl.driver.module.me.ui.BankyuejinduActivity;
-import com.xrwl.driver.module.me.ui.CouponActivity;
 import com.xrwl.driver.retrofit.BaseObserver;
 
 import java.io.UnsupportedEncodingException;
@@ -19,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
-
-import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 /**
  * Created by www.longdw.com on 2018/5/3 下午10:23.
@@ -81,19 +75,22 @@ public class FindPresenter extends FindContract.APresenter {
         mView.showLoading();
         mPageIndex = 0;
 
-//        for (String key : params.keySet()) {
-//            String value = params.get(key);
-//            try {
-//                params.put(key, URLEncoder.encode(value, "UTF-8"));
-//            } catch (UnsupportedEncodingException e) {
-//                Log.e(TAG, e.getMessage(), e);
-//            }
-//        }
-
         params.put("userid", getAccount().getId());
         params.put("transitpoint", getAccount().getTransitpoint());
         params.put("pages", mPageIndex + "");
-        mModel.getData(params).subscribe(new BaseObserver<List<Order>>() {
+
+        Map<String, String> sendParams = new HashMap<>();
+
+        for (String key : params.keySet()) {
+            String value = params.get(key);
+            try {
+                sendParams.put(key, URLEncoder.encode(value, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mModel.getData(sendParams).subscribe(new BaseObserver<List<Order>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 addDisposable(d);
@@ -111,6 +108,51 @@ public class FindPresenter extends FindContract.APresenter {
 
             @Override
             protected void onHandleError(Throwable e) {
+                mView.onRefreshError(e);
+            }
+        });
+    }
+
+    @Override
+    public void getMoreData(Map<String, String> params) {
+        mPageIndex++;
+
+        params.put("userid", getAccount().getId());
+        params.put("transitpoint", getAccount().getTransitpoint());
+        params.put("pages", mPageIndex + "");
+
+        Map<String, String> sendParams = new HashMap<>();
+
+        for (String key : params.keySet()) {
+            String value = params.get(key);
+            try {
+                sendParams.put(key, URLEncoder.encode(value, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mModel.getData(sendParams).subscribe(new BaseObserver<List<Order>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addDisposable(d);
+            }
+
+            @Override
+            protected void onHandleSuccess(BaseEntity<List<Order>> entity) {
+                if (entity.isSuccess()) {
+                    mDatas.addAll(entity.getData());
+                    entity.setData(mDatas);
+                    mView.onRefreshSuccess(entity);
+                } else {
+                    mPageIndex--;
+                    mView.onError(entity);
+                }
+            }
+
+            @Override
+            protected void onHandleError(Throwable e) {
+                mPageIndex--;
                 mView.onRefreshError(e);
             }
         });
@@ -185,42 +227,4 @@ public class FindPresenter extends FindContract.APresenter {
         });
     }
 
-    @Override
-    public void getMoreData(Map<String, String> params) {
-        mPageIndex++;
-
-//        for (String key : params.keySet()) {
-//            String value = params.get(key);
-//            try {
-//                params.put(key, URLEncoder.encode(value, "UTF-8"));
-//            } catch (UnsupportedEncodingException e) {
-//                Log.e(TAG, e.getMessage(), e);
-//            }
-//        }
-
-        mModel.getData(params).subscribe(new BaseObserver<List<Order>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-                addDisposable(d);
-            }
-
-            @Override
-            protected void onHandleSuccess(BaseEntity<List<Order>> entity) {
-                if (entity.isSuccess()) {
-                    mDatas.addAll(entity.getData());
-                    entity.setData(mDatas);
-                    mView.onRefreshSuccess(entity);
-                } else {
-                    mPageIndex--;
-                    mView.onError(entity);
-                }
-            }
-
-            @Override
-            protected void onHandleError(Throwable e) {
-                mPageIndex--;
-                mView.onRefreshError(e);
-            }
-        });
-    }
 }
