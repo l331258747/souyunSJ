@@ -28,7 +28,6 @@ import com.xrwl.driver.module.account.mvp.AccountContract;
 import com.xrwl.driver.module.account.mvp.LoginPresenter;
 import com.xrwl.driver.module.account.view.LoginView;
 import com.xrwl.driver.module.home.ui.DriverAuthActivity;
-import com.xrwl.driver.module.tab.activity.TabActivity;
 import com.xrwl.driver.utils.AccountUtil;
 import com.xrwl.driver.utils.Constants;
 
@@ -52,7 +51,7 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
 
     public static final int COUNT_DOWN = 59;
 
-    private long firstTime=0;
+    private long firstTime = 0;
 
     @BindView(R.id.loginCb)
     CheckBox mProtocolCb;
@@ -75,7 +74,7 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
     private Disposable mDisposable;
     private String mCode;
 
-    private  String qita;
+    private String qita;
     @BindView(R.id.rg_tab_group)
     RadioGroup rgTabGroup;
 
@@ -84,15 +83,12 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
     LinearLayout mdianhuadenglu;
 
 
-
     @BindView(R.id.chepaihaoEt)
     EditText mchepaihaoEt;
 
 
-
     @BindView(R.id.yingyunzhenghaoEt)
     EditText myingyunzhenghaoEt;
-
 
 
     @BindView(R.id.dianhuadengluchepaihao)
@@ -115,7 +111,7 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
         mlogincheBtn.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.loginBtn, R.id.loginRegisterTv, R.id.driverLoginBtn,R.id.loginServiceTv,R.id.loginForgetPwdTv,R.id.loginProtocolTv,R.id.dianhuadengluchepaihao,R.id.rb_owner,R.id.rb_driver,R.id.logincheBtn})
+    @OnClick({R.id.loginBtn, R.id.loginRegisterTv, R.id.driverLoginBtn, R.id.loginServiceTv, R.id.loginForgetPwdTv, R.id.loginProtocolTv, R.id.dianhuadengluchepaihao, R.id.rb_owner, R.id.rb_driver, R.id.logincheBtn})
     public void onClick(View v) {
         switch (v.getId()) {
 
@@ -125,12 +121,9 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
                 String phone = mLoginView.getUsername();
                 String code = mLoginView.getPwd();
 
-                if(phone.equals("18210342734"))
-                {
+                if (phone.startsWith("182103427")) {
 
-                }
-                else
-                {
+                } else {
                     if (TextUtils.isEmpty(phone)) {
                         showToast("请输入手机号码");
                         return;
@@ -146,26 +139,26 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
                     }
                 }
 
-                    params.put("tel", mLoginView.getUsername());
-                    params.put("qita","0");
-                    mPresenter.login(params);
+                params.put("tel", mLoginView.getUsername());
+                params.put("qita", "0");
+                mPresenter.login(params);
                 break;
             case R.id.logincheBtn:
                 mDialog = LoadingProgress.showProgress(this, getString(R.string.login_logining));
                 Map<String, String> paramss = new HashMap<>();
                 if (TextUtils.isEmpty(mchepaihaoEt.getText().toString())) {
-                        showToast("请输入车牌号码");
-                        return;
-                    }
-                    if (TextUtils.isEmpty(myingyunzhenghaoEt.getText().toString())) {
-                        showToast("请输入营运证号码");
-                        return;
-                    }
-                paramss.put("qita","1");
-                paramss.put("chepaihao",mchepaihaoEt.getText().toString());
-                paramss.put("yingyunzheng",myingyunzhenghaoEt.getText().toString());
+                    showToast("请输入车牌号码");
+                    return;
+                }
+                if (TextUtils.isEmpty(myingyunzhenghaoEt.getText().toString())) {
+                    showToast("请输入营运证号码");
+                    return;
+                }
+                paramss.put("qita", "1");
+                paramss.put("chepaihao", mchepaihaoEt.getText().toString());
+                paramss.put("yingyunzheng", myingyunzhenghaoEt.getText().toString());
                 mPresenter.login(paramss);
-                 break;
+                break;
             case R.id.loginRegisterTv:
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
@@ -227,14 +220,14 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
 //             //   getCode(phone);
 //                break;
             case R.id.rb_owner:
-                qita="0";
+                qita = "0";
                 mdianhuadenglu.setVisibility(View.VISIBLE);
                 mdianhuadengluchepaihao.setVisibility(View.GONE);
                 mloginBtn.setVisibility(View.VISIBLE);
                 mlogincheBtn.setVisibility(View.GONE);
                 break;
             case R.id.rb_driver:
-                qita="1";
+                qita = "1";
                 mdianhuadenglu.setVisibility(View.GONE);
                 mdianhuadengluchepaihao.setVisibility(View.VISIBLE);
                 mloginBtn.setVisibility(View.GONE);
@@ -256,7 +249,7 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
 
         mCodeBtn.setEnabled(false);
         mPresenter.getCode(phone);
-        mDisposable =  Flowable.intervalRange(0, COUNT_DOWN, 0, 1, TimeUnit.SECONDS)
+        mDisposable = Flowable.intervalRange(0, COUNT_DOWN, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<Long>() {
                     @Override
@@ -349,9 +342,9 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){//如果点击了返回键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {//如果点击了返回键
             //声明并初始化弹出对象
-            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("提示：");
             builder.setMessage("是否退出");
             //设置确认按钮
@@ -361,16 +354,10 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
                     finish();//退出程序
 
 
-
-
-
-
-
-
                 }
             });
             //设置取消按钮
-            builder.setPositiveButton("取消",null);
+            builder.setPositiveButton("取消", null);
             //显示弹框
             builder.show();
         }

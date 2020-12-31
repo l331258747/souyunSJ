@@ -183,7 +183,7 @@ public interface Api {
     Observable<BaseEntity<HistoryOrder>> getHistoryList(@QueryMap Map<String, String> params);
 
     /** 司机-->余额 */
-    @GET("History/Balance")
+    @GET("History/Balanceprice")
     Observable<BaseEntity<HistoryOrder>> getHistoryBalanceList(@QueryMap Map<String, String> params);
 
 

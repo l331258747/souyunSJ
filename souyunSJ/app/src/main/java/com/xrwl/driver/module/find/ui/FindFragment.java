@@ -3,23 +3,18 @@ package com.xrwl.driver.module.find.ui;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -42,7 +37,6 @@ import com.xrwl.driver.module.find.dialog.ChooseAddressDialog;
 import com.xrwl.driver.module.find.dialog.ProductSearchDialog;
 import com.xrwl.driver.module.find.mvp.FindContract;
 import com.xrwl.driver.module.find.mvp.FindPresenter;
-import com.xrwl.driver.module.order.driver.ui.DriverOrderActivity;
 import com.xrwl.driver.module.order.driver.ui.DriverOrderDetailActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -50,7 +44,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,12 +71,13 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
 
     @BindView(R.id.findStartTv)
     TextView mStartTv;
+    @BindView(R.id.findStartIv)
+    ImageView mStartIv;
+    @BindView(R.id.findEndTv)
+    TextView mEndTv;
+    @BindView(R.id.findEndIv)
+    ImageView mEndIv;
 
-    @BindView(R.id.sj)
-    EditText mEndTv;
-
-    @BindView(R.id.zbb)
-    ImageView oo;
     @BindView(R.id.addBankNumEt)
     EditText mNumEt;//厂家密钥
     @BindView(R.id.drivertelEt)
@@ -104,6 +98,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     private AMapLocationClientOption mLocationOption = null;
     private ProductSearch mProductSearch;
     private static String morendequ;
+
     public static FindFragment newInstance(String title) {
 
         Bundle args = new Bundle();
@@ -126,7 +121,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     @Override
     protected void initView(View view) {
 
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
             //判断是否具有权限
             if (ContextCompat.checkSelfPermission(mContext,
                     Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
@@ -135,34 +130,36 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 }
                 ActivityCompat.requestPermissions(mContext,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CONTACTS },
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS},
                         0);
             }
         }
         initBaseRv(mRv);
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getData();
-            }
-        });
+        mRefreshLayout.setOnRefreshListener(() -> getData());
         mputong.setVisibility(View.VISIBLE);
         initLocation();
-        oo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mEndTv.getWindowToken(),0);
-                mYunCityPicher();
-                mCP.show();
-            }
-        });
     }
 
-
+    @OnClick({R.id.findStartTv, R.id.findStartIv, R.id.findEndTv, R.id.findEndIv})
+    public void onCityClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEndTv.getWindowToken(), 0);
+        switch (v.getId()) {
+            case R.id.findStartTv:
+            case R.id.findStartIv:
+                mYunCityPicher(mEndTv);
+                mCP.show();
+                break;
+            case R.id.findEndTv:
+            case R.id.findEndIv:
+                mYunCityPicher(mStartTv);
+                mCP.show();
+                break;
+        }
+    }
 
     //这是三级联动
-    public void mYunCityPicher() {
+    public void mYunCityPicher(TextView tv) {
         mCP = new CityPicker.Builder(getContext())
                 .textSize(20)
                 //地址选择
@@ -204,7 +201,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                 String district = citySelected[2];
                 //邮证编码
                 String code = citySelected[3];
-                mEndTv.setText(province + city + district);
+                tv.setText(province + city + district);
             }
 
             @Override
@@ -214,12 +211,6 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
             }
         });
     }
-
-
-
-
-
-
 
 
     private void initLocation() {
@@ -235,16 +226,15 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                     //aMapLocation.getLongitude();//获取纬度;
                     mStartTv.setText(city);
                     params.put("start", city);
-                    String sijicity=null;
+                    String sijicity = null;
                     try {
-                        sijicity= URLEncoder.encode(chuangcity,"UTF-8");
+                        sijicity = URLEncoder.encode(chuangcity, "UTF-8");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    morendequ=sijicity;
+                    morendequ = sijicity;
                     params.put("current_city", sijicity);
-                }
-                else {
+                } else {
                     params.put("start", "全国");
                 }
 
@@ -335,15 +325,17 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
 //        }
 //    }
 
-    /** 起点单选回调 */
+    /**
+     * 起点单选回调
+     */
     @Override
     public void onSingleSelect(Address address) {
         mStartTv.setText(address.getName());
 
 
-        String sijicity=null;
+        String sijicity = null;
         try {
-            sijicity= URLEncoder.encode(address.getName(),"UTF-8");
+            sijicity = URLEncoder.encode(address.getName(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -351,12 +343,14 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         getData();
     }
 
-    /** 终点多选回调 */
+    /**
+     * 终点多选回调
+     */
     @Override
     public void onMultiSelect(List<Address> datas) {
         mSelectedEndAddressList = datas;
         StringBuilder sb = new StringBuilder();
-        for (int i = 0, size = datas.size();i < size;i++) {
+        for (int i = 0, size = datas.size(); i < size; i++) {
             Address a = datas.get(i);
             sb.append(a.getName());
             if (i < size - 1) {
@@ -366,25 +360,27 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         mEndTv.setText(sb.toString());
 
 
-        String ends=sb.toString();
+        String ends = sb.toString();
         try {
-            ends= URLEncoder.encode(sb.toString(),"UTF-8");
+            ends = URLEncoder.encode(sb.toString(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        params.put("end_area",ends);
+        params.put("end_area", ends);
 
-       getData();
+        getData();
     }
 
-    /** 高级搜索回调 */
+    /**
+     * 高级搜索回调
+     */
     @Override
     public void onProductSearch(ProductSearch ps) {
 
-        String canshuo="0";
-        String encodeParme=null;
+        String canshuo = "0";
+        String encodeParme = null;
         try {
-            encodeParme= URLEncoder.encode(ps.productName,"UTF-8");
+            encodeParme = URLEncoder.encode(ps.productName, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -393,58 +389,41 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
 
         params.put("long_truck", ps.longTrucks);
 
-        if("0".equals(String.valueOf(ps.category + "")))
-        {
-             canshuo="0";
-        }
-        else if("1".equals(String.valueOf(ps.category + "")))
-        {
-            canshuo="5";
-        }
-        else if("2".equals(String.valueOf(ps.category + "")))
-        {
-            canshuo="6";
-        }
-        else if("3".equals(String.valueOf(ps.category + "")))
-        {
-            canshuo="1";
-        }
-        else if("4".equals(String.valueOf(ps.category + "")))
-        {
-            canshuo="2";
+        if ("0".equals(String.valueOf(ps.category + ""))) {
+            canshuo = "0";
+        } else if ("1".equals(String.valueOf(ps.category + ""))) {
+            canshuo = "5";
+        } else if ("2".equals(String.valueOf(ps.category + ""))) {
+            canshuo = "6";
+        } else if ("3".equals(String.valueOf(ps.category + ""))) {
+            canshuo = "1";
+        } else if ("4".equals(String.valueOf(ps.category + ""))) {
+            canshuo = "2";
         }
         params.put("pstype", canshuo);
 
         params.put("start_date", ps.startDate);
         params.put("end_date", ps.endDate);
         mProductSearch = ps;
-       getData();
+        getData();
     }
-   protected String leixing(String cs)
-   {
-        String abcd="";
-        if(cs=="0")
-        {
-            abcd="0";
+
+    protected String leixing(String cs) {
+        String abcd = "";
+        if (cs == "0") {
+            abcd = "0";
+        } else if (cs == "1") {
+            abcd = "5";
+        } else if (cs == "2") {
+            abcd = "6";
+        } else if (cs == "3") {
+            abcd = "1";
+        } else if (cs == "4") {
+            abcd = "2";
         }
-        else if(cs=="1")
-        {
-            abcd="5";
-        }
-        else if(cs=="2")
-        {
-            abcd="6";
-        }
-        else if(cs=="3")
-        {
-            abcd="1";
-        }
-        else if(cs=="4")
-        {
-            abcd="2";
-        }
-        return  abcd;
-   }
+        return abcd;
+    }
+
     @Override
     public void onDialogDismiss() {
         mStartAddressDialog = null;
@@ -459,9 +438,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         if (entity.getData().size() == 0) {
             showNoData();
             return;
-        }
-        else
-        {
+        } else {
             if (mAdapter == null) {
                 mAdapter = new FindAdapter(mContext, R.layout.find_recycler_item, entity.getData());
                 mLoadMoreWrapper = new LoadMoreWrapper(mAdapter);
@@ -554,79 +531,45 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     public void showLoading() {
         mRefreshLayout.setRefreshing(true);
     }
-    protected String chexing(String che){
-        String xingString="";
-        if("三轮车".equals(che))
-        {
-            xingString="2";
-        }
-        else if("小型面包".equals(che))
-        {
-            xingString="3";
-        }
-        else if("金杯".equals(che))
-        {
-            xingString="4";
-        }
-        else if("厢货".equals(che))
-        {
-            xingString="5";
-        }
-        else if("3.8米".equals(che))
-        {
-            xingString="3";
-        }
-        else if("小型平板".equals(che))
-        {
-            xingString="6";
-        }
-        else if("大型平板".equals(che))
-        {
-            xingString="7";
-        }
-        else if("4.2米".equals(che))
-        {
-            xingString="27";
-        }
-        else if("6.2米".equals(che))
-        {
-            xingString="28";
-        }
-        else if("6.8米".equals(che))
-        {
-            xingString="29";
-        }
-        else if("7.2米".equals(che))
-        {
-            xingString="30";
-        }
-        else if("8.2米".equals(che))
-        {
-            xingString="31";
-        }
-        else if("9.6米".equals(che))
-        {
-            xingString="32";
-        }
-        else if("16.5米".equals(che))
-        {
-            xingString="33";
-        }
-        else if("17.5米".equals(che))
-        {
-            xingString="34";
-        }
-        else if("13米".equals(che))
-        {
-            xingString="35";
-        }
-        else if("矿车".equals(che))
-        {
-            xingString="44";
-        }
-        else
-        {
-            xingString="4";
+
+    protected String chexing(String che) {
+        String xingString = "";
+        if ("三轮车".equals(che)) {
+            xingString = "2";
+        } else if ("小型面包".equals(che)) {
+            xingString = "3";
+        } else if ("金杯".equals(che)) {
+            xingString = "4";
+        } else if ("厢货".equals(che)) {
+            xingString = "5";
+        } else if ("3.8米".equals(che)) {
+            xingString = "3";
+        } else if ("小型平板".equals(che)) {
+            xingString = "6";
+        } else if ("大型平板".equals(che)) {
+            xingString = "7";
+        } else if ("4.2米".equals(che)) {
+            xingString = "27";
+        } else if ("6.2米".equals(che)) {
+            xingString = "28";
+        } else if ("6.8米".equals(che)) {
+            xingString = "29";
+        } else if ("7.2米".equals(che)) {
+            xingString = "30";
+        } else if ("8.2米".equals(che)) {
+            xingString = "31";
+        } else if ("9.6米".equals(che)) {
+            xingString = "32";
+        } else if ("16.5米".equals(che)) {
+            xingString = "33";
+        } else if ("17.5米".equals(che)) {
+            xingString = "34";
+        } else if ("13米".equals(che)) {
+            xingString = "35";
+        } else if ("矿车".equals(che)) {
+            xingString = "44";
+        } else {
+            xingString = "4";
         }
         return xingString;
     }
