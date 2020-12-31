@@ -83,6 +83,7 @@ import com.xrwl.driver.module.order.driver.ui.util.RandomUntil;
 import com.xrwl.driver.module.publish.bean.PayResult;
 import com.xrwl.driver.module.publish.bean.Photo;
 import com.xrwl.driver.module.tab.activity.TabActivity;
+import com.xrwl.driver.utils.ActivityCollect;
 import com.xrwl.driver.utils.Constants;
 import com.xrwl.driver.view.PhotoRecyclerView;
 
@@ -896,15 +897,14 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                         String virtualMobile = dhBenn.getVirtualMobile();
                         Intent intent = new Intent(Intent.ACTION_DIAL);
                         Uri data = Uri.parse("tel:" + virtualMobile);
-            intent.setData(data);
-            startActivity(intent);
+                        intent.setData(data);
+                        startActivity(intent);
                     }
-
 
 
                     @Override
                     public void onError(Throwable e) {
-                    Log.e("www",e.getMessage().toString());
+                        Log.e("www", e.getMessage().toString());
 
                     }
 
@@ -1043,56 +1043,58 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                     }).show();
         } else if (id == R.id.detailTransBtn) {//开始运输
 
+            new AlertDialog.Builder(this)
+//                            .setMessage("请提示发货方确认开始运输")
+                    .setMessage("是否确认开始运输")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确认", (dialog, which) -> mPresenter.cancelDriverkaishiyunshu(mId)).show();
+            return;
 
-            if (od.type.equals("6")) {
-                new AlertDialog.Builder(this)
-                        .setMessage("请提示发货方在电脑端操作")
-                        .setNegativeButton("取消", null)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
-
-            } else {
-                if (!od.huozhudianji.equals("1")) {
-                    new AlertDialog.Builder(this)
-                            .setMessage("请提示发货方确认开始运输")
-                            .setNegativeButton("取消", null)
-                            .setPositiveButton("提示", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    mPresenter.cancelDriverkaishiyunshu(mId);
-                                }
-                            }).show();
-                    return;
-                }
-
-                if (od.huozhudianji.equals("1")) {
-                    new AlertDialog.Builder(this)
-                            .setMessage("您确定要开始运输吗？开始运输后，方便收货方、发货方能准确查询当前货物的位置")
-                            .setNegativeButton("取消", null)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-//                                    mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
-                                    mPresenter.trans(mId);
-
-                                }
-                            }).show();
-                } else {
-                    new AlertDialog.Builder(this)
-                            .setMessage("发货方未确认开始运输，您没有权限点击，请联系发货方确认")
-                            .setNegativeButton("取消", null)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            }).show();
-                }
-            }
+//            if (od.type.equals("6")) {
+//                new AlertDialog.Builder(this)
+//                        .setMessage("请提示发货方在电脑端操作")
+//                        .setNegativeButton("取消", null)
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                            }
+//                        }).show();
+//
+//            } else {
+//                if (!od.huozhudianji.equals("1")) {
+//                    new AlertDialog.Builder(this)
+////                            .setMessage("请提示发货方确认开始运输")
+//                            .setMessage("是否确认开始运输")
+//                            .setNegativeButton("取消", null)
+//                            .setPositiveButton("确认", (dialog, which) -> mPresenter.cancelDriverkaishiyunshu(mId)).show();
+//                    return;
+//                }
+//
+//                if (od.huozhudianji.equals("1")) {
+//                    new AlertDialog.Builder(this)
+//                            .setMessage("您确定要开始运输吗？开始运输后，方便收货方、发货方能准确查询当前货物的位置")
+//                            .setNegativeButton("取消", null)
+//                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+////                                    mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+//                                    mPresenter.trans(mId);
+//
+//                                }
+//                            }).show();
+//                } else {
+//                    new AlertDialog.Builder(this)
+//                            .setMessage("发货方未确认开始运输，您没有权限点击，请联系发货方确认")
+//                            .setNegativeButton("取消", null)
+//                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//
+//                                }
+//                            }).show();
+//                }
+//            }
 
         } else if (id == R.id.detailConfirmBtn) {//确认
 //            ShippingNoteInfo shippingNoteInfo = new ShippingNoteInfo();
@@ -1109,25 +1111,24 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             String str = formatter.format(curDate);
 
 
-
             SimpleDateFormat formattera = new SimpleDateFormat("HHmmss");
             Date curDatea = new Date(System.currentTimeMillis());
             String stra = formatter.format(curDatea);
 
 
             ShippingNoteInfo shippingNoteInfo = new ShippingNoteInfo();
-            shippingNoteInfo.setShippingNoteNumber("TYDH2020"+mId);
+            shippingNoteInfo.setShippingNoteNumber("TYDH2020" + mId);
             shippingNoteInfo.setSerialNumber("0000");
             shippingNoteInfo.setStartCountrySubdivisionCode(str);
             shippingNoteInfo.setEndCountrySubdivisionCode(str);
 
-            shippingNoteInfo.setSendCount(Integer.parseInt(2020+mId));
-            shippingNoteInfo.setAlreadySendCount(Integer.parseInt(2006+mId));
-            ShippingNoteInfo[] shippingNoteInfos = new  ShippingNoteInfo[1];
+            shippingNoteInfo.setSendCount(Integer.parseInt(2020 + mId));
+            shippingNoteInfo.setAlreadySendCount(Integer.parseInt(2006 + mId));
+            ShippingNoteInfo[] shippingNoteInfos = new ShippingNoteInfo[1];
             int s = shippingNoteInfos.length;
             shippingNoteInfos[0] = shippingNoteInfo;
             //停止服务。context 必须为 activity。
-            LocationOpenApi.stop(this,shippingNoteInfos, new OnResultListener() {
+            LocationOpenApi.stop(this, shippingNoteInfos, new OnResultListener() {
                 @Override
                 public void onSuccess() {
 
@@ -1144,85 +1145,104 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             //模拟测试位置信息
 
             openGPSSEtting();
-            mPresenter.calculateDistanceWithLonLat(Double.parseDouble(od.startLon), Double.parseDouble(od.startLat), readmylon, readmylat);
-            if (od.type.equals("6")) {
-                new AlertDialog.Builder(this)
-                        .setMessage("请提示发货方或收货方在电脑端操作")
-                        .setNegativeButton("取消", null)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }).show();
-            } else {
-                if (od.sijidianji.equals("0")) {
-                    new AlertDialog.Builder(this)
-                            .setMessage("请提示发货方确认到达")
-                            .setNegativeButton("取消", null)
-                            .setPositiveButton("提示", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-                                    Date curDate = new Date(System.currentTimeMillis());
-                                    String str = formatter.format(curDate);
-                                    try {
-                                        mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    }
-                                    mPresenter.confirmqianOrder(mId);
-                                }
-                            }).show();
-                    return;
-                }
-                if (od.sijidianji.equals("2")) {
-                    new AlertDialog.Builder(this)
-                            .setMessage("您确定要货物到达吗？到达后双方互相评价，为您下一次接单提供优先匹配服务")
-                            .setNegativeButton("取消", null)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //wxPay();
-                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-                                    Date curDate = new Date(System.currentTimeMillis());
-                                    String str = formatter.format(curDate);
-                                    try {
-                                        mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    }
-                                    mConfirmClick = true;
-                                    mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
-                                    mPresenter.confirmOrder(mId);
-                                }
-                            }).show();
-                } else {
-                    new AlertDialog.Builder(this)
-                            .setMessage("请提示发货方确认到达")
-                            .setNegativeButton("取消", null)
-                            .setPositiveButton("提示", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // mPresenter.cancelDriverkaishiyunshu(mId);
-                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-                                    Date curDate = new Date(System.currentTimeMillis());
-                                    String str = formatter.format(curDate);
-                                    try {
-                                        mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    }
-                                    EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
-                                    Intent intent = new Intent(mContext, DriverOrderActivity.class);
-                                    intent.putExtra("position", 1);
-                                    startActivity(intent);
-                                    finish();
+//            mPresenter.calculateDistanceWithLonLat(Double.parseDouble(od.startLon), Double.parseDouble(od.startLat), readmylon, readmylat);
 
-                                }
-                            }).show();
-                    return;
-                }
-            }
+            new AlertDialog.Builder(this)
+                    .setMessage("是否确认到达")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确定", (dialog, which) -> {
+//                        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyyMMddHHmmss");
+//                        Date curDate1 = new Date(System.currentTimeMillis());
+//                        String str1 = formatter1.format(curDate1);
+                        try {
+                            mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        mConfirmClick = true;
+//                        mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+                        mPresenter.confirmOrder(mId);
+                    }).show();
+
+
+//            if (od.type.equals("6")) {
+//                new AlertDialog.Builder(this)
+//                        .setMessage("请提示发货方或收货方在电脑端操作")
+//                        .setNegativeButton("取消", null)
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                            }
+//                        }).show();
+//            } else {
+//                if (od.sijidianji.equals("0")) {
+//                    new AlertDialog.Builder(this)
+//                            .setMessage("请提示发货方确认到达")
+//                            .setNegativeButton("取消", null)
+//                            .setPositiveButton("提示", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+//                                    Date curDate = new Date(System.currentTimeMillis());
+//                                    String str = formatter.format(curDate);
+//                                    try {
+//                                        mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
+//                                    } catch (UnsupportedEncodingException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                    mPresenter.confirmqianOrder(mId);
+//                                }
+//                            }).show();
+//                    return;
+//                }
+//                if (od.sijidianji.equals("2")) {
+//                    new AlertDialog.Builder(this)
+//                            .setMessage("您确定要货物到达吗？到达后双方互相评价，为您下一次接单提供优先匹配服务")
+//                            .setNegativeButton("取消", null)
+//                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    //wxPay();
+//                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+//                                    Date curDate = new Date(System.currentTimeMillis());
+//                                    String str = formatter.format(curDate);
+//                                    try {
+//                                        mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
+//                                    } catch (UnsupportedEncodingException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                    mConfirmClick = true;
+//                                    mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+//                                    mPresenter.confirmOrder(mId);
+//                                }
+//                            }).show();
+//                } else {
+//                    new AlertDialog.Builder(this)
+//                            .setMessage("请提示发货方确认到达")
+//                            .setNegativeButton("取消", null)
+//                            .setPositiveButton("提示", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // mPresenter.cancelDriverkaishiyunshu(mId);
+//                                    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+//                                    Date curDate = new Date(System.currentTimeMillis());
+//                                    String str = formatter.format(curDate);
+//                                    try {
+//                                        mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
+//                                    } catch (UnsupportedEncodingException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                    EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+//                                    Intent intent = new Intent(mContext, DriverOrderActivity.class);
+//                                    intent.putExtra("position", 1);
+//                                    startActivity(intent);
+//                                    finish();
+//
+//                                }
+//                            }).show();
+//                    return;
+//                }
+//            }
 
 
         } else if (id == R.id.detailGrabBtn) {//抢单
@@ -1238,29 +1258,27 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             String stra = formatter.format(curDatea);
 
 
-
             ShippingNoteInfo shippingNoteInfo = new ShippingNoteInfo();
-            shippingNoteInfo.setShippingNoteNumber("TYDH2020"+mId);
+            shippingNoteInfo.setShippingNoteNumber("TYDH2020" + mId);
             shippingNoteInfo.setSerialNumber("0000");
             shippingNoteInfo.setStartCountrySubdivisionCode(str);
             shippingNoteInfo.setEndCountrySubdivisionCode(str);
 
-            shippingNoteInfo.setSendCount(Integer.parseInt(2020+mId));
-            shippingNoteInfo.setAlreadySendCount(Integer.parseInt(2006+mId));
+            shippingNoteInfo.setSendCount(Integer.parseInt(2020 + mId));
+            shippingNoteInfo.setAlreadySendCount(Integer.parseInt(2006 + mId));
 
 
-
-
-            ShippingNoteInfo[] shippingNoteInfos = new  ShippingNoteInfo[1];
+            ShippingNoteInfo[] shippingNoteInfos = new ShippingNoteInfo[1];
             int s = shippingNoteInfos.length;
             shippingNoteInfos[0] = shippingNoteInfo;
             //启用服务。context 必须为 activity。
 
-            LocationOpenApi.start(this,shippingNoteInfos, new OnResultListener() {
+            LocationOpenApi.start(this, shippingNoteInfos, new OnResultListener() {
                 @Override
                 public void onSuccess() {
 
                 }
+
                 @Override
                 public void onFailure(String s, String s1) {
                     Toast.makeText(mContext, s1.toString(), Toast.LENGTH_SHORT).show();
@@ -1322,7 +1340,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
                                 }
                             }).show();
-                         refresh();
+                    refresh();
                 } else {
                     new AlertDialog.Builder(this)
                             .setMessage("该订单已被其他司机接单，请尝试其他订单！")
@@ -1473,12 +1491,19 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
     @Override
     public void onCancelDriverkaishiyunshuSuccess(BaseEntity<OrderDetail> entity) {
-        showToast("提示成功");
+//        showToast("提示成功");
+//        EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+//        Intent intent = new Intent(this, DriverOrderActivity.class);
+//        intent.putExtra("position", 1);
+//        startActivity(intent);
+//        finish();
+
+        showToast("提交成功");
         EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+        ActivityCollect.getAppCollect().finishAllNotHome();
         Intent intent = new Intent(this, DriverOrderActivity.class);
         intent.putExtra("position", 1);
         startActivity(intent);
-        finish();
     }
 
     @Override
@@ -1489,16 +1514,21 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     @Override
     public void onConfirmOrderSuccess(BaseEntity<OrderDetail> entity) {
         //mOperationDialog.dismiss();
-        showToast("收货成功");
+//        showToast("提交成功");
+//
+//        mPresenter.getOrderDetail(mId);
+//        EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+//        Intent intent = new Intent(this, DriverOrderActivity.class);
+//        intent.putExtra("position", 2);
+//        startActivity(intent);
+//        finish();
 
-        mPresenter.getOrderDetail(mId);
+        showToast("提交成功");
         EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+        ActivityCollect.getAppCollect().finishAllNotHome();
         Intent intent = new Intent(this, DriverOrderActivity.class);
         intent.putExtra("position", 2);
         startActivity(intent);
-        finish();
-
-//        finish();
     }
 
     @Override
@@ -1608,10 +1638,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 //        EventBus.getDefault().post(new DriverListRrefreshEvent());
 
 
-
-
         Intent intent = new Intent(this, GrapSuccessActivity.class);
-        intent.putExtra("mid",mId);
+        intent.putExtra("mid", mId);
         startActivity(intent);
         finish();
 
@@ -1670,9 +1698,9 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-                                Date curDate = new Date(System.currentTimeMillis());
-                                String str = formatter.format(curDate);
+//                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+//                                Date curDate = new Date(System.currentTimeMillis());
+//                                String str = formatter.format(curDate);
                                 try {
                                     mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
                                 } catch (UnsupportedEncodingException e) {
@@ -1684,11 +1712,11 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                             }
                         }).show();
 
-                EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
-                Intent intent = new Intent(mContext, DriverOrderActivity.class);
-                intent.putExtra("position", 2);
-                startActivity(intent);
-                finish();
+//                EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+//                Intent intent = new Intent(mContext, DriverOrderActivity.class);
+//                intent.putExtra("position", 2);
+//                startActivity(intent);
+//                finish();
             } else {
 
             }
@@ -1705,11 +1733,11 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                                 mPresenter.trans(mId);
                             }
                         }).show();
-                EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
-                Intent intent = new Intent(mContext, DriverOrderActivity.class);
-                intent.putExtra("position", 1);
-                startActivity(intent);
-                finish();
+//                EventBus.getDefault().post(new DriverOrderListRrefreshEvent());
+//                Intent intent = new Intent(mContext, DriverOrderActivity.class);
+//                intent.putExtra("position", 1);
+//                startActivity(intent);
+//                finish();
             } else {
             }
         }
@@ -1909,7 +1937,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         if (routeType == ROUTE_TYPE_WALK) {
 //            RouteSearch.WalkRouteQuery query = new RouteSearch.WalkRouteQuery(fromAndTo, mode);
 //            mRouteSearch.calculateWalkRouteAsyn(query);
-            RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, mode,null,null,"");
+            RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, mode, null, null, "");
             mRouteSearch.calculateDriveRouteAsyn(query);
         }
     }

@@ -248,8 +248,12 @@ public interface Api {
     @POST("Order/Coordinate")
     Observable<BaseEntity> postLonLat(@FieldMap Map<String, String> params);
 
-    /** 司机--->确认收货 */
-    @GET("Order/DriverFinish")
+//    /** 司机--->确认收货 */
+//    @GET("Order/DriverFinish")
+//    Observable<BaseEntity<OrderDetail>> confirmDriverOrder(@QueryMap Map<String, String> params);
+
+    /** 司机--->确认到达 */
+    @GET("Order/Confirmation")
     Observable<BaseEntity<OrderDetail>> confirmDriverOrder(@QueryMap Map<String, String> params);
 
     /** 司机--->确认收货前提示对方 */
@@ -269,8 +273,11 @@ public interface Api {
 
 
 
-    /** 司机--->取消订单开始运输 */
-    @GET("Order/CancelOrderkaishiyunshu")
+//    /** 司机--->取消订单开始运输 */
+//    @GET("Order/CancelOrderkaishiyunshu")
+//    Observable<BaseEntity<OrderDetail>> cancelDriverkaishiyunshuOrder(@QueryMap Map<String, String> params);
+    /** 司机--->开始运输 */
+    @GET("Order/Transportation")
     Observable<BaseEntity<OrderDetail>> cancelDriverkaishiyunshuOrder(@QueryMap Map<String, String> params);
 
 
