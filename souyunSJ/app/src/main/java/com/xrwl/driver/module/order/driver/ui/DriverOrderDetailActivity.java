@@ -373,23 +373,20 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         mRedPacketViewHolder.setOnRedPacketDialogClickListener(new OnRedPacketDialogClickListener() {
             @Override
             public void onCloseClick() {
-                // mRedPacketDialog.dismiss();
+                mRedPacketDialog.dismiss();
             }
 
             @Override
             public void onOpenClick() {
                 //领取红包,调用接口
-
-
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
                         Intent intent = new Intent(mContext, HongbaolistActivity.class);
                         intent.putExtra("orderid", mId);
                         intent.putExtra("nums", od.Actual_price);
                         startActivity(intent);
-                        // mRedPacketDialog.dismiss();
+                        mRedPacketDialog.dismiss();
                         // finish();
                     }
                 }, 1000);
