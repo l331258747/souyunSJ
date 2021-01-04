@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -62,7 +61,7 @@ public class MeFragment extends BaseFragment {
     TextView appye;
 
 
-   @BindView(R.id.myorders)
+    @BindView(R.id.myorders)
     TextView wodedingdan;
 
     @BindView(R.id.myrenzheng)
@@ -90,7 +89,7 @@ public class MeFragment extends BaseFragment {
     ImageView yuepic;
 
     @BindView(R.id.gerenxinxi)
-    LinearLayout wodexinxi;
+    RelativeLayout wodexinxi;
 
     @BindView(R.id.wddd)
     RelativeLayout appwodedingdan;
@@ -115,13 +114,11 @@ public class MeFragment extends BaseFragment {
     RelativeLayout apptuichudenglu;
 
 
-
     @BindView(R.id.addressTv)//地址
-     TextView appaddressTv;
+            TextView appaddressTv;
 
     @BindView(R.id.invoiceTv)//发票
-     TextView appinvoiceTv;
-
+            TextView appinvoiceTv;
 
 
     private Account mAccount;
@@ -150,44 +147,31 @@ public class MeFragment extends BaseFragment {
     protected void initView(View view) {
         mAccount = AccountUtil.getAccount(mContext);
 
-        if(TextUtils.isEmpty(mAccount.getName()))
-        {
+        if (TextUtils.isEmpty(mAccount.getName())) {
             appyonghuming.setText("");
-        }
-        else
-        {
+        } else {
             try {
-                appyonghuming.setText(URLDecoder.decode(mAccount.getName(),"UTF-8"));
+                appyonghuming.setText(URLDecoder.decode(mAccount.getName(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
         }
-        if(TextUtils.isEmpty(mAccount.getPhone()))
-        {
+        if (TextUtils.isEmpty(mAccount.getPhone())) {
             appdianhua.setText("电话：");
-        }
-        else
-        {
-            appdianhua.setText("电话："+mAccount.getPhone());
+        } else {
+            appdianhua.setText("电话：" + mAccount.getPhone());
         }
 
-         String rzcx="";
-        if(TextUtils.isEmpty(mAccount.getRenzhengchexing())||mAccount.getRenzhengchexing().length()==0)
-        {
-            rzcx="请认证";
+        String rzcx = "";
+        if (TextUtils.isEmpty(mAccount.getRenzhengchexing()) || mAccount.getRenzhengchexing().length() == 0) {
+            rzcx = "请认证";
+        } else {
+            rzcx = mAccount.getRenzhengchexing();
         }
-        else
-        {
-            rzcx=mAccount.getRenzhengchexing();
-        }
-        if(rzcx.equals("0"))
-        {
+        if (rzcx.equals("0")) {
             apprenzhengchexing.setText("车型：");
-        }
-        else
-        {
-            apprenzhengchexing.setText("车型："+rzcx);
+        } else {
+            apprenzhengchexing.setText("车型：" + rzcx);
         }
 
         youhuijuanpic.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +224,7 @@ public class MeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //面对面订单
-                Intent intent = new Intent(mContext,SiLiaoOrderActivity.class);
+                Intent intent = new Intent(mContext, SiLiaoOrderActivity.class);
                 intent.putExtra("title", "企业订单");
                 startActivity(intent);
             }
