@@ -124,7 +124,7 @@
                             >
                             <TextView
                                 android:id="@+id/myOrderItemStartTv"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:layout_marginTop="6dp"
@@ -141,7 +141,7 @@
                                 android:maxLines="1"
                                 android:ellipsize="end"
                                 android:textSize="@dimen/default_font14"
-                                tools:text="今井村今井村今井村今井村今井村今井村今井村今井村今井村今井村"
+                                tools:text="今井村"
                                 android:textColor="@color/black"/>
 
                             <TextView

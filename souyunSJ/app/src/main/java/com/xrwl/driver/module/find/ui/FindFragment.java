@@ -99,7 +99,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     private static String morendequ;
 
     //字段
-    String canshu = "";
+    String type = "";
     String locationStart = "全国";
     String locationEnd = "全国";
 
@@ -166,11 +166,11 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     public void onTabClick(View v) {
         switch (v.getId()) {
             case R.id.rb_owner:
-                canshu = "";
+                type = "";
                 getData();
                 break;
             case R.id.rb_driver:
-                canshu = "0";
+                type = "6";
                 getData();
                 break;
         }
@@ -286,20 +286,20 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     @Override
     protected void getData() {
         Map<String, String> params = new HashMap<>();
-        params.put("start_area", locationStart);
-        params.put("end_area", locationEnd);
-        if(!TextUtils.isEmpty(canshu))
-            params.put("canshu", canshu);
+        params.put("ksaddress", locationStart);
+        params.put("jsaddress", locationEnd);
+        if(!TextUtils.isEmpty(type))
+            params.put("type", type);
         mPresenter.getData(params);
     }
 
     private void getMoreData() {
         Map<String, String> params = new HashMap<>();
-        params.put("start_area", locationStart);
-        params.put("end_area", locationEnd);
-        if(!TextUtils.isEmpty(canshu))
-            params.put("canshu", canshu);
-        mPresenter.getMoreData(params);
+        params.put("ksaddress", locationStart);
+        params.put("jsaddress", locationEnd);
+        if(!TextUtils.isEmpty(type))
+            params.put("type", type);
+        mPresenter. getMoreData(params);
     }
 
 //    @OnClick({R.id.findStartLayout, R.id.findEndLayout, R.id.findSearchLayout,R.id.rb_owner,R.id.rb_driver,R.id.addBtn})
