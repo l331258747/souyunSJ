@@ -1,35 +1,26 @@
 package com.xrwl.driver.module.me.ui;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.amap.api.maps.model.Text;
 import com.blankj.utilcode.util.PermissionUtils;
-import com.ldw.library.adapter.recycler.MultiItemTypeAdapter;
 import com.ldw.library.mvp.BaseMVP;
 import com.xrwl.driver.R;
 import com.xrwl.driver.base.BaseFragment;
 import com.xrwl.driver.bean.Account;
 import com.xrwl.driver.module.account.activity.ModifyPwdActivity;
-import com.xrwl.driver.module.account.activity.WebActivity;
-
 import com.xrwl.driver.module.home.ui.DriverAuthActivity;
-import com.xrwl.driver.module.home.ui.OwnerAuthActivity;
-import com.xrwl.driver.module.me.adapter.MeAdapter;
-import com.xrwl.driver.module.me.bean.Me;
 import com.xrwl.driver.module.me.dialog.ExitDialog;
 import com.xrwl.driver.module.order.driver.ui.DriverOrderActivity;
 import com.xrwl.driver.module.order.driver.ui.SiLiaoOrderActivity;
@@ -38,12 +29,9 @@ import com.xrwl.driver.module.publish.ui.AddressActivity;
 import com.xrwl.driver.module.publish.ui.ReceiptActivity;
 import com.xrwl.driver.utils.AccountUtil;
 import com.xrwl.driver.utils.Constants;
-import com.xrwl.driver.module.me.ui.BankyueActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -105,26 +93,26 @@ public class MeFragment extends BaseFragment {
     LinearLayout wodexinxi;
 
     @BindView(R.id.wddd)
-    LinearLayout appwodedingdan;
+    RelativeLayout appwodedingdan;
 
     @BindView(R.id.smdd)
-    LinearLayout appsmdd;
+    RelativeLayout appsmdd;
 
 
     @BindView(R.id.smrz)
-    LinearLayout appshimingrenzheng;
+    RelativeLayout appshimingrenzheng;
 
     @BindView(R.id.je)
-    LinearLayout appjine;
+    RelativeLayout appjine;
 
     @BindView(R.id.lxkf)
-    LinearLayout applianxikefu;
+    RelativeLayout applianxikefu;
 
     @BindView(R.id.xgmm)
-    LinearLayout appxiugaimima;
+    RelativeLayout appxiugaimima;
 
     @BindView(R.id.tcdl)
-    LinearLayout apptuichudenglu;
+    RelativeLayout apptuichudenglu;
 
 
 
