@@ -1228,9 +1228,9 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
     LinearLayout mcheliangzhaopianly;
     //实名认证隐藏和显示的ly
     @BindView(R.id.topLY)
-    LinearLayout mtoply;
+    RelativeLayout mtoply;
     @BindView(R.id.toprzLY)
-    LinearLayout mtoprzLY;
+    RelativeLayout mtoprzLY;
     @BindView(R.id.diyiLY)
     LinearLayout mdiyily;
     @BindView(R.id.dierLY)
@@ -1316,7 +1316,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
 
         mCategory = "0";
         mAuthSpinner.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, android.R.id.text1,
+                R.layout.my_simple_spinner_dropdown_item, android.R.id.text1,
                 new String[]{"同城零担", "同城专车", "长途整车", "长途零担", "大宗货物"}));
         mAuthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
