@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/global_bg_color">
+    android:background="@color/global_bg_color"
+    android:orientation="vertical">
 
 
     <com.ldw.library.view.TitleView
@@ -13,83 +12,89 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimary"
-        app:backImage="@drawable/ic_back"/>
+        app:backImage="@drawable/ic_back" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_dp20"
-        android:orientation="horizontal"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/btn_blue_r5"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10">
 
-        android:paddingTop="@dimen/default_dp20">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="到账银行卡"
-            android:textSize="@dimen/default_font14"
-            android:textColor="@color/black"
-            />
-        <TextView
-            android:id="@+id/daozhangyinhangkaTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点击选择"
-            android:textSize="@dimen/default_font12"
-            android:textColor="@color/blue"
-            android:layout_marginLeft="55dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_dp60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="到账银行卡"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font14" />
 
-     </LinearLayout>
+            <TextView
+                android:id="@+id/daozhangyinhangkaTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="55dp"
+                android:text="点击选择"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font12" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="@dimen/default_dp20"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/default_dp20">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="可提现金额"
-            android:textSize="@dimen/default_font14"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/totalPriceTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_dp15"
-            android:text="0"
-            android:textSize="@dimen/default_font16" />
-
-        <Button
-            android:id="@+id/quanbutixianBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_dp30"
-            android:background="@null"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/default_font12"
-            android:text="全部提现"
-            />
+        </RelativeLayout>
 
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_dp60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/tv_totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可提现金额"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font14" />
+
+            <TextView
+                android:id="@+id/totalPriceTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_dp15"
+                android:layout_toEndOf="@+id/tv_totalPrice"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font16" />
+
+            <Button
+                android:id="@+id/quanbutixianBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="@dimen/default_dp30"
+                android:background="@null"
+                android:text="全部提现"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font12" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_marginLeft="@dimen/default_dp20"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/default_dp20">
-
+        android:layout_marginStart="@dimen/default_dp10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/totalPriceEt"
@@ -100,21 +105,19 @@
             android:hint="请输入提现金额"
             android:maxLength="10"
             android:textSize="@dimen/default_font20" />
+
         <Button
             android:id="@+id/addTixianBtn"
             style="@style/BaseBtnTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_dp20"
-            android:layout_marginEnd="@dimen/default_dp25"
             android:layout_marginStart="@dimen/default_dp25"
             android:layout_marginTop="@dimen/default_dp20"
+            android:layout_marginEnd="@dimen/default_dp25"
+            android:layout_marginBottom="@dimen/default_dp20"
             android:enabled="false"
             android:text="申 请 提 现"
-            android:textColor="@color/white"
-
-            />
-
+            android:textColor="@color/white"/>
 
 
         <Button
@@ -122,20 +125,19 @@
             style="@style/BaseBtnTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginEnd="@dimen/default_dp25"
             android:layout_marginStart="@dimen/default_dp25"
-            android:visibility="gone"
+            android:layout_marginEnd="@dimen/default_dp25"
             android:enabled="false"
             android:text="提 现 记 录"
             android:textColor="@color/white"
+            android:visibility="gone"/>
 
-            />
     </LinearLayout>
 
 
-    <include layout="@layout/bank_recycler_item" android:visibility="gone"/>
-
+    <include
+        layout="@layout/bank_recycler_item"
+        android:visibility="gone" />
 
 
     <android.support.v7.widget.RecyclerView
