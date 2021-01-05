@@ -42,4 +42,6 @@
     <dimen name="margin_padding">15dp</dimen>
     <dimen name="zero">0dp</dimen>
     <dimen name="trace_spinner_padding">2dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
 </resources>
