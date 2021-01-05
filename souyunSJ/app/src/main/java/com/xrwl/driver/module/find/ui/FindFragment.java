@@ -99,9 +99,15 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     private static String morendequ;
 
     //字段
-    String type = "";
+    String type = "0";
     String locationStart = "全国";
     String locationEnd = "全国";
+    String locationStartSheng = "";
+    String locationStartShi = "";
+    String locationStartXian = "";
+    String locationEndSheng = "";
+    String locationEndShi = "";
+    String locationEndXian = "";
 
     public static FindFragment newInstance(String title) {
 
@@ -166,7 +172,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     public void onTabClick(View v) {
         switch (v.getId()) {
             case R.id.rb_owner:
-                type = "";
+                type = "0";
                 getData();
                 break;
             case R.id.rb_driver:
@@ -222,9 +228,15 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
 
                 if(isStart){
                     locationStart = province + city + district;
+                    locationStartSheng = province;
+                    locationStartShi = city;
+                    locationStartXian = district;
                     mStartTv.setText(locationStart);
                 }else{
                     locationEnd = province + city + district;
+                    locationEndSheng = province;
+                    locationEndShi = city;
+                    locationEndXian = district;
                     mEndTv.setText(locationEnd);
                 }
 
@@ -247,6 +259,9 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                 String district = aMapLocation.getDistrict();
 
                 locationStart = province + city + district;
+                locationStartSheng = province;
+                locationStartShi = city;
+                locationStartXian = district;
                 mStartTv.setText(locationStart);
 
 //                params.put("start", city);
@@ -288,8 +303,15 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         Map<String, String> params = new HashMap<>();
         params.put("ksaddress", locationStart);
         params.put("jsaddress", locationEnd);
-        if(!TextUtils.isEmpty(type))
-            params.put("type", type);
+
+        params.put("kaishisheng", locationStartSheng);
+        params.put("kaishishi", locationStartShi);
+        params.put("kaishixian", locationStartXian);
+        params.put("daodasheng", locationEndSheng);
+        params.put("daodashi", locationEndShi);
+        params.put("daodaxian", locationEndXian);
+
+        params.put("type", type);
         mPresenter.getData(params);
     }
 
@@ -297,6 +319,14 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         Map<String, String> params = new HashMap<>();
         params.put("ksaddress", locationStart);
         params.put("jsaddress", locationEnd);
+
+        params.put("kaishisheng", locationStartSheng);
+        params.put("kaishishi", locationStartShi);
+        params.put("kaishixian", locationStartXian);
+        params.put("daodasheng", locationEndSheng);
+        params.put("daodashi", locationEndShi);
+        params.put("daodaxian", locationEndXian);
+
         if(!TextUtils.isEmpty(type))
             params.put("type", type);
         mPresenter. getMoreData(params);
