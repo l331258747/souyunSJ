@@ -297,8 +297,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         init();
 
         //   searchRouteResult(ROUTE_TYPE_WALK, RouteSearch.WalkDefault);
-
-        initViews();
     }
 
     @Override
