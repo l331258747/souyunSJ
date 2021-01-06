@@ -280,7 +280,7 @@ public interface Api {
 //    @GET("Order/CancelOrderkaishiyunshu")
 //    Observable<BaseEntity<OrderDetail>> cancelDriverkaishiyunshuOrder(@QueryMap Map<String, String> params);
     /** 司机--->开始运输 */
-    @GET("Order/Transportation")
+    @GET("Order/DriverTransportationnew")
     Observable<BaseEntity<OrderDetail>> cancelDriverkaishiyunshuOrder(@QueryMap Map<String, String> params);
 
 
@@ -296,8 +296,6 @@ public interface Api {
     /** 增加记录数----货主哪里查看记录 */
     @GET("Order/Hit")
     Observable<BaseEntity<OrderDetail>> hit(@QueryMap Map<String, String> params);
-
-
 
 
     /** 抢单 */
