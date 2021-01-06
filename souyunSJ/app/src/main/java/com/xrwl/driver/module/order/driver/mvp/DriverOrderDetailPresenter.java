@@ -358,7 +358,7 @@ public class DriverOrderDetailPresenter extends DriverOrderContract.ADetailPrese
                 if (entity.isSuccess()) {
                     mView.onUploadImagesSuccess(entity);
                 } else {
-                    mView.onError(entity);
+                    mView.onUploadImagesError(entity);
                 }
             }
 

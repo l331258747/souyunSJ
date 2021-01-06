@@ -82,6 +82,7 @@ public interface DriverOrderContract {
         void onGrappwdOrderError(Throwable e);
 
         void onUploadImagesSuccess(BaseEntity<OrderDetail> entity);
+        void onUploadImagesError(BaseEntity entity);
         void onUploadImagesError(Throwable e);
 
         /**这个针对的是短信验证码货主和司机交互*/

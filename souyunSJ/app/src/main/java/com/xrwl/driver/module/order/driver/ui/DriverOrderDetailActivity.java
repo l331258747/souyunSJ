@@ -1361,7 +1361,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                 }
             }
             if (canUpload) {
-                mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+                mOperationDialog = LoadingProgress.showProgress(this, "正在提交...");
                 mPresenter.uploadImages(mId, mImagePaths);
             } else {
                 showToast("请先选择图片后再上传");
@@ -1660,14 +1660,22 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
     @Override
     public void onUploadImagesSuccess(BaseEntity<OrderDetail> entity) {
-        //mOperationDialog.dismiss();
-
+        if(mOperationDialog!=null && mOperationDialog.isShowing())
+            mOperationDialog.dismiss();
         mPresenter.getOrderDetail(mId);
     }
 
     @Override
+    public void onUploadImagesError(BaseEntity e) {
+        if(mOperationDialog!=null && mOperationDialog.isShowing())
+            mOperationDialog.dismiss();
+        showToast(e.getMsg());
+    }
+
+    @Override
     public void onUploadImagesError(Throwable e) {
-        //mOperationDialog.dismiss();
+        if(mOperationDialog!=null && mOperationDialog.isShowing())
+            mOperationDialog.dismiss();
         showNetworkError();
     }
 
