@@ -53,7 +53,7 @@
                 android:background="@drawable/radiobutton_background"
                 android:button="@null"
                 android:gravity="center"
-                android:text="企业订单"
+                android:text="大宗货物"
                 android:textColor="@color/radiobutton_textcolor"
                 android:textSize="@dimen/default_font18" />
         </RadioGroup>
