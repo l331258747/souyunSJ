@@ -60,7 +60,7 @@ public class DriverOrderFragment extends BaseEventFragment<DriverOrderContract.I
 
     @Override
     protected void initView(View view) {
-        initBaseRv(mRv);
+        initBaseRv2(mRv);
 
         mType = getArguments().getString("type");
 

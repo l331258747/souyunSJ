@@ -144,7 +144,7 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                         0);
             }
         }
-        initBaseRv(mRv);
+        initBaseRv2(mRv);
         mRefreshLayout.setOnRefreshListener(() -> getData());
         mputong.setVisibility(View.VISIBLE);
         initLocation();

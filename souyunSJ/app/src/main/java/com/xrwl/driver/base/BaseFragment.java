@@ -168,6 +168,9 @@ public abstract class BaseFragment<V extends BaseMVP.IBaseView, P extends BaseMV
         rv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rv.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
     }
+    protected void initBaseRv2(RecyclerView rv) {
+        rv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+    }
 
     protected void finish() {
         getActivity().finish();
