@@ -1,17 +1,8 @@
 package com.xrwl.driver.module.find.adapter;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageView;
 
-import com.blankj.utilcode.util.PermissionUtils;
 import com.ldw.library.adapter.recycler.CommonAdapter;
 import com.ldw.library.adapter.recycler.base.ViewHolder;
 import com.xrwl.driver.R;
@@ -52,7 +43,7 @@ public class FindAdapter extends CommonAdapter<Order> {
 //                            .setNegativeButton("取消", null)
 //                            .setPositiveButton("设置", new DialogInterface.OnClickListener() {
 //                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
+//                                publcic void onClick(DialogInterface dialog, int which) {
 //                                    PermissionUtils.openAppSettings();
 //                                }
 //                            }).show();
