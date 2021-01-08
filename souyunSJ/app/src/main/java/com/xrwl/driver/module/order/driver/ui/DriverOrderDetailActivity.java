@@ -1766,15 +1766,15 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
     @Override
     protected void onDestroy() {
-
+        super.onDestroy();
         if (mPayBroadcastReceiver != null) {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mPayBroadcastReceiver);
 
         }
         mHandler.removeCallbacksAndMessages(null);
 
-        super.onDestroy();
-        mapView.onDestroy();
+        if(mapView != null)
+            mapView.onDestroy();
 
     }
 
