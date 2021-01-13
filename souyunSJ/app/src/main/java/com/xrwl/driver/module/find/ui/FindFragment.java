@@ -3,6 +3,7 @@ package com.xrwl.driver.module.find.ui;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -48,8 +49,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-
 /**
  * 司机找货
  * Created by www.longdw.com on 2018/4/5 上午9:17.
@@ -58,6 +57,8 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         implements FindContract.IView {
 //public class FindFragment extends BaseEventFragment<FindContract.IView, FindPresenter> implements ChooseAddressDialog
 //        .OnSelectListener, FindContract.IView, ProductSearchDialog.OnProductSearchListener {
+
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 999;
 
     @BindView(R.id.baseRv)
     RecyclerView mRv;
@@ -131,23 +132,36 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
     @Override
     protected void initView(View view) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
-            //判断是否具有权限
-            if (ContextCompat.checkSelfPermission(mContext,
-                    Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
-                //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true。
-                if (ActivityCompat.shouldShowRequestPermissionRationale(mContext,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                }
-                ActivityCompat.requestPermissions(mContext,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS},
-                        0);
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//如果 API level 是大于等于 23(Android 6.0) 时
+//            //判断是否具有权限
+//            if (ContextCompat.checkSelfPermission(mContext,
+//                    Manifest.permission.CAMERA) != PERMISSION_GRANTED) {
+//                //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true。
+//                if (ActivityCompat.shouldShowRequestPermissionRationale(mContext,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                }
+//                ActivityCompat.requestPermissions(mContext,
+//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS},
+//                        0);
+//            }
+//        }
         initBaseRv2(mRv);
         mRefreshLayout.setOnRefreshListener(() -> getData());
         mputong.setVisibility(View.VISIBLE);
-        initLocation();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(mContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(mContext,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            } else {
+                initLocation();
+            }
+        } else {
+            initLocation();
+        }
+
     }
 
     @OnClick({R.id.findStartTv, R.id.findStartIv, R.id.findEndTv, R.id.findEndIv})
@@ -627,5 +641,22 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
             xingString = "4";
         }
         return xingString;
+    }
+
+    //onRequestPermissionsResult 需要回调需要在activity中调用
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                showToast("权限已申请");
+//                initLocation();
+//            } else {
+//                showToast("权限已拒绝");
+//                initLocation();
+//            }
+            initLocation();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

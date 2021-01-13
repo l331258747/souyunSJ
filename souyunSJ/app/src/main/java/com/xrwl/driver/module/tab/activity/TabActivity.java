@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,9 +33,6 @@ import com.xrwl.driver.bean.Cljbxx;
 import com.xrwl.driver.bean.Tab;
 import com.xrwl.driver.event.BusinessTabCountEvent;
 import com.xrwl.driver.event.TabCheckEvent;
-import com.xrwl.driver.module.account.activity.LoginActivity;
-import com.xrwl.driver.module.account.activity.LoginsActivity;
-import com.xrwl.driver.module.loading.activity.LoadingActivity;
 import com.xrwl.driver.module.tab.mvp.TabPresenter;
 import com.xrwl.driver.utils.AccountUtil;
 import com.xrwl.driver.utils.BadgeUtil;
@@ -87,7 +85,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
             JSONObject json = new JSONObject(Utils.getAssetsString(mContext, "driver_tab.json"));
             mDatas = Tab.parseJson(json);
-             initNavBar();
+            initNavBar();
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage(), e);
         }
@@ -98,7 +96,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
         String enterpriseSenderCode = "14101810";
         String environment = "debug";
         String ShippingNoteInfo[];
-        LocationOpenApi.init(TabActivity.this, appId, appSecurity,enterpriseSenderCode,environment , new OnResultListener() {
+        LocationOpenApi.init(TabActivity.this, appId, appSecurity, enterpriseSenderCode, environment, new OnResultListener() {
             @Override
             public void onSuccess() {
 
@@ -120,7 +118,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
     private void initNavBar() {
 
-        for (int i = 0, size = mDatas.size();i < size;i++) {
+        for (int i = 0, size = mDatas.size(); i < size; i++) {
             Tab tab = mDatas.get(i);
 
             int normalRes = getResources().getIdentifier(tab.getIcon() + "_selected", "drawable", getPackageName());
@@ -133,8 +131,8 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
             String title = mDatas.get(i).getTitle();
             try {
                 Class cls = Class.forName(getPackageName() + tab.getPage());
-                Method method = cls.getMethod("newInstance", new Class[] { String.class });
-                mFragmentList.add((Fragment)method.invoke(null, new Object[] { title }));
+                Method method = cls.getMethod("newInstance", new Class[]{String.class});
+                mFragmentList.add((Fragment) method.invoke(null, new Object[]{title}));
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage(), e);
             }
@@ -146,8 +144,8 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 //        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), mFragmentList));
 //        mViewPager.addOnPageChangeListener(mPageChangeListener);
 
-      //  new LBadgeView(mContext).setGravityOffset(0, true).bindTarget(mMainBottomTab.getItems().get(1).getBadgeTargetView()).setBadgeNumber(20);
-   }
+        //  new LBadgeView(mContext).setGravityOffset(0, true).bindTarget(mMainBottomTab.getItems().get(1).getBadgeTargetView()).setBadgeNumber(20);
+    }
 
 
     private void Driverpositioning() {
@@ -168,7 +166,6 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
         hashMap.put("RoadTransportCertificateNumber", "5454545");
         hashMap.put("TrailerVehiclePlateNumber", "5454545");
         hashMap.put("Remark", "5454545");
-
 
 
         RetrofitManager1 retrofitManager = RetrofitManager1.getInstance();
@@ -203,6 +200,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
                     }
                 });
     }
+
     private void getBadgeCount() {
         mPresenter.getBadgeCount();
     }
@@ -219,6 +217,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
     /**
      * 点击HomeFragment页面的找货或者发货动态选中Tab
+     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -229,7 +228,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
     private void initLocation() {
         mLocationClient = new AMapLocationClient(this);
         mLocationClient.setLocationListener(this);
-        AMapLocationClientOption  option = new AMapLocationClientOption();
+        AMapLocationClientOption option = new AMapLocationClientOption();
         option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
         option.setInterval(5 * 60 * 1000);
         mLocationClient.setLocationOption(option);
@@ -262,7 +261,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
     }
 
     @Override
-    public void onRefreshError(Throwable e) { 
+    public void onRefreshError(Throwable e) {
     }
 
     @Override
@@ -271,6 +270,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
     }
 
     long time = 0;
+
     //@Override
 //    public void onBackPressed() {
 //        if (System.currentTimeMillis() - time < 1500) {
@@ -297,7 +297,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 //    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             long secondTime = System.currentTimeMillis();
             if (secondTime - time > 1500) {//如果两次按键时间间隔大于1500毫秒，则不退出
                 Toast.makeText(TabActivity.this, "再按一次退出程序...",
@@ -327,7 +327,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
                         /*
                          *  在这里实现你自己的逻辑
                          */
-                        Intent intent=new Intent(TabActivity.this,TabActivity.class);
+                        Intent intent = new Intent(TabActivity.this, TabActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -336,8 +336,9 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
             }
         }
 
-       return super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);
     }
+
     private boolean checkGpsIsOpen() {
         boolean isOpen;
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -346,12 +347,12 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
     }
 
     private void openGPSSEtting() {
-        if (checkGpsIsOpen()){
-        }else {
+        if (checkGpsIsOpen()) {
+        } else {
             new AlertDialog.Builder(this).setTitle("请打开定位权限")
                     .setMessage("打开位置信息")
                     //  取消选项
-                    .setNegativeButton("取消",new DialogInterface.OnClickListener(){
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -366,11 +367,29 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //跳转到手机原生设置页面
                             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                            startActivityForResult(intent,GPS_REQUEST_CODE);
+                            startActivityForResult(intent, GPS_REQUEST_CODE);
                         }
                     })
                     .setCancelable(false)
                     .show();
+        }
+    }
+
+    // Activity中
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // 获取到Activity下的Fragment
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments == null) {
+            return;
+        }
+        // 查找在Fragment中onRequestPermissionsResult方法并调用
+        for (Fragment fragment : fragments) {
+            if (fragment != null) {
+                // 这里就会调用我们Fragment中的onRequestPermissionsResult方法
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
         }
     }
 }
