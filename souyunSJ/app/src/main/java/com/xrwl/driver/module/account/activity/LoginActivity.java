@@ -111,6 +111,15 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
         mlogincheBtn.setVisibility(View.GONE);
     }
 
+    @OnClick(R.id.tv_agreement)
+    public void onAgreementClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_agreement:
+                startActivity(new Intent(this,AgreementActivity.class));
+                break;
+        }
+    }
+
     @OnClick({R.id.loginBtn, R.id.loginRegisterTv, R.id.driverLoginBtn, R.id.loginServiceTv, R.id.loginForgetPwdTv, R.id.loginProtocolTv, R.id.dianhuadengluchepaihao, R.id.rb_owner, R.id.rb_driver, R.id.logincheBtn})
     public void onClick(View v) {
         switch (v.getId()) {

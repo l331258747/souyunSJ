@@ -105,6 +105,9 @@
             android:name=".module.account.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".module.account.activity.AgreementActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".module.account.activity.LoginsActivity"
             android:screenOrientation="portrait" />
         <activity
