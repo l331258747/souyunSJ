@@ -1140,24 +1140,24 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             //模拟测试位置信息
 
             openGPSSEtting();
-//            mPresenter.calculateDistanceWithLonLat(Double.parseDouble(od.startLon), Double.parseDouble(od.startLat), readmylon, readmylat);
+            mPresenter.calculateDistanceWithLonLat(Double.parseDouble(od.startLon), Double.parseDouble(od.startLat), readmylon, readmylat);
 
-            new AlertDialog.Builder(this)
-                    .setMessage("是否确认到达")
-                    .setNegativeButton("取消", null)
-                    .setPositiveButton("确定", (dialog, which) -> {
-//                        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyyMMddHHmmss");
-//                        Date curDate1 = new Date(System.currentTimeMillis());
-//                        String str1 = formatter1.format(curDate1);
-                        try {
-                            mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        mConfirmClick = true;
-//                        mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
-                        mPresenter.confirmOrder(mId);
-                    }).show();
+//            new AlertDialog.Builder(this)
+//                    .setMessage("是否确认到达")
+//                    .setNegativeButton("取消", null)
+//                    .setPositiveButton("确定", (dialog, which) -> {
+////                        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyyMMddHHmmss");
+////                        Date curDate1 = new Date(System.currentTimeMillis());
+////                        String str1 = formatter1.format(curDate1);
+//                        try {
+//                            mPresenter.getCodeButton("4", URLDecoder.decode(od.startPos, "UTF-8"), URLDecoder.decode(od.endPos, "UTF-8"), od.ddbh, URLDecoder.decode(mAccount.name, "UTF-8"), od.consignorPhone);
+//                        } catch (UnsupportedEncodingException e) {
+//                            e.printStackTrace();
+//                        }
+//                        mConfirmClick = true;
+////                        mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+//                        mPresenter.confirmOrder(mId);
+//                    }).show();
 
 
 //            if (od.type.equals("6")) {
@@ -1694,13 +1694,15 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         chaju = distance.distance;
         //这个目前在运输中到已完成点击后自动操作的步骤
         if ("2".equals(ddzhuangtais)) {
-            if (Double.parseDouble(chaju) * 1000 <= Double.parseDouble(canshu)) {
+//            if (Double.parseDouble(chaju) * 1000 <= Double.parseDouble(canshu)) {
+            if (Double.parseDouble(chaju) <= Double.parseDouble(canshu)) {
                 new AlertDialog.Builder(this)
                         .setMessage("运输中转已完成：您已到达指定目的地区域，请确认是否完成本单运输。注：运费将在货主支付完成后，支付至余额中，请确认查收。")
                         .setNegativeButton("取消", null)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
 //                                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 //                                Date curDate = new Date(System.currentTimeMillis());
 //                                String str = formatter.format(curDate);
@@ -1710,7 +1712,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                                     e.printStackTrace();
                                 }
                                 mConfirmClick = true;
-                                mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+//                                mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
                                 mPresenter.confirmOrder(mId);
                             }
                         }).show();
@@ -1721,18 +1723,20 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 //                startActivity(intent);
 //                finish();
             } else {
-
+                double juli = Double.parseDouble(canshu) - Double.parseDouble(chaju);
+                showToast("距离目的地还有"+juli+"公里");
             }
         } else if ("1".equals(ddzhuangtais)) {
             //这个目前是从已接单到运输中
-            if (Double.parseDouble(chaju) * 1000 <= Double.parseDouble(canshu)) {
+//            if (Double.parseDouble(chaju) * 1000 <= Double.parseDouble(canshu)) {
+            if (Double.parseDouble(chaju) <= Double.parseDouble(canshu)) {
                 new AlertDialog.Builder(this)
                         .setMessage("已接单转运输中：您已到达指定地点区域，请确认是否开始运输。")
                         .setNegativeButton("取消", null)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
+//                                mOperationDialog = LoadingProgress.showProgress(mContext, "正在提交...");
                                 mPresenter.trans(mId);
                             }
                         }).show();
@@ -1742,14 +1746,21 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 //                startActivity(intent);
 //                finish();
             } else {
+                double juli = Double.parseDouble(canshu) - Double.parseDouble(chaju);
+                showToast("距离目的地还有"+juli+"公里");
             }
         }
 
     }
 
     @Override
-    public void oncalculateDistanceError(Throwable e) {
+    public void oncalculateDistanceError(BaseEntity entity) {
+        showToast(entity.getMsg());
+    }
 
+    @Override
+    public void oncalculateDistanceError(Throwable e) {
+        showNetworkError();
     }
 
     //这个是自动收货的设置点

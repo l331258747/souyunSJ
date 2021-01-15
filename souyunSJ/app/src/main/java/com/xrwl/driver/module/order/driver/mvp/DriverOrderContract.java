@@ -90,6 +90,7 @@ public interface DriverOrderContract {
         void onGetCodeError(Throwable e);
 
         void oncalculateDistanceSuccess(BaseEntity<Distance> entity);
+        void oncalculateDistanceError(BaseEntity entity);
         void oncalculateDistanceError(Throwable e);
 
         void onOrderDetailReceivingSuccess(BaseEntity<OrderDetail> entity);

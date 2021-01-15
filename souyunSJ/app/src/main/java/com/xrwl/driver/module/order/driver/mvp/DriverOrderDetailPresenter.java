@@ -480,7 +480,7 @@ public class DriverOrderDetailPresenter extends DriverOrderContract.ADetailPrese
                 if (entity.isSuccess()) {
                     mView.oncalculateDistanceSuccess(entity);
                 } else {
-                    mView.onError(entity);
+                    mView.oncalculateDistanceError(entity);
                 }
             }
             @Override
