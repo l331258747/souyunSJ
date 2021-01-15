@@ -106,6 +106,7 @@ public class OrderDetail {
 
     public String zidongzhicategory;
     public String zidongzhicanshu;
+    public String dingwei;
 
     public String start_desc;
     public String end_desc;
