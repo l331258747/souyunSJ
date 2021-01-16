@@ -1785,7 +1785,9 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 //                finish();
             } else {
                 float juli = DecimalUtil.subtract(Float.parseFloat(chaju),Float.parseFloat(canshu));
-                showToast("距离目地的还有"+juli+"公里，到达目的地3公里范围内，便可点击完成订单。");
+                new AlertDialog.Builder(this)
+                        .setMessage("距离目地的还有"+juli+"公里，到达目的地3公里范围内，便可点击完成订单。")
+                        .setPositiveButton("确定", null).show();
             }
         } else if ("1".equals(ddzhuangtais)) {
             //这个目前是从已接单到运输中
@@ -1808,7 +1810,9 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 //                finish();
             } else {
                 float juli = DecimalUtil.subtract(Float.parseFloat(chaju),Float.parseFloat(canshu));
-                showToast("距离目地的还有"+juli+"公里，到达目的地3公里范围内，便可点击完成订单。");
+                new AlertDialog.Builder(this)
+                        .setMessage("距离目地的还有"+juli+"公里，到达目的地3公里范围内，便可点击完成订单。")
+                        .setPositiveButton("确定", null).show();
             }
         }
 
