@@ -15,7 +15,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,7 +42,6 @@ import com.xrwl.driver.retrofit.file.JsDownloadListener;
 import com.xrwl.driver.utils.AccountUtil;
 import com.xrwl.driver.utils.FileUtil;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -243,21 +241,24 @@ public class LoadingActivity extends BaseActivity<LoadingContract.IView, Loading
 //                        Intent intent = new Intent(Intent.ACTION_VIEW);
 //                        intent.setData(Uri.parse(update.url));
 //                        startActivity(intent);
-                        mPresenter.downloadApk(update.url, LoadingActivity.this);
-                        mProgressBar.setVisibility(View.VISIBLE);
-//                        new AlertDialog.Builder(mContext).setMessage("请先打开权限设置")
-//                                .setNegativeButton("取消", null)
-//                                .setPositiveButton("设置", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        //installProcess();
-//                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                                            startInstallPermissionSettingActivity();
-//                                        }
-//                                        mPresenter.downloadApk(update.url, LoadingActivity.this);
-//                                        mProgressBar.setVisibility(View.VISIBLE);
-//                                    }
-//                                }).show();
+//                        mPresenter.downloadApk(update.url, LoadingActivity.this);
+//                        mProgressBar.setVisibility(View.VISIBLE);
+                        new AlertDialog.Builder(mContext).setMessage("请先打开权限设置")
+                                .setNegativeButton("取消", null)
+                                .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                            startInstallPermissionSettingActivity();
+                                        }
+
+                                        mPresenter.downloadApk(update.url, LoadingActivity.this);
+                                        mProgressBar.setVisibility(View.VISIBLE);
+
+                                    }
+                                }).show();
 
                     }
                 }).setCancelable(false).show();
