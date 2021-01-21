@@ -789,8 +789,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             mGrabBtn.setVisibility(View.GONE);
             mCancelBtn.setVisibility(View.GONE);
             mUploadBtn.setVisibility(View.VISIBLE);
-            mConsignorTv.setText("发货电话：" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
-            mConsigneeTv.setText("收货电话：" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
+            mConsignorTv.setText("" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
+            mConsigneeTv.setText("" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
 
         } else if (od.type.equals("3")) {
 
@@ -808,8 +808,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             mUploadBtn.setVisibility(View.VISIBLE);
 
 
-            mConsignorTv.setText("发货电话：" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
-            mConsigneeTv.setText("收货电话：" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
+            mConsignorTv.setText("" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
+            mConsigneeTv.setText("" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
 
 
             if (od.isbzj_type.equals("0")) {
@@ -829,8 +829,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         } else if (od.type.equals("4")) {
             mPhotoView.setVisibility(View.VISIBLE);
             mUploadBtn.setVisibility(View.VISIBLE);
-            mConsignorTv.setText("发货电话：" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
-            mConsigneeTv.setText("收货电话：" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
+            mConsignorTv.setText("" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
+            mConsigneeTv.setText("" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
             new AlertDialog.Builder(this)
                     .setMessage(entity.getMsg())
                     .setPositiveButton("确定！", new DialogInterface.OnClickListener() {

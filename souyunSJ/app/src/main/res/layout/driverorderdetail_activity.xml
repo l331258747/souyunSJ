@@ -183,16 +183,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="运费 :"
+                        android:text="运\u3000\u3000费："
                         android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/paytv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:gravity="center"
                         android:text="10%"
                         android:textColor="@color/black"
@@ -235,17 +235,16 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="订单编号 :"
+                        android:text="订单编号："
                         android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/detailOrderIdTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_dp20"
+                        android:layout_marginStart="@dimen/dp_10"
                         android:gravity="center_vertical"
                         android:text="213123123"
                         android:textColor="@color/black"
