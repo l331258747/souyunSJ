@@ -979,10 +979,10 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         return timeStamp;
     }
 
-    @OnClick({R.id.detailConsignorTv, R.id.detailConsigneeTv})
+    @OnClick({R.id.detailConsignorTv, R.id.detailConsigneeTv,R.id.detailConsignorIv, R.id.detailConsigneeIv})
     public void call(View v) {
         int id = v.getId();
-        if (id == R.id.detailConsignorTv) {
+        if (id == R.id.detailConsignorTv || id == R.id.detailConsignorIv) {
             //todo dddddddddddddddddddddddddd
 
             String precisionStandardTime = getPrecisionStandardTime();
@@ -1014,7 +1014,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 //                            }
 //                        }).show();
 //            }
-        } else if (id == R.id.detailConsigneeTv) {
+        } else if (id == R.id.detailConsigneeTv || id == R.id.detailConsigneeIv) {
 
             Intent intent = new Intent(Intent.ACTION_DIAL);
             Uri data = Uri.parse("tel:" + od.consigneePhone);
