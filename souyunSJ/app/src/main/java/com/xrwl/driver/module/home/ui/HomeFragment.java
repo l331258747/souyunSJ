@@ -1,7 +1,5 @@
 package com.xrwl.driver.module.home.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CalendarView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,20 +22,18 @@ import com.xrwl.driver.bean.Account;
 import com.xrwl.driver.bean.HomeItem;
 import com.xrwl.driver.event.TabCheckEvent;
 import com.xrwl.driver.module.account.activity.LoadingWebActivity;
-import com.xrwl.driver.module.account.activity.RegulationsQueryActivity;
 import com.xrwl.driver.module.account.activity.SingleNumberQueryActivity;
 import com.xrwl.driver.module.account.activity.WebActivity;
-import com.xrwl.driver.module.account.activity.WebActivityputong;
-import com.xrwl.driver.module.find.ui.FindFragment;
 import com.xrwl.driver.module.home.adapter.HomeAdAdapter;
 import com.xrwl.driver.module.home.adapter.HomeRecyclerAdapter;
 import com.xrwl.driver.module.home.adapter.HomesAdAdapter;
+import com.xrwl.driver.module.home.adapter.WebBannerAdapter;
 import com.xrwl.driver.module.order.driver.ui.DriverOrderActivity;
 import com.xrwl.driver.module.order.owner.ui.OwnerOrderActivity;
 import com.xrwl.driver.module.order.owner.ui.QianDaoActivity;
 import com.xrwl.driver.module.order.owner.ui.ZhouGongActivity;
 import com.xrwl.driver.module.publish.ui.NewsActivity;
-import com.xrwl.driver.module.publish.ui.PublishFragment;
+import com.xrwl.driver.module.tab.activity.TabActivity;
 import com.xrwl.driver.retrofit.BaseSimpleObserver;
 import com.xrwl.driver.retrofit.RxSchedulers;
 import com.xrwl.driver.utils.AccountUtil;
@@ -55,12 +50,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import com.example.library.banner.BannerLayout;
-import com.xrwl.driver.module.home.adapter.WebBannerAdapter;
-import java.util.ArrayList;
-import java.util.List;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+
 /**
  * Created by www.longdw.com on 2018/3/25 下午10:58.
  */
@@ -79,6 +69,8 @@ public class HomeFragment extends BaseFragment {
     TextView mPublishOrFindTv;
     @BindView(R.id.recycler)
     BannerLayout mrecycler;
+    @BindView(R.id.ll_order)
+    LinearLayout ll_order;
     private Account mAccount;
     private Disposable mDisposable;
     private HomeAdAdapter mHomeAdAdapter;
@@ -112,8 +104,6 @@ public class HomeFragment extends BaseFragment {
         mHomeIntroRv.setNestedScrollingEnabled(false);
         mHomeServiceRv.setNestedScrollingEnabled(false);
 
-
-
         mHomeIntroRv.setLayoutManager(new GridLayoutManager(mContext, 4));
         mHomeIntroRv.addItemDecoration(new GridSpacingItemDecoration(4, 8, false));
 
@@ -135,39 +125,24 @@ public class HomeFragment extends BaseFragment {
                 @Override
                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                     HomeItem hi = homeItem.getData1().get(position);
-                    if(hi.getUrl().equals("1"))
-                    {
+                    if (hi.getUrl().equals("1")) {
                         startActivity(new Intent(mContext, NearLocationActivity.class));
-                    }
-                    else if(hi.getUrl().equals("2"))
-                    {
+                    } else if (hi.getUrl().equals("2")) {
                         EventBus.getDefault().post(new TabCheckEvent());
                         //startActivity(new Intent(mContext, FindFragment.class));
-                    }
-                    else if(hi.getUrl().equals("3"))
-                    {
+                    } else if (hi.getUrl().equals("3")) {
                         startActivity(new Intent(mContext, CalendarView.class));
-                    }
-                    else if(hi.getUrl().equals("5"))
-                    {
+                    } else if (hi.getUrl().equals("5")) {
                         startActivity(new Intent(mContext, ZhouGongActivity.class));
-                    }
-                    else if(hi.getUrl().equals("14"))
-                    {
+                    } else if (hi.getUrl().equals("14")) {
                         //头条新闻
                         startActivity(new Intent(mContext, NewsActivity.class));
-                    }
-                    else if(hi.getUrl().equals("12"))
-                    {
+                    } else if (hi.getUrl().equals("12")) {
                         startActivity(new Intent(mContext, SingleNumberQueryActivity.class));
 
-                    }
-                    else if(hi.getUrl().equals("11"))
-                    {
+                    } else if (hi.getUrl().equals("11")) {
                         showToast("敬请期待...");
-                    }
-                    else
-                    {
+                    } else {
                         Intent intent = new Intent();
                         intent.putExtra("title", hi.getTitle());
                         intent.putExtra("url", hi.getUrl());
@@ -192,22 +167,18 @@ public class HomeFragment extends BaseFragment {
                         } else {
                             startActivity(new Intent(mContext, DriverAuthActivity.class));
                         }
-                    }
-                    else if (position == 1) {
+                    } else if (position == 1) {
 
-                    }
-                    else if (position == 2) {
+                    } else if (position == 2) {
                         //startActivity(new Intent(mContext, MainActivity.class));
                         //7日签到
                         startActivity(new Intent(mContext, QianDaoActivity.class));
-                    }
-                    else if (position == 3) {
+                    } else if (position == 3) {
                         startActivity(new Intent(mContext, LoadingWebActivity.class));
 //                        Uri uri = Uri.parse("http://xrygh.16souyun.cn/website/index.aspx");
 //                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 //                        startActivity(intent);
-                    }
-                    else if (position == 4) {
+                    } else if (position == 4) {
                         Uri uri = Uri.parse("https://mp.weixin.qq.com/s?__biz=MzA3ODExNzcyNw==&mid=2649690837&idx=1&sn=e43f89827fef1c4a213e6036b27d5c5f&chksm=875c1ce5b02b95f3907221a18d2bdbdc05e8696491a7a653baee45bd442c153765455a2fc3bb&mpshare=1&scene=1&srcid=0916aH7HI8CkyWgpDEmljYyU&pass_ticket=7UOXlojkwlQb%2Foh2Ujuxo%2BBnvd39xzAOvN8hSwAtkqn9ezATmXWL2Xg9RxA3Vts3#rd");
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
@@ -227,27 +198,23 @@ public class HomeFragment extends BaseFragment {
             list.add("http://www.16souyun.com/applunbo/dangjiandj.png");
             list.add("http://www.16souyun.com/applunbo/gonghui.png");
 
-            WebBannerAdapter webBannerAdapter=new WebBannerAdapter(mContext,list);
+            WebBannerAdapter webBannerAdapter = new WebBannerAdapter(mContext, list);
             webBannerAdapter.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    if (position ==0) {
+                    if (position == 0) {
                         Intent intent = new Intent();
                         intent.putExtra("title", "天气预报");
                         intent.putExtra("url", "http://www.help.bj.cn/weather/1d.html?id=101100701");
                         intent.setClass(mContext, WebActivity.class);
                         startActivity(intent);
-                    }
-                    else if (position==1)
-                    {
+                    } else if (position == 1) {
                         Intent intent = new Intent();
                         intent.putExtra("title", "云党建");
                         intent.putExtra("url", "http://ydj.16souyun.com/website/index.aspx");
                         intent.setClass(mContext, WebActivity.class);
                         startActivity(intent);
-                    }
-                    else if (position==2)
-                    {
+                    } else if (position == 2) {
                         Intent intent = new Intent();
                         intent.putExtra("title", "云工会");
                         intent.putExtra("jiekou", "1");
@@ -302,7 +269,7 @@ public class HomeFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({R.id.homePublishLayout, R.id.homeMyOrderLayout, R.id.homeHistoryLayout, R.id.homeAuthLayout,R.id.saoyisaoBtn})
+    @OnClick({R.id.homePublishLayout, R.id.homeMyOrderLayout, R.id.homeHistoryLayout, R.id.homeAuthLayout, R.id.saoyisaoBtn, R.id.ll_order})
     public void onClick(View v) {
         if (v.getId() == R.id.homePublishLayout) {
 
@@ -324,10 +291,10 @@ public class HomeFragment extends BaseFragment {
             } else {
                 startActivity(new Intent(mContext, DriverAuthActivity.class));
             }
-        }
-        else if(v.getId()==R.id.saoyisaoBtn)
-        {
+        } else if (v.getId() == R.id.saoyisaoBtn) {
             startActivity(new Intent(mContext, saoyisaoActivity.class));
+        } else if (v.getId() == R.id.ll_order) {
+            ((TabActivity)getActivity()).setCurrent(2);
         }
     }
 }

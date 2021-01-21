@@ -525,7 +525,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/default_dp10"
                             android:layout_toRightOf="@+id/iv_3"
-                            android:text="上传驾驶本"
+                            android:text="上传驾驶证"
                             android:textColor="@color/white" />
 
                         <ImageView
@@ -575,7 +575,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/default_dp10"
                             android:layout_toRightOf="@+id/iv_4"
-                            android:text="上传行车本"
+                            android:text="上传行驶证"
                             android:textColor="@color/white" />
 
                         <ImageView

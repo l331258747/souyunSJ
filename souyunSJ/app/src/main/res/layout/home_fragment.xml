@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,51 +8,45 @@
 
 
     <LinearLayout
+        android:id="@+id/fanhuizhuyejian"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal"
-        android:id="@+id/fanhuizhuyejian"
-        >
+        android:orientation="horizontal">
 
 
-<LinearLayout
-    android:id="@+id/saoyisaoBtn"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@drawable/sousuo"
-    >
-       <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-           android:gravity="right"
-           android:textColor="@color/white"
-           android:layout_gravity="center"
-          android:layout_marginEnd="55dp"
-           android:textStyle="bold"
-        android:text="扫一扫"
-        />
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/saoyisaoBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sousuo"
+            android:orientation="horizontal">
 
-
-
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="55dp"
+                android:gravity="right"
+                android:text="扫一扫"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_marginStart="170dp"
+            android:gravity="center_horizontal"
             android:text="主页"
+            android:textColor="@color/white"
             android:textSize="@dimen/default_font16"
-              android:layout_gravity="center"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
-</LinearLayout>
+    </LinearLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
 
@@ -71,10 +64,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:orientation="horizontal"
-                android:paddingBottom="25dp"
-                android:paddingTop="25dp">
-
-
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp">
 
 
                 <LinearLayout
@@ -88,14 +79,14 @@
                     <ImageView
                         android:layout_width="@dimen/home_icon_size"
                         android:layout_height="@dimen/home_icon_size"
-                        android:src="@drawable/home_ic_fbhy"/>
+                        android:src="@drawable/home_ic_fbhy" />
 
                     <TextView
                         android:id="@+id/homePublishOrFindTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="发布货源"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -110,13 +101,13 @@
                     <ImageView
                         android:layout_width="@dimen/home_icon_size"
                         android:layout_height="@dimen/home_icon_size"
-                        android:src="@drawable/home_ic_wddd"/>
+                        android:src="@drawable/home_ic_wddd" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="我的订单"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -131,13 +122,13 @@
                     <ImageView
                         android:layout_width="@dimen/home_icon_size"
                         android:layout_height="@dimen/home_icon_size"
-                        android:src="@drawable/home_ic_lsjy"/>
+                        android:src="@drawable/home_ic_lsjy" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="历史交易"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -152,24 +143,24 @@
                     <ImageView
                         android:layout_width="@dimen/home_icon_size"
                         android:layout_height="@dimen/home_icon_size"
-                        android:src="@drawable/home_ic_smrz"/>
+                        android:src="@drawable/home_ic_smrz" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="实名认证"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
 
@@ -179,87 +170,73 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/homeViewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="match_parent"
 
                     android:layout_height="4dp" />
 
 
-
-
                 <LinearLayout
+                    android:id="@+id/ll_order"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_dp60"
                     android:background="@color/white"
-                    android:orientation="horizontal"
                     android:gravity="left"
-                    >
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="73dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/default_dp10"
                         android:src="@drawable/owner" />
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:text="你的订单有人接单   1天前"
-                        />
+                        android:text="欢迎您在线接单"
+                        android:textColor="@color/black" />
+
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dp_20"
                         android:layout_marginLeft="@dimen/default_dp80"
                         android:src="@drawable/ic_green_arrow"
-
                         />
                 </LinearLayout>
 
 
                 <TextView
-                    android:layout_width="match_parent" android:layout_height="2dp" />
-
-
-
-
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp" />
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/homeIntroRv"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/white" />
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/homeServiceRv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="0dp"/>
-
-
-
-
-
-
-
-
-
-
-
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp" />
 
 
                 <!--轮播图位置-->
                 <android.support.v4.view.ViewPager
                     android:id="@+id/homesViewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_height="wrap_content" />
 
 
                 <com.example.library.banner.BannerLayout
@@ -271,26 +248,25 @@
                     app:autoPlaying="true"
                     app:centerScale="1.3"
                     app:itemSpace="20"
-                    app:moveSpeed="1.8"/>
+                    app:moveSpeed="1.8" />
 
-
-
-              <TextView
-                  android:layout_width="match_parent"
-                  android:text="———16飕云———"
-                  android:gravity="center"
-                  android:textSize="16dp"
-                  android:textColor="@color/gray"
-                  android:layout_height="30dp" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:text="您的一站式物流管理平台"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="———16飕云———"
+                    android:textColor="@color/gray"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
 
                     android:gravity="center"
+                    android:text="您的一站式物流管理平台"
                     android:textColor="@color/gray"
-                    android:textSize="14dp"
-                    android:layout_height="20dp" />
+                    android:textSize="14dp" />
             </LinearLayout>
 
 

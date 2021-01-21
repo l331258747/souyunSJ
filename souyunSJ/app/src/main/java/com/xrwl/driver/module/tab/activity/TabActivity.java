@@ -147,6 +147,9 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
         //  new LBadgeView(mContext).setGravityOffset(0, true).bindTarget(mMainBottomTab.getItems().get(1).getBadgeTargetView()).setBadgeNumber(20);
     }
 
+    public void setCurrent(int pos){
+        mMainBottomTab.selectTab(pos);
+    }
 
     private void Driverpositioning() {
 
