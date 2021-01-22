@@ -125,7 +125,6 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
         switch (v.getId()) {
 
             case R.id.loginBtn:
-                mDialog = LoadingProgress.showProgress(this, getString(R.string.login_logining));
                 Map<String, String> params = new HashMap<>();
                 String phone = mLoginView.getUsername();
                 String code = mLoginView.getPwd();
@@ -148,6 +147,7 @@ public class LoginActivity extends BaseActivity<AccountContract.ILoginView, Logi
                     }
                 }
 
+                mDialog = LoadingProgress.showProgress(this, getString(R.string.login_logining));
                 params.put("tel", mLoginView.getUsername());
                 params.put("qita", "0");
                 mPresenter.login(params);
