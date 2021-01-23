@@ -270,7 +270,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_height="wrap_content"
-                        android:text="暂未数据"
+                        android:text="接单后查看"
                         android:textColor="@color/black" />
 
                     <ImageView
@@ -299,7 +299,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
-                        android:text="暂未数据"
+                        android:text="接单后查看"
                         android:textColor="@color/black" />
 
                     <ImageView
