@@ -211,14 +211,16 @@ public class HomeFragment extends BaseFragment {
                     } else if (position == 1) {
                         Intent intent = new Intent();
                         intent.putExtra("title", "云党建");
-                        intent.putExtra("url", "http://ydj.16souyun.com/website/index.aspx");
+//                        intent.putExtra("url", "http://ydj.16souyun.com/website/index.aspx");
+                        intent.putExtra("url", "http://16xrydj.16souyun.com:810");
                         intent.setClass(mContext, WebActivity.class);
                         startActivity(intent);
                     } else if (position == 2) {
                         Intent intent = new Intent();
                         intent.putExtra("title", "云工会");
                         intent.putExtra("jiekou", "1");
-                        intent.putExtra("url", "http://ygh.16souyun.com/website/index.aspx");
+//                        intent.putExtra("url", "http://ygh.16souyun.com/website/index.aspx");
+                        intent.putExtra("url", "http://16xrygh.16souyun.com:810");
                         intent.setClass(mContext, LoadingWebActivity.class);
                         startActivity(intent);
                     }
