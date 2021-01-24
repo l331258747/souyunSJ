@@ -202,13 +202,12 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
                 .textSize(20)
                 //地址选择
                 .title("地址选择")
-                .backgroundPop(0xa0000000)
                 //文字的颜色
-                .titleBackgroundColor("#0CB6CA")
-                .titleTextColor("#000000")
+                .titleBackgroundColor("#f16415")
+                .titleTextColor("#ffffff")
                 .backgroundPop(0xa0000000)
-                .confirTextColor("#000000")
-                .cancelTextColor("#000000")
+                .confirTextColor("#ffffff")
+                .cancelTextColor("#ffffff")
                 .province("xx省")
                 .city("xx市")
                 .district("xx区")
