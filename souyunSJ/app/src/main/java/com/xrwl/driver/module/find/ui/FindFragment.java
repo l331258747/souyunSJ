@@ -42,6 +42,7 @@ import com.xrwl.driver.module.order.driver.ui.DriverOrderDetailActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -510,6 +511,8 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         mRefreshLayout.setRefreshing(false);
         if (entity.getData().size() == 0) {
             showNoData();
+            if(mAdapter != null)
+                mAdapter.setDatas(new ArrayList<>());
             return;
         } else {
             if (mAdapter == null) {
@@ -550,15 +553,22 @@ public class FindFragment extends BaseEventFragment<FindContract.IView, FindPres
         if (mAdapter == null) {
             showError();
         }
+        if(mAdapter != null)
+            mAdapter.setDatas(new ArrayList<>());
+        showToast("数据加载失败");
     }
 
     @Override
     public void onError(BaseEntity entity) {
         mRefreshLayout.setRefreshing(false);
+        mAdapter.setDatas(new ArrayList<>());
         if (mAdapter == null) {
             showError();
         }
         handleError(entity);
+        if(mAdapter != null)
+            mAdapter.setDatas(new ArrayList<>());
+        showToast("数据加载失败");
     }
 
     @Override
