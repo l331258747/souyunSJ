@@ -60,5 +60,6 @@ public class GongAnAuth {
     public String register_date;
     public String use_character;
     public String vin;
+    public String gross_mass;
 
 }

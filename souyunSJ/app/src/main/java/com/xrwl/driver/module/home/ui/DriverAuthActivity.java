@@ -1512,89 +1512,62 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
     //执行操作
     private void doSomeThing(String usernames, String invitePhones, String chepaihaoma,
                              String hedingzaizhiliang, String yingyunzhenghaoma, String cheliangzhoushu,
-                             String jiashizhenghaoma, String zigezhenghaoma,String mCategory) {
-        // Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        String usernamesa = "";
-        try {
-            usernamesa = URLEncoder.encode(usernames, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String invitePhonesa = "";
-        try {
-            invitePhonesa = URLEncoder.encode(invitePhones, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
-        String chepaihaomaa = "";
-        try {
-            chepaihaomaa = URLEncoder.encode(chepaihaoma, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String hedingzaizhilianga = "";
-        try {
-            hedingzaizhilianga = URLEncoder.encode(hedingzaizhiliang, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String yingyunzhenghaomaa = "";
-        try {
-            yingyunzhenghaomaa = URLEncoder.encode(yingyunzhenghaoma, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String cheliangzhoushua = "";
-        try {
-            cheliangzhoushua = URLEncoder.encode(cheliangzhoushu, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
-        String jiashizhenghaomaa = "";
-        try {
-            jiashizhenghaomaa = URLEncoder.encode(jiashizhenghaoma, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
-        String zigezhenghaomaa = "";
-        try {
-            zigezhenghaomaa = URLEncoder.encode(zigezhenghaoma, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String mCategorya = "";
-        try {
-            mCategorya = URLEncoder.encode(mCategory, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+                             String jiashizhenghaoma, String zigezhenghaoma, String mCategory) {
         //------------3
         postType = 3;
         Map<String, String> picMaps = new HashMap<>();
+
         Map<String, String> params = new HashMap<>();
         params.put("check", "0");
-        params.put("username", usernamesa);
+        params.put("username", usernames);
         params.put("userid", mAccount.getId());
-        params.put("invitePhones", invitePhonesa);
+        params.put("invitePhones", invitePhones);
 
-        params.put("chepaihaoma", chepaihaomaa);
-        params.put("hedingzaizhiliang", hedingzaizhilianga);
-        params.put("yingyunzhenghaoma", yingyunzhenghaomaa);
-        params.put("cheliangzhoushu", cheliangzhoushua);
-        params.put("jiashizhenghaoma", jiashizhenghaomaa);
-        params.put("zigezhenghaoma", zigezhenghaomaa);
-        params.put("category", mCategorya);
+        params.put("chepaihaoma", chepaihaoma);
+        params.put("hedingzaizhiliang", hedingzaizhiliang);
+        params.put("yingyunzhenghaoma", yingyunzhenghaoma);
+        params.put("cheliangzhoushu", cheliangzhoushu);
+        params.put("jiashizhenghaoma", jiashizhenghaoma);
+        params.put("zigezhenghaoma", zigezhenghaoma);
+        params.put("category", mCategory);
+
+        params.put("zhunjiachexing", dd.vehicle_type);
+        params.put("fazhengjiguan", dd.issue_date);
+        params.put("youxiaoqizi", dd.start_date);
+        params.put("youxiaoqizhi", dd.end_date);
+        params.put("cheliangshibiedaima", dd.vin);
+        params.put("cheliangnengyuanleixing", "A");
+        params.put("cheliangleixing", dd.vehicle_type);
+        params.put("guachepaizhao", dd.plate_num);
+        params.put("cheliangzongzhiliang", dd.gross_mass);
+        params.put("shiyongxingzhi", dd.use_character);
+
+        /**
+         todo 驾驶证 行驶证信息
+         zhunjiachexing 准驾车型    vehicle_type
+         fazhengjiguan 发证日期     issue_date
+         youxiaoqizi 有效期自       start_date
+         youxiaoqizhi 有效期至      end_date
+         cheliangshibiedaima 车辆识别代码     vin
+         cheliangnengyuanleixing 车辆能源类型 A
+         cheliangleixing 车辆类型           vehicle_type
+         guachepaizhao 挂车牌照             plate_num
+         cheliangzongzhiliang 车辆总质量    gross_mass
+         shiyongxingzhi 使用性质            use_character
+         */
+
+        Map<String, String> postParams = new HashMap<>();
+        for (String key : params.keySet()) {
+            try {
+                String value = params.get(key);
+                if (!TextUtils.isEmpty(value)) {
+                    String encodedParam = URLEncoder.encode(value, "UTF-8");
+                    postParams.put(key, encodedParam);
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
         mPresenter.postputongData(params);
     }
@@ -1637,25 +1610,25 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
 //            checkPostzhizhao();
 //        }
         else if (id == R.id.authConfirmBtn) {
-            if(TextUtils.isEmpty(mNameEt.getText().toString()) || TextUtils.isEmpty(mshenfenzhengEt.getText().toString())){
+            if (TextUtils.isEmpty(mNameEt.getText().toString()) || TextUtils.isEmpty(mshenfenzhengEt.getText().toString())) {
                 showToast("请上传身份证");
                 return;
             }
-            if(TextUtils.isEmpty(mjiashizhenghaomaEt.getText().toString())){
-                showToast("请上传驾驶证&行驶证");
+            if (TextUtils.isEmpty(mjiashizhenghaomaEt.getText().toString())) {
+                showToast("请上传驾驶证");
                 return;
             }
-            if(TextUtils.isEmpty(mchepaihaomaEt.getText().toString())){
-                showToast("请输入车牌号码");
+            if (TextUtils.isEmpty(mchepaihaomaEt.getText().toString())) {
+                showToast("请上传行驶证");
                 return;
             }
-            if(TextUtils.isEmpty(mCategory)){
+            if (TextUtils.isEmpty(mCategory)) {
                 showToast("请选择配送类型");
             }
 
-            doSomeThing(mNameEt.getText().toString(),mshenfenzhengEt.getText().toString(),mchepaihaomaEt.getText().toString(),
+            doSomeThing(mNameEt.getText().toString(), mshenfenzhengEt.getText().toString(), mchepaihaomaEt.getText().toString(),
                     mhedingzaizhiliangEt.getText().toString(), myingyunzhenghaomaEt.getText().toString(), mcheliangzhoushuEt.getText().toString(),
-                    mjiashizhenghaomaEt.getText().toString(), mzigezhenghaomaEt.getText().toString(),mCategory);
+                    mjiashizhenghaomaEt.getText().toString(), mzigezhenghaomaEt.getText().toString(), mCategory);
 
         }
     }
@@ -1726,8 +1699,8 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         mLoadingDialog = LoadingProgress.showProgress(this, msg);
     }
 
-    public void dismissLoading(){
-        if(mLoadingDialog!=null && mLoadingDialog.isShowing())
+    public void dismissLoading() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing())
             mLoadingDialog.dismiss();
     }
 
@@ -1750,11 +1723,11 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         //------------1
         mPresenter.postData(picMaps, params);
 
-        mPresenter.shenfenzheng(mIdPath,"face_cardimg","1");
+        mPresenter.shenfenzheng(mIdPath, "face_cardimg", "1");
 
     }
 
-    private void checkPostjiashi(){
+    private void checkPostjiashi() {
         if (TextUtils.isEmpty(mDriverPath))
             return;
 
@@ -1768,7 +1741,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         //------------1
         mPresenter.postData(picMaps, params);
 
-        mPresenter.shenfenzheng(mDriverPath,"driverimg","2");
+        mPresenter.shenfenzheng(mDriverPath, "driverimg", "2");
     }
 
 
@@ -1787,18 +1760,18 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         //------------1
         mPresenter.postData(picMaps, params);
 
-        mPresenter.shenfenzheng(mBookPath,"travelimg","3");
+        mPresenter.shenfenzheng(mBookPath, "travelimg", "3");
 
     }
 
 
     @OnClick({R.id.authIdIv, R.id.authIdIvUn,
-            R.id.authAvatarIv,R.id.authAvatarIvUn,
+            R.id.authAvatarIv, R.id.authAvatarIvUn,
             R.id.authDriverIv, R.id.authDriverIvUn,
             R.id.authBookIv, R.id.authBookIvUn,
             R.id.authCarpicIv})
     public void camera(View v) {
-        if(status) return;
+        if (status) return;
         int id = v.getId();
         int result = RESULT_ID;
         if (id == R.id.authIdIv || id == R.id.authIdIvUn) {
@@ -1887,7 +1860,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         dismissLoading();
 
         //------------2
-        if(postType == 3){
+        if (postType == 3) {
             getData();
         }
     }
@@ -1895,7 +1868,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
     @Override
     public void onPostError(BaseEntity entity) {
         //------------1.2
-        if(postType == 0){
+        if (postType == 0) {
             mauthIdIvUn.setVisibility(View.VISIBLE);
             mIdIv.setVisibility(View.GONE);
             mIdPath = "";
@@ -1903,17 +1876,17 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mAvatarIv.setVisibility(View.GONE);
             mAvatarPath = "";
             showToast("上传失败，请重新上传");
-        }else if(postType == 1){
+        } else if (postType == 1) {
             mauthDriverIvUn.setVisibility(View.VISIBLE);
             mDriverIv.setVisibility(View.GONE);
             mDriverPath = "";
             showToast("上传失败，请重新上传");
-        }else if(postType == 2){
+        } else if (postType == 2) {
             mauthBookIvUn.setVisibility(View.VISIBLE);
             mBookIv.setVisibility(View.GONE);
             mBookPath = "";
             showToast("上传失败，请重新上传");
-        } else if(postType == 3){
+        } else if (postType == 3) {
             handleError(entity);
         }
 
@@ -1926,31 +1899,32 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         showNetworkError();
     }
 
+    GongAnAuth dd;
     @Override
     public void shenfenzhengSuccess(BaseEntity<GongAnAuth> entity) {
-        GongAnAuth dd = entity.getData();
+        dd = entity.getData();
 
         //------------2.1
-        if(postType == 0){
+        if (postType == 0) {
             mNameEt.setText(dd.name);
             mshenfenzhengEt.setText(dd.num);
-        }else if(postType == 1){
+        } else if (postType == 1) {
             mjiashizhenghaomaEt.setText(dd.num);
-        }else if(postType == 2){
-            if(dd.plate_num.length() > 0){
-                mjianchengs.setSelection(getJianchengPos(dd.plate_num.substring(0,1)));
+        } else if (postType == 2) {
+            if (dd.plate_num.length() > 0) {
+                mjianchengs.setSelection(getJianchengPos(dd.plate_num.substring(0, 1)));
                 mchepaihaomaEt.setText(dd.plate_num.substring(1));
             }
         }
         showToast("验证成功");
     }
 
-    public int getJianchengPos(String str){
-        Resources res =getResources();
-        String[] city=res.getStringArray(R.array.jiancheng);
+    public int getJianchengPos(String str) {
+        Resources res = getResources();
+        String[] city = res.getStringArray(R.array.jiancheng);
 
-        for (int i=0;i<city.length;i++){
-            if(city[i].equals(str)){
+        for (int i = 0; i < city.length; i++) {
+            if (city[i].equals(str)) {
                 return i;
             }
         }
@@ -2031,7 +2005,6 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
 
                 mxuantian.setVisibility(View.VISIBLE);
             }
-
 
 
             if (TextUtils.isEmpty(auth.name) || auth.name.length() == 0) {
