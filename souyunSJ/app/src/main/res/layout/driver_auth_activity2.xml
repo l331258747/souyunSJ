@@ -952,7 +952,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/default_font14" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/hedingzaizhiliangEt"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"

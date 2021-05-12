@@ -4,7 +4,6 @@ package com.xrwl.driver.module.home.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,91 +48,108 @@ import butterknife.OnClick;
 public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, DriverAuthPresenter> implements DriverAuthContract
         .IView {
 
-    private long firstTime = 0;
-    private static Handler handler = new Handler();
-
-    public static final int RESULT_ID = 100;
-    public static final int RESULT_AVATAR = 200;
-    public static final int RESULT_DRIVER = 300;
-    public static final int RESULT_BOOK = 400;
-    public static final int RESULT_CAR = 500;
-
-    @BindView(R.id.authCarpicIv)
-    ImageView mauthCarpicIv;//车辆照片
-    @BindView(R.id.authIdIv)
-    ImageView mIdIv;//身份证
-    @BindView(R.id.authNameEt)
-    TextView mNameEt;//姓名
-    @BindView(R.id.authAvatarIv)
-    ImageView mAvatarIv;//本人照片
-    @BindView(R.id.authConfirmBtn)
-    Button mConfirmBtn;
-    @BindView(R.id.authSpinner)
-    Spinner mAuthSpinner;
-    @BindView(R.id.carSp)
-    Spinner mcarSp;
-
-    @BindView(R.id.shenfenzhengEt)
-    TextView mshenfenzhengEt;//姓名
-    @BindView(R.id.chepaihaomaEt)
-    TextView mchepaihaomaEt;//姓名
-    @BindView(R.id.hedingzaizhiliangEt)
-    EditText mhedingzaizhiliangEt;//姓名
-    @BindView(R.id.yingyunzhenghaomaEt)
-    EditText myingyunzhenghaomaEt;//姓名
-    @BindView(R.id.cheliangzhoushuEt)
-    EditText mcheliangzhoushuEt;//姓名
-    @BindView(R.id.jiashizhenghaomaEt)
-    TextView mjiashizhenghaomaEt;//姓名
-    @BindView(R.id.zigezhenghaomaEt)
-    EditText mzigezhenghaomaEt;//姓名
-    @BindView(R.id.discarSp)
-    TextView mdiscarsp;//姓名
-    private String mIdPath, mAvatarPath, mDriverPath, mBookPath, mCarPath;
-    private String mCategory;
+    public static final int RESULT_ID = 100;//身份证-正面
+    public static final int RESULT_AVATAR = 200;//身份证-反面
+    public static final int RESULT_DRIVER = 300;//驾驶证-正面
+    public static final int RESULT_DRIVER_BACK = 301;//驾驶证-反面
+    public static final int RESULT_BOOK = 400;//行驶证-正面
+    public static final int RESULT_BOOK_BACK = 401;//行驶证-反面
+    public static final int RESULT_CAR = 500;//车辆照片
 
     //实名认证隐藏和显示的ly
     @BindView(R.id.topLY)
     RelativeLayout mtoply;
     @BindView(R.id.toprzLY)
     RelativeLayout mtoprzLY;
-    @BindView(R.id.xuantian)
-    LinearLayout mxuantian;
-    @BindView(R.id.diyiweiwanshanbt)
-    Button mdiyiweiwanshanbt;
-    @BindView(R.id.dierweiwanshanbt)
-    Button mdierweiwanshanbt;
-    @BindView(R.id.disanweiwanshanbt)
-    Button mdisanweiwanshanbt;
-    @BindView(R.id.diwuweiwanshanbt)
-    Button mdiwuweiwanshanbt;
-    @BindView(R.id.disiweiwanshanbt)
-    Button mdisiweiwanshanbt;
-
     @BindView(R.id.aliyun)
-    TextView maliyun;
+    TextView maliyun;//阿里云tip
 
+    @BindView(R.id.authNameEt)
+    TextView mNameEt;//姓名
+    @BindView(R.id.shenfenzhengEt)
+    TextView mshenfenzhengEt;//证件号
+    @BindView(R.id.authSpinner)
+    Spinner mAuthSpinner;//配送类型
+    @BindView(R.id.jiashizhenghaomaEt)
+    TextView mjiashizhenghaomaEt;//证件号码
+
+    @BindView(R.id.authDesTv)
+    TextView mauthDesTv;//证件照tip
+    @BindView(R.id.diyiweiwanshanbt)
+    Button mdiyiweiwanshanbt;//个人信息
+    @BindView(R.id.dierweiwanshanbt)
+    Button mdierweiwanshanbt;//身份证信息
+    @BindView(R.id.disanweiwanshanbt)
+    Button mdisanweiwanshanbt;//驾驶证信息
+    @BindView(R.id.disiweiwanshanbt)
+    Button mdisiweiwanshanbt;//车辆信息
+    @BindView(R.id.diwuweiwanshanbt)
+    Button mdiwuweiwanshanbt;//行驶证信息
+
+    @BindView(R.id.authIdIv)
+    ImageView mIdIv;//身份证-正面
+    @BindView(R.id.authAvatarIv)
+    ImageView mAvatarIv;//身份证-反面
+    @BindView(R.id.authIdIvUn)
+    RelativeLayout mauthIdIvUn;//身份证-正面-un
+    @BindView(R.id.authAvatarIvUn)
+    RelativeLayout mauthAvatarIvUn;//身份证-反面-un
+
+    @BindView(R.id.authDriverIv)
+    ImageView mDriverIv;//驾驶证-正面
+    @BindView(R.id.authDriverBackIv)
+    ImageView mDriverBackIv;//驾驶证-反面
+    @BindView(R.id.authDriverIvUn)
+    RelativeLayout mauthDriverIvUn;//驾驶证-正面-un
+    @BindView(R.id.authDriverBackIvUn)
+    RelativeLayout mauthDriverBackIvUn;//驾驶证-反面-un
+
+    @BindView(R.id.authBookIv)
+    ImageView mBookIv;//行驶证-正面
+    @BindView(R.id.authBookBackIv)
+    ImageView mBookBackIv;//行驶证-反面
+    @BindView(R.id.authBookIvUn)
+    RelativeLayout mauthBookIvUn;//行驶证-正面-un
+    @BindView(R.id.authBookBackIvUn)
+    RelativeLayout mauthBookBackIvUn;//行驶证-反面-un
+
+    @BindView(R.id.jianchengs)
+    Spinner mjianchengs;//车牌号码-省
+    @BindView(R.id.chepaihaomaEt)
+    TextView mchepaihaomaEt;//车牌号码
+    @BindView(R.id.carSp)
+    Spinner mcarSp;//车型
+    @BindView(R.id.discarSp)
+    TextView mdiscarsp;//认证车型
+    @BindView(R.id.authCarpicIv)
+    ImageView mauthCarpicIv;//车辆照片
+
+
+    @BindView(R.id.xuantian)
+    LinearLayout mxuantian;//选填
     @BindView(R.id.dagou)
     CheckBox mCheckBox;
-    @BindView(R.id.authDesTv)
-    TextView mauthDesTv;
-    @BindView(R.id.authIdIvUn)
-    RelativeLayout mauthIdIvUn;
-    @BindView(R.id.authAvatarIvUn)
-    RelativeLayout mauthAvatarIvUn;
-    @BindView(R.id.authDriverIvUn)
-    RelativeLayout mauthDriverIvUn;
-    @BindView(R.id.authBookIvUn)
-    RelativeLayout mauthBookIvUn;
-    @BindView(R.id.authDriverIv)
-    ImageView mDriverIv;//驾驶证
-    @BindView(R.id.authBookIv)
-    ImageView mBookIv;//行车本
-    @BindView(R.id.jianchengs)
-    Spinner mjianchengs;//行车本
+    @BindView(R.id.hedingzaizhiliangEt)
+    TextView mhedingzaizhiliangEt;//核定载质量
+    @BindView(R.id.yingyunzhenghaomaEt)
+    EditText myingyunzhenghaomaEt;//营运证号码
+    @BindView(R.id.cheliangzhoushuEt)
+    EditText mcheliangzhoushuEt;//车 辆 轴 数
+    @BindView(R.id.zigezhenghaomaEt)
+    EditText mzigezhenghaomaEt;//资格证号码
+
+    @BindView(R.id.authConfirmBtn)
+    Button mConfirmBtn;//提交
+
+    private String mIdPath, mAvatarPath;//身份证
+    private String mDriverPath,mDriverBackPath;//驾驶证
+    private String mBookPath,mBookBackPath;//行驶证
+    private String mCarPath;//车辆照片
+
+    private String mCategory;//配送类型
 
     private ProgressDialog mLoadingDialog;
-    int postType;//0身份证,1驾驶证，2行驶证，3提交信息
+    int postType;//0身份证,1驾驶证，11驾驶证反面，2行驶证，21行驶证反面，3提交信息
     boolean status;
 
     @Override
@@ -166,10 +182,14 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         //驾驶证
         mDriverIv.setVisibility(View.GONE);
         mauthDriverIvUn.setVisibility(View.VISIBLE);
+        mDriverBackIv.setVisibility(View.GONE);
+        mauthDriverBackIvUn.setVisibility(View.VISIBLE);
 
         //行驶证
         mBookIv.setVisibility(View.GONE);
         mauthBookIvUn.setVisibility(View.VISIBLE);
+        mBookBackIv.setVisibility(View.GONE);
+        mauthBookBackIvUn.setVisibility(View.VISIBLE);
 
         //选填的
         mxuantian.setVisibility(View.GONE);
@@ -177,9 +197,9 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         //提交
         mConfirmBtn.setVisibility(View.VISIBLE);
 
-        //spanner 不可选，自动填充
+        //spanner 不可选，自动填充 车牌号-省
         mjianchengs.setEnabled(false);
-
+        mjianchengs.setVisibility(View.GONE);
 
         mCategory = "0";
         mAuthSpinner.setAdapter(new ArrayAdapter<>(this,
@@ -290,7 +310,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
                 showToast("请上传驾驶证");
                 return;
             }
-            if (TextUtils.isEmpty(mchepaihaomaEt.getText().toString())) {
+            if (TextUtils.isEmpty(mchepaihaomaEt.getText().toString()) || TextUtils.isEmpty(mhedingzaizhiliangEt.getText().toString())) {
                 showToast("请上传行驶证");
                 return;
             }
@@ -338,27 +358,27 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         mPresenter.shenfenzheng(mIdPath, "face_cardimg", "1");
 
         mPresenter.postData(picMaps, params);
-
     }
 
     //认证驾驶证
     private void checkPostjiashi() {
         if (TextUtils.isEmpty(mDriverPath))
             return;
+        if (TextUtils.isEmpty(mDriverBackPath))
+            return;
 
         Map<String, String> picMaps = new HashMap<>();
         Map<String, String> params = new HashMap<>();
 
         picMaps.put("pic_drive", mDriverPath);
+        picMaps.put("pic_drive_back", mDriverBackPath);
         params.put("type", "10");
         showLoading("上传驾驶证...");
         postType = 1;
         //------------1
 
         mPresenter.shenfenzheng(mDriverPath, "driverimg", "2");
-
         mPresenter.postData(picMaps, params);
-
     }
 
     //认证行驶证
@@ -377,16 +397,34 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         //------------1
 
         mPresenter.shenfenzheng(mBookPath, "travelimg", "3");
-
         mPresenter.postData(picMaps, params);
-
     }
 
+    //认证行驶证-反面
+    private void checkPostxingshiBack() {
+        if (TextUtils.isEmpty(mBookBackPath)) {
+            return;
+        }
+        Map<String, String> picMaps = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
+
+        picMaps.put("pic_train_back", mBookBackPath);
+        params.put("type", "20");
+
+        showLoading("上传行驶证...");
+        postType = 21;
+        //------------1
+
+        mPresenter.shenfenzheng(mBookPath, "travelimgback", "3");
+        mPresenter.postData(picMaps, params);
+    }
 
     @OnClick({R.id.authIdIv, R.id.authIdIvUn,
             R.id.authAvatarIv, R.id.authAvatarIvUn,
             R.id.authDriverIv, R.id.authDriverIvUn,
+            R.id.authDriverBackIv, R.id.authDriverBackIvUn,
             R.id.authBookIv, R.id.authBookIvUn,
+            R.id.authBookBackIv, R.id.authBookBackIvUn,
             R.id.authCarpicIv})
     public void camera(View v) {
 //        if (status) return;
@@ -398,8 +436,12 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             result = RESULT_AVATAR;
         } else if (id == R.id.authDriverIv || id == R.id.authDriverIvUn) {
             result = RESULT_DRIVER;
+        }  else if (id == R.id.authDriverBackIv || id == R.id.authDriverBackIvUn) {
+            result = RESULT_DRIVER_BACK;
         } else if (id == R.id.authBookIv || id == R.id.authBookIvUn) {
             result = RESULT_BOOK;
+        } else if (id == R.id.authBookBackIv || id == R.id.authBookBackIvUn) {
+            result = RESULT_BOOK_BACK;
         } else if (id == R.id.authCarpicIv) {
             result = RESULT_CAR;
         }
@@ -451,6 +493,16 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mDriverIv.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(mDriverPath).into(mDriverIv);
             checkPostjiashi();
+        } else if (requestCode == RESULT_DRIVER_BACK) {
+            if (lm.isCompressed()) {
+                mDriverBackPath = lm.getCompressPath();
+            } else {
+                mDriverBackPath = lm.getPath();
+            }
+            mauthDriverBackIvUn.setVisibility(View.GONE);
+            mDriverBackIv.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(mDriverBackPath).into(mDriverBackIv);
+            checkPostjiashi();
         } else if (requestCode == RESULT_BOOK) {
             if (lm.isCompressed()) {
                 mBookPath = lm.getCompressPath();
@@ -461,6 +513,16 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mauthBookIvUn.setVisibility(View.GONE);
             mBookIv.setVisibility(View.VISIBLE);
             checkPostxingshi();
+        } else if (requestCode == RESULT_BOOK_BACK) {
+            if (lm.isCompressed()) {
+                mBookBackPath = lm.getCompressPath();
+            } else {
+                mBookBackPath = lm.getPath();
+            }
+            Glide.with(mContext).load(mBookBackPath).into(mBookBackIv);
+            mauthBookBackIvUn.setVisibility(View.GONE);
+            mBookBackIv.setVisibility(View.VISIBLE);
+            checkPostxingshiBack();
         } else if (requestCode == RESULT_CAR) {
             if (lm.isCompressed()) {
                 mCarPath = lm.getCompressPath();
@@ -499,10 +561,20 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mDriverIv.setVisibility(View.GONE);
             mDriverPath = "";
             showToast("上传失败，请重新上传");
+        } else if (postType == 11) {
+            mauthDriverBackIvUn.setVisibility(View.VISIBLE);
+            mDriverBackIv.setVisibility(View.GONE);
+            mDriverBackPath = "";
+            showToast("上传失败，请重新上传");
         } else if (postType == 2) {
             mauthBookIvUn.setVisibility(View.VISIBLE);
             mBookIv.setVisibility(View.GONE);
             mBookPath = "";
+            showToast("上传失败，请重新上传");
+        } else if (postType == 2) {
+            mauthBookBackIvUn.setVisibility(View.VISIBLE);
+            mBookBackIv.setVisibility(View.GONE);
+            mBookBackPath = "";
             showToast("上传失败，请重新上传");
         } else if (postType == 3) {
             handleError(entity);
@@ -528,11 +600,15 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mshenfenzhengEt.setText(dd.num);
         } else if (postType == 1) {
             mjiashizhenghaomaEt.setText(dd.num);
+        } else if (postType == 11) {
+
         } else if (postType == 2) {
             if (dd.plate_num.length() > 0) {
                 mjianchengs.setSelection(getJianchengPos(dd.plate_num.substring(0, 1)));
-                mchepaihaomaEt.setText(dd.plate_num.substring(1));
+                mchepaihaomaEt.setText(dd.plate_num);
             }
+        } else if (postType == 21) {
+            mhedingzaizhiliangEt.setText(dd.approved_load);
         }
         showToast("验证成功");
     }
@@ -555,6 +631,22 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         showToast("验证失败，请重新上传");
     }
 
+    public void setTextValue(TextView tv, String value){
+        try {
+            tv.setText(URLDecoder.decode(value, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setTextValue(EditText tv, String value){
+        try {
+            tv.setText(URLDecoder.decode(value, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     //获取个人信息成功
     @Override
     public void onRefreshSuccess(BaseEntity<Auth> entity) {
@@ -562,59 +654,67 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         Auth auth = entity.getData();
         if (auth != null) {
 
-            //名字，invitePhones，驾驶证号码
+            //名字，身份证号码，驾驶证号码
             if ((!TextUtils.isEmpty(auth.name)) && (!TextUtils.isEmpty(auth.invitePhones)) && (!TextUtils.isEmpty(auth.jiashizhenghaoma))) {
                 mdiyiweiwanshanbt.setText("审核中");
                 mdiyiweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
             }
-            //身份证号码，本人照片，驾驶证
-            if ((!TextUtils.isEmpty(auth.picId)) && !TextUtils.isEmpty(auth.picAvatar) && !TextUtils.isEmpty(auth.picDriver)) {
+
+            //身份证号码正面，身份证号码背面，身份证号码
+            if ((!TextUtils.isEmpty(auth.picId)) && !TextUtils.isEmpty(auth.picAvatar) && (!TextUtils.isEmpty(auth.invitePhones))) {
                 mdierweiwanshanbt.setText("审核中");
                 mdierweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
             }
 
-            //行车本，
-            if ((!TextUtils.isEmpty(auth.picBook))) {
+            //驾驶证，
+            if ((!TextUtils.isEmpty(auth.jiashizhenghaoma))) {
                 mdisanweiwanshanbt.setText("审核中");
                 mdisanweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
             }
 
             //车牌号码，
-            if ((!TextUtils.isEmpty(auth.chepaihaoma)) && (!TextUtils.isEmpty(auth.hedingzaizhiliang)) && (!TextUtils.isEmpty(auth.yingyunzhenghaoma)) && (!TextUtils.isEmpty(auth.cheliangzhoushu)) && (!TextUtils.isEmpty(auth.zigezhenghaoma))) {
+            if ((!TextUtils.isEmpty(auth.chepaihaoma))) {
                 mdisiweiwanshanbt.setText("审核中");
                 mdisiweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
             }
 
+            //行驶证，
+            if ((!TextUtils.isEmpty(auth.chepaihaoma))) {
+                mdiwuweiwanshanbt.setText("审核中");
+                mdiwuweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
+            }
+
 
             if ("1".equals(auth.review)) {
-
                 status = true;
-
                 mtoply.setVisibility(View.GONE);
                 mtoprzLY.setVisibility(View.VISIBLE);
-
                 mConfirmBtn.setVisibility(View.GONE);
 
+                //名字，身份证号码，驾驶证号码
                 if ((!TextUtils.isEmpty(auth.name)) && (!TextUtils.isEmpty(auth.invitePhones)) && (!TextUtils.isEmpty(auth.jiashizhenghaoma))) {
                     mdiyiweiwanshanbt.setText("审核通过");
                     mdiyiweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
                     maliyun.setVisibility(View.GONE);
                 }
-                if ((!TextUtils.isEmpty(auth.picId)) && !TextUtils.isEmpty(auth.picAvatar) && !TextUtils.isEmpty(auth.picDriver)) {
+
+                if ((!TextUtils.isEmpty(auth.picId)) && !TextUtils.isEmpty(auth.picAvatar) && (!TextUtils.isEmpty(auth.invitePhones))) {
                     mdierweiwanshanbt.setText("审核通过");
                     mdierweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
-
                     mauthDesTv.setVisibility(View.GONE);
                 }
-                if ((!TextUtils.isEmpty(auth.picBook)) && (!TextUtils.isEmpty(auth.picBook))) {
+                if ((!TextUtils.isEmpty(auth.jiashizhenghaoma))) {
                     mdisanweiwanshanbt.setText("审核通过");
                     mdisanweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
                 }
-                if ((!TextUtils.isEmpty(auth.chepaihaoma)) && (!TextUtils.isEmpty(auth.hedingzaizhiliang)) && (!TextUtils.isEmpty(auth.yingyunzhenghaoma)) && (!TextUtils.isEmpty(auth.cheliangzhoushu)) && (!TextUtils.isEmpty(auth.zigezhenghaoma))) {
+                if ((!TextUtils.isEmpty(auth.chepaihaoma))) {
                     mdisiweiwanshanbt.setText("审核通过");
                     mdisiweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
-
                     mCheckBox.setVisibility(View.GONE);
+                }
+                if ((!TextUtils.isEmpty(auth.chepaihaoma))) {
+                    mdiwuweiwanshanbt.setText("审核通过");
+                    mdiwuweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
                 }
 
                 mAuthSpinner.setEnabled(false);
@@ -630,86 +730,58 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             }
 
 
-            if (TextUtils.isEmpty(auth.name) || auth.name.length() == 0) {
+            //姓名
+            if (TextUtils.isEmpty(auth.name) || auth.name.equals("0")) {
                 mNameEt.setText("");
             } else {
-                if (auth.name.equals("0")) {
-                    mNameEt.setText("");
-                } else {
-                    try {
-                        mNameEt.setText(URLDecoder.decode(auth.name, "UTF-8"));
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                }
+                setTextValue(mNameEt,auth.name);
             }
-
+            //证件号码
             if (TextUtils.isEmpty(auth.invitePhones) || auth.invitePhones.length() == 0) {
                 mshenfenzhengEt.setText("");
             } else {
-                try {
-                    mshenfenzhengEt.setText(URLDecoder.decode(auth.invitePhones, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                setTextValue(mshenfenzhengEt,auth.invitePhones);
             }
-            if (TextUtils.isEmpty(auth.chepaihaoma) || auth.chepaihaoma.length() == 0) {
-                mchepaihaomaEt.setText("");
-            } else {
-                try {
-                    mchepaihaomaEt.setText(URLDecoder.decode(auth.chepaihaoma, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (TextUtils.isEmpty(auth.hedingzaizhiliang) || auth.hedingzaizhiliang.length() == 0) {
-                mhedingzaizhiliangEt.setText("");
-            } else {
-                try {
-                    mhedingzaizhiliangEt.setText(URLDecoder.decode(auth.hedingzaizhiliang, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (TextUtils.isEmpty(auth.yingyunzhenghaoma) || auth.yingyunzhenghaoma.length() == 0) {
-                myingyunzhenghaomaEt.setText("");
-            } else {
-                try {
-                    myingyunzhenghaomaEt.setText(URLDecoder.decode(auth.yingyunzhenghaoma, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (TextUtils.isEmpty(auth.cheliangzhoushu) || auth.cheliangzhoushu.length() == 0) {
-                mcheliangzhoushuEt.setText("");
-            } else {
-                try {
-                    mcheliangzhoushuEt.setText(URLDecoder.decode(auth.cheliangzhoushu, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-
+            // 驾驶证号码
             if (TextUtils.isEmpty(auth.jiashizhenghaoma) || auth.jiashizhenghaoma.length() == 0) {
                 mjiashizhenghaomaEt.setText("");
             } else {
-                try {
-                    mjiashizhenghaomaEt.setText(URLDecoder.decode(auth.jiashizhenghaoma, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                setTextValue(mjiashizhenghaomaEt,auth.jiashizhenghaoma);
             }
 
+            //车牌号码
+            if (TextUtils.isEmpty(auth.chepaihaoma) || auth.chepaihaoma.length() == 0) {
+                mchepaihaomaEt.setText("");
+            } else {
+                setTextValue(mchepaihaomaEt,auth.chepaihaoma);
+            }
+
+            //核定载质量
+            if (TextUtils.isEmpty(auth.hedingzaizhiliang) || auth.hedingzaizhiliang.length() == 0) {
+                mhedingzaizhiliangEt.setText("");
+            } else {
+                setTextValue(mhedingzaizhiliangEt,auth.hedingzaizhiliang);
+            }
+            //营运证号码
+            if (TextUtils.isEmpty(auth.yingyunzhenghaoma) || auth.yingyunzhenghaoma.length() == 0) {
+                myingyunzhenghaomaEt.setText("");
+            } else {
+                setTextValue(myingyunzhenghaomaEt,auth.yingyunzhenghaoma);
+            }
+            //车 辆 轴 数
+            if (TextUtils.isEmpty(auth.cheliangzhoushu) || auth.cheliangzhoushu.length() == 0) {
+                mcheliangzhoushuEt.setText("");
+            } else {
+                setTextValue(mcheliangzhoushuEt,auth.cheliangzhoushu);
+            }
+            //资格证号码
             if (TextUtils.isEmpty(auth.zigezhenghaoma) || auth.zigezhenghaoma.length() == 0) {
                 mzigezhenghaomaEt.setText("");
             } else {
-                try {
-                    mzigezhenghaomaEt.setText(URLDecoder.decode(auth.zigezhenghaoma, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                setTextValue(mzigezhenghaomaEt,auth.zigezhenghaoma);
             }
 
+            //认证车型
             if (TextUtils.isEmpty(auth.renzhengchexing) || null == auth.renzhengchexing) {
                 mcarSp.setVisibility(View.VISIBLE);
                 mdiscarsp.setVisibility(View.GONE);
@@ -725,15 +797,33 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
 
             if (!TextUtils.isEmpty(auth.picId)) {//身份证
                 Glide.with(this).load(auth.picId).into(mIdIv);
+                mauthIdIvUn.setVisibility(View.GONE);
+                mIdIv.setVisibility(View.VISIBLE);
             }
-            if (!TextUtils.isEmpty(auth.picAvatar)) {//本人
+            if (!TextUtils.isEmpty(auth.picAvatar)) {//身份证反
                 Glide.with(this).load(auth.picAvatar).into(mAvatarIv);
+                mauthAvatarIvUn.setVisibility(View.GONE);
+                mAvatarIv.setVisibility(View.VISIBLE);
             }
             if (!TextUtils.isEmpty(auth.picDriver)) {//驾驶证
                 Glide.with(this).load(auth.picDriver).into(mDriverIv);
+                mauthDriverIvUn.setVisibility(View.GONE);
+                mDriverIv.setVisibility(View.VISIBLE);
+            }
+            if (!TextUtils.isEmpty(auth.picDriverBack)) {//驾驶证反
+                Glide.with(this).load(auth.picDriverBack).into(mDriverBackIv);
+                mauthDriverBackIvUn.setVisibility(View.GONE);
+                mDriverBackIv.setVisibility(View.VISIBLE);
             }
             if (!TextUtils.isEmpty(auth.picBook)) {//行车本
                 Glide.with(this).load(auth.picBook).into(mBookIv);
+                mauthBookIvUn.setVisibility(View.GONE);
+                mBookIv.setVisibility(View.VISIBLE);
+            }
+            if (!TextUtils.isEmpty(auth.picBookBack)) {//行车本
+                Glide.with(this).load(auth.picBookBack).into(mBookBackIv);
+                mauthBookBackIvUn.setVisibility(View.GONE);
+                mBookBackIv.setVisibility(View.VISIBLE);
             }
             if (!TextUtils.isEmpty(auth.picCar)) {//车辆照片
                 Glide.with(this).load(auth.picCar).into(mauthCarpicIv);

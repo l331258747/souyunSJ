@@ -62,4 +62,7 @@ public class GongAnAuth {
     public String vin;
     public String gross_mass;
 
+    //行驶证
+    public String approved_load;
+
 }

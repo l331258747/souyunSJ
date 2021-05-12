@@ -16,37 +16,45 @@ public class Auth {
      */
     @SerializedName("type_review")
     public String review;
-    @SerializedName("type_carload")
-    public String carload;//是否是整车  0：不是  1：是
-    public String name;
+
+    public String name;//姓名
+    public String invitePhones;//身份证号码
+    public String category;//配送类型
+    public String jiashizhenghaoma;//驾驶证号码
+
     @SerializedName("pic_id")
     public String picId;//身份证
     @SerializedName("pic_avatar")
     public String picAvatar;//本人照片
+
+    @SerializedName("pic_driver")
+    public String picDriver;//驾驶证
+    @SerializedName("pic_driver_back")
+    public String picDriverBack;//驾驶证反
+
+    @SerializedName("pic_train")
+    public String picBook;//行驶证
+    @SerializedName("pic_train_back")
+    public String picBookBack;//行驶证反
+
+    @SerializedName("pic_car")
+    public String picCar;//车辆照片
+    public String chepaihaoma;//车牌号码
+    public String renzhengchexing;//认证车型
+
+    public String hedingzaizhiliang;//核定载质量
+    public String yingyunzhenghaoma;//营运证号码
+    public String cheliangzhoushu;//车 辆 轴 数
+    public String zigezhenghaoma;//资格证号码
+
+    //--------------无效
     @SerializedName("pic_licence")
     public String picLicence;//营业执照
     public String unit;
-
-    /** 以下三个字段针对司机端 */
-    @SerializedName("pic_driver")
-    public String picDriver;//驾驶证
-    public String jiashizheng;//驾驶证
-    @SerializedName("pic_train")
-    public String picBook;//行车本
-    public String picCar;//车辆照片
-    public String category;
-
-
-
-    public String chepaihaoma;
-    public String hedingzaizhiliang;
-    public String yingyunzhenghaoma;
-    public String cheliangzhoushu;
-    public String jiashizhenghaoma;
-    public String zigezhenghaoma;
-    public String invitePhones;
     public String picidshenfenzheng;
-    public String renzhengchexing;
+    @SerializedName("type_carload")
+    public String carload;//是否是整车  0：不是  1：是
+    public String jiashizheng;//驾驶证
     /**
      * 是否是整车
      * @return
