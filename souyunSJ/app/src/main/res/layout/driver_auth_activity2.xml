@@ -48,12 +48,72 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingTop="5dp">
+            android:orientation="vertical">
+
+            <!--            个人信息-->
+
+            <LinearLayout
+                android:id="@+id/diyiLY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_dp10"
+                android:layout_marginBottom="@dimen/default_dp10"
+                android:gravity="center_vertical"
+
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_dp10"
+                        android:text="个人信息"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_dp10"
+                        android:text="完善身份信息，体验更多服务" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/diyiweiwanshanbt"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:text="未完善" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/aliyun"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/gray"
+                android:gravity="center"
+                android:text="实名认证服务由阿里云计算有限公司提供"
+                android:textColor="@color/white"
+                android:textSize="@dimen/default_font14" />
 
             <!--            是否实名 -->
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:background="@color/gray_33"
+                android:padding="@dimen/default_dp10"
                 android:layout_height="180dp">
 
                 <RelativeLayout
@@ -61,9 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_blue_r5"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/default_dp10"
-                    android:layout_marginEnd="@dimen/default_dp10">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/default_dp80"
@@ -80,9 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_blue_r5"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/default_dp10"
-                    android:layout_marginEnd="@dimen/default_dp10">
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="@dimen/default_dp80"
@@ -97,10 +153,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray_33"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -215,66 +268,6 @@
 
             </RelativeLayout>
 
-
-            <!--            个人信息-->
-
-            <LinearLayout
-                android:id="@+id/diyiLY"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_dp10"
-                android:layout_marginBottom="@dimen/default_dp10"
-                android:gravity="center_vertical"
-
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_dp10"
-                        android:text="个人信息"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_dp10"
-                        android:text="完善身份信息，体验更多服务" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/diyiweiwanshanbt"
-                        android:layout_width="65dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:text="未完善" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <include layout="@layout/base_lineview_include" />
-
-            <TextView
-                android:id="@+id/aliyun"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:background="@color/gray"
-                android:gravity="center"
-                android:text="实名认证服务由阿里云计算有限公司提供"
-                android:textColor="@color/white"
-                android:textSize="@dimen/default_font14" />
 
             <!--            证件照片-->
 

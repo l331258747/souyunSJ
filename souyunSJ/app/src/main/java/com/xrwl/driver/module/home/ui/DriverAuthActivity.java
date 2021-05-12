@@ -334,9 +334,10 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         showLoading("上传身份证...");
         postType = 0;
         //------------1
-        mPresenter.postData(picMaps, params);
 
         mPresenter.shenfenzheng(mIdPath, "face_cardimg", "1");
+
+        mPresenter.postData(picMaps, params);
 
     }
 
@@ -353,9 +354,11 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         showLoading("上传驾驶证...");
         postType = 1;
         //------------1
-        mPresenter.postData(picMaps, params);
 
         mPresenter.shenfenzheng(mDriverPath, "driverimg", "2");
+
+        mPresenter.postData(picMaps, params);
+
     }
 
     //认证行驶证
@@ -372,9 +375,10 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         showLoading("上传行驶证...");
         postType = 2;
         //------------1
-        mPresenter.postData(picMaps, params);
 
         mPresenter.shenfenzheng(mBookPath, "travelimg", "3");
+
+        mPresenter.postData(picMaps, params);
 
     }
 
@@ -385,7 +389,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             R.id.authBookIv, R.id.authBookIvUn,
             R.id.authCarpicIv})
     public void camera(View v) {
-        if (status) return;
+//        if (status) return;
         int id = v.getId();
         int result = RESULT_ID;
         if (id == R.id.authIdIv || id == R.id.authIdIvUn) {
@@ -594,7 +598,6 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
                 if ((!TextUtils.isEmpty(auth.name)) && (!TextUtils.isEmpty(auth.invitePhones)) && (!TextUtils.isEmpty(auth.jiashizhenghaoma))) {
                     mdiyiweiwanshanbt.setText("审核通过");
                     mdiyiweiwanshanbt.setTextColor(android.graphics.Color.BLUE);
-
                     maliyun.setVisibility(View.GONE);
                 }
                 if ((!TextUtils.isEmpty(auth.picId)) && !TextUtils.isEmpty(auth.picAvatar) && !TextUtils.isEmpty(auth.picDriver)) {
