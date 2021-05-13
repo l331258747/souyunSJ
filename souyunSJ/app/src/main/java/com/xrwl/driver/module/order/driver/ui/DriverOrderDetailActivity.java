@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +48,7 @@ import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkPath;
 import com.amap.api.services.route.WalkRouteResult;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.hdgq.locationlib.LocationOpenApi;
 import com.hdgq.locationlib.entity.ShippingNoteInfo;
 import com.hdgq.locationlib.listener.OnResultListener;
@@ -101,6 +103,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -140,7 +144,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
     private int GPS_REQUEST_CODE = 1;
 
-    private String chaju;
     public String zidongcategory;
     public String canshu;
     public String ddzhuangtais;
@@ -292,7 +295,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
         initLocation();
 
-
         mContext = this.getApplicationContext();
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(bundle);
@@ -338,6 +340,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         mStartPoint = new LatLonPoint(Double.valueOf(od.startLat), Double.valueOf(od.startLon));
         //终点
         mEndPoint = new LatLonPoint(Double.valueOf(od.endLat), Double.valueOf(od.endLon));
+
 
 
 //        if(od.type.equals("0"))
@@ -629,6 +632,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             mUploadBtn.setVisibility(View.VISIBLE);
             mConsignorTv.setText("" + (mConsignorPhone = od.consignorPhone.replace("-", "")));
             mConsigneeTv.setText("" + (mConsigneePhone = od.consigneePhone.replace("-", "")));
+
+            openAudioThread();
 
         } else if (od.type.equals("3")) {
 
@@ -1190,7 +1195,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         if (isRangeDialog != null && isRangeDialog.isShowing())
             isRangeDialog.dismiss();
         Distance distance = entity.getData();
-        chaju = distance.distance;
+        String chaju = distance.distance;
         //这个目前在运输中到已完成点击后自动操作的步骤
         if ("2".equals(ddzhuangtais)) {
 //            if (Double.parseDouble(chaju) * 1000 <= Double.parseDouble(canshu)) {
@@ -1406,7 +1411,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
         mOption.setGpsFirst(false);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(60000);//可选，设置定位间隔。默认为2秒2000
+        mOption.setInterval(60 * 1000);//可选，设置定位间隔。默认为2秒2000
         mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
         mOption.setOnceLocation(false);//可选，设置是否单次定位。默认是false
         mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
@@ -1721,6 +1726,51 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     }
     //================== 线路规划 end
 
+
+    //================== 语音播报 start
+
+    Timer audioThread;
+    //开始语音现成
+    public void openAudioThread(){
+        audioThread = new Timer();
+        audioThread.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(nidayey > 0 && nidayex > 0)
+                    mPresenter.audioWithLonLat(Double.parseDouble(od.endLon), Double.parseDouble(od.endLat), nidayey, nidayex);
+            }
+        },1000,60 * 1000);
+    }
+
+    //关闭语音现成
+    public void closeAudioThread(){
+        if(audioThread != null){
+            audioThread.cancel();
+            audioThread = null;
+        }
+    }
+
+
+    @Override
+    public void audioWithLonLatSuccess(BaseEntity<Distance> entity) {
+        Distance distance = entity.getData();
+        String chaju = distance.distance;
+        //这个目前在运输中到已完成点击后自动操作的步骤
+        if(!TextUtils.equals("2",ddzhuangtais))
+            return;
+        if (Double.parseDouble(chaju) <= Double.parseDouble(canshu)) {
+            LogUtils.e("audioWithLonLatSuccess yes");
+
+            MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.sangongli);
+            mediaPlayer.start();
+
+            closeAudioThread();
+        }else{
+            LogUtils.e("audioWithLonLatSuccess no");
+        }
+    }
+
+    //================== 语音播报 end
 
     //=-================= 无效 start
 
@@ -2138,6 +2188,9 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        closeAudioThread();
+
         if (mLocationClient != null)
             mLocationClient.stopLocation();
 

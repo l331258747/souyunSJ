@@ -95,6 +95,8 @@ public interface DriverOrderContract {
 
         void onOrderDetailReceivingSuccess(BaseEntity<OrderDetail> entity);
         void onOrderDetailReceivingError(Throwable e);
+
+        void audioWithLonLatSuccess(BaseEntity<Distance> entity);
     }
 
     abstract class ADetailPresenter extends MyPresenter<IDetailView> {
@@ -134,6 +136,8 @@ public interface DriverOrderContract {
         public abstract void getCodeButton(String mobile,String type,String start_city,String end_city,String order_sn,String surname,String logistics,String name_name);
         public abstract void getCodeButton(String type,String start_city,String end_city,String order_sn,String surname,String phone);
         public abstract void calculateDistanceWithLonLat(double startLon, double startLat, double endLon, double endLat);
+
+        public abstract void audioWithLonLat(double startLon, double startLat, double endLon, double endLat);
     }
 
     interface IDetailModel {

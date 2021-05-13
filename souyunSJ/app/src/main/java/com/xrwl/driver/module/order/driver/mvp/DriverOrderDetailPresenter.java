@@ -3,6 +3,7 @@ package com.xrwl.driver.module.order.driver.mvp;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.ldw.library.bean.BaseEntity;
 import com.xrwl.driver.bean.Distance;
 import com.xrwl.driver.bean.MsgCode;
@@ -486,6 +487,38 @@ public class DriverOrderDetailPresenter extends DriverOrderContract.ADetailPrese
             @Override
             protected void onHandleError(Throwable e) {
                 mView.oncalculateDistanceError(e);
+            }
+        });
+    }
+
+    @Override
+    public void audioWithLonLat(double startLon, double startLat, double endLon, double endLat) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token", "acd890f765efd007cbb5701fd1ac7ae0");
+        params.put("type", "0");
+        params.put("startx", startLon + "");
+        params.put("starty", startLat + "");
+        params.put("endx", endLon + "");
+        params.put("endy", endLat + "");
+
+        mModel.calculateDistance(params).subscribe(new BaseObserver<Distance>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                addDisposable(d);
+            }
+
+            @Override
+            protected void onHandleSuccess(BaseEntity<Distance> entity) {
+                if (entity.isSuccess()) {
+                    LogUtils.e("audioWithLonLat success");
+                    mView.audioWithLonLatSuccess(entity);
+                } else {
+                    LogUtils.e("audioWithLonLat error");
+                }
+            }
+            @Override
+            protected void onHandleError(Throwable e) {
+                LogUtils.e("audioWithLonLat error2");
             }
         });
     }
