@@ -187,8 +187,8 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     Button mdetailConfirmxianjinBtn;
 
 
-    @BindView(R.id.detailPhotoView) //图片上传和放大
-            PhotoRecyclerView mPhotoView;
+    @BindView(R.id.detailPhotoView)
+    PhotoRecyclerView mPhotoView;//图片上传和放大
 
     @BindView(R.id.detailConsignorTv)
     TextView mConsignorTv;//发货电话
@@ -327,7 +327,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         mPresenter.hit(mId);
 
     }
-
 
 
     @SuppressLint("SetTextI18n")
@@ -1150,8 +1149,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GPS_REQUEST_CODE) {
@@ -1258,7 +1255,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         }
 
     }
-
 
 
     //================拨打电话 start
@@ -1386,7 +1382,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                 } else {
 
                 }
-                mLocationClient.stopLocation();
+//                mLocationClient.stopLocation();
             }
         });
         //设置定位参数
@@ -1397,37 +1393,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
         //启动定位
         mLocationClient.startLocation();
-
-
-//        mLocationClient = new AMapLocationClient(mContext);
-//        mLocationOption = new AMapLocationClientOption();
-//        mLocationClient.setLocationListener(new AMapLocationListener() {
-//            @Override
-//            public void onLocationChanged(AMapLocation aMapLocation) {
-//                if (aMapLocation.getErrorCode() == 0) {
-//                    String city = aMapLocation.getCity();
-//                    String chuangcity = aMapLocation.getCity();
-//                    mylat = aMapLocation.getLatitude();
-//                    mylon = aMapLocation.getLongitude();
-//                    nidayex = aMapLocation.getLatitude();
-//                    nidayey = aMapLocation.getLongitude();
-//
-//                } else {
-//
-//                }
-//
-//                mLocationClient.stopLocation();
-//
-//
-//            }
-//        });
-//        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//        //设置定位间隔,单位毫秒,默认为2000ms
-//        mLocationOption.setInterval(2000);
-//        //设置定位参数
-//        mLocationClient.setLocationOption(mLocationOption);
-//        mLocationClient.startLocation();
     }
 
     /**
@@ -1441,7 +1406,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
         mOption.setGpsFirst(false);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(2000);//可选，设置定位间隔。默认为2秒
+        mOption.setInterval(60000);//可选，设置定位间隔。默认为2秒2000
         mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
         mOption.setOnceLocation(false);//可选，设置是否单次定位。默认是false
         mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
@@ -1489,8 +1454,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
                     .show();
         }
     }
-
-
 
 
     /****
@@ -1664,6 +1627,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     // ===============微信支付 end
 
     //================== 线路规划 start
+
     /**
      * 开始搜索路线规划方案
      */
@@ -1759,15 +1723,13 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
 
     //=-================= 无效 start
+
     /**
      * 刷新, 这样的刷新方法，仅仅有一个Activity实例。
      */
     public void refresh() {
         onCreate(null);
     }
-
-
-
 
 
     @Override
@@ -2176,10 +2138,12 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPayBroadcastReceiver != null) {
+        if (mLocationClient != null)
+            mLocationClient.stopLocation();
+
+        if (mPayBroadcastReceiver != null)
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mPayBroadcastReceiver);
 
-        }
         mHandler.removeCallbacksAndMessages(null);
 
         if (mapView != null)
