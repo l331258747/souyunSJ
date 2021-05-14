@@ -99,6 +99,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+<!--            var Android_URL = "myapp://www.16souyun.com/openwith?uid=123";-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW"></action>-->
+<!--                <category android:name="android.intent.category.DEFAULT"></category>-->
+<!--                <category android:name="android.intent.category.BROWSABLE"></category>-->
+
+<!--                <data android:scheme="myapp" android:host="www.16souyun.com" android:path="/openwith"/>-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".module.account.activity.LoginActivity"
