@@ -23,8 +23,9 @@ public class DriverAuthModel implements DriverAuthContract.IModel {
     }
 
     @Override
-    public Observable<BaseEntity> postData(Map<String, RequestBody> params) {
-        return RetrofitFactory.getInstance().postDriverAuthInfo(params).compose(RxSchedulers.<BaseEntity>compose());
+    public Observable<BaseEntity<GongAnAuth>> postData(Map<String, RequestBody> params) {
+        return OtherRetrofitFactory.getInstance("https://app.16souyun.com/").postDriverAuthInfo(params).compose(RxSchedulers
+                .<BaseEntity<GongAnAuth>>compose());
     }
 
     @Override

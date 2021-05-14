@@ -50,6 +50,21 @@ public class Ad_listActivity extends BaseActivity<DriverAuthContract.IView, Driv
     }
 
     @Override
+    public void onPostputongSuccess(BaseEntity entity) {
+
+    }
+
+    @Override
+    public void onPostputongError(BaseEntity entity) {
+
+    }
+
+    @Override
+    public void onPostputongError(Throwable e) {
+
+    }
+
+    @Override
     public void shenfenzhengSuccess(BaseEntity<GongAnAuth> entity) {
 
     }

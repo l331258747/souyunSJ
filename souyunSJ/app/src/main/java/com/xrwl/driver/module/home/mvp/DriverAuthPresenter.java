@@ -44,7 +44,7 @@ public class DriverAuthPresenter extends DriverAuthContract.APresenter {
         for (String key : picMaps.keySet()) {
             String value = picMaps.get(key);
             File file = new File(value);
-            finalParams.put("images\"; filename=\"" + key + ".png", RequestBody.create(MediaType.parse("image/png"), file));
+            finalParams.put("file\"; filename=\"" + key + ".png", RequestBody.create(MediaType.parse("image/png"), file));
         }
 
         for (String key : params.keySet()) {
@@ -59,14 +59,14 @@ public class DriverAuthPresenter extends DriverAuthContract.APresenter {
             }
         }
 
-        mModel.postData(finalParams).subscribe(new BaseSimpleObserver<BaseEntity>() {
+        mModel.postData(finalParams).subscribe(new BaseObserver<GongAnAuth>() {
             @Override
             public void onSubscribe(Disposable d) {
                 addDisposable(d);
             }
 
             @Override
-            protected void onHandleSuccess(BaseEntity entity) {
+            protected void onHandleSuccess(BaseEntity<GongAnAuth> entity) {
                 if (entity.isSuccess()) {
                     mView.onPostSuccess(entity);
                 } else {
@@ -76,7 +76,7 @@ public class DriverAuthPresenter extends DriverAuthContract.APresenter {
 
             @Override
             protected void onHandleError(Throwable e) {
-                mView.onPostError(e);
+                mView.onPostError(new BaseEntity());
             }
         });
     }
@@ -121,15 +121,15 @@ public class DriverAuthPresenter extends DriverAuthContract.APresenter {
             @Override
             protected void onHandleSuccess(BaseEntity entity) {
                 if (entity.isSuccess()) {
-                    mView.onPostSuccess(entity);
+                    mView.onPostputongSuccess(entity);
                 } else {
-                    mView.onPostError(entity);
+                    mView.onPostputongError(entity);
                 }
             }
 
             @Override
             protected void onHandleError(Throwable e) {
-                mView.onPostError(e);
+                mView.onPostputongError(e);
             }
         });
     }

@@ -21,6 +21,16 @@ public class GongAnAuth {
 //    public String use_character;
 //    public String vehicle_type;
 //    public String vin;
+
+    public String idcardnum;
+    public String username;
+
+    public String fazhengjiguan;
+    public String jiashizhenghaoma;
+    public String zhunjiachexing;
+
+
+
     //身份证信息
     public String address;
     public String birth;
@@ -30,6 +40,7 @@ public class GongAnAuth {
     public String num;//证件号码
     public String sex;
     public String request_id;
+
 
 
     //驾驶证
@@ -65,4 +76,21 @@ public class GongAnAuth {
     //行驶证
     public String approved_load;
 
+    public String youxiaoqizhi;
+    public String youxiaoqizi;
+    public String issueDate;
+    public String registerDate;
+    public String useCharacter;
+    public String vehicleNumber;
+    public String vehicleOwner;
+    public String vehicleType;
+    public String energyType;
+    public String grossMass;
+    public String path;
+    public String idcardFace;
+    public String idcardBack;
+    public String vehicleFace;
+    public String vehicleBack;
+    public String driverLicenseFace;
+    public String driverLicenseBack;
 }

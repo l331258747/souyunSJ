@@ -225,12 +225,89 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         mPresenter.getData();
     }
 
+    //提交信息
+    private void onSubmit(String usernames, String invitePhones, String chepaihaoma,
+                          String hedingzaizhiliang, String jiashizhenghaoma, String mCategory){
+        //userid	String	用户id
+        //address	String	地址（身份证认证）
+        //fazhengjiguan	String	发证机关（驾驶证）
+        //idcardnum	String	身份证号 （身份证）
+        //issueDate	String	注册日期 （行驶证）
+        //jiashizhenghaoma	String	驾驶证号码
+        //registerDate	String	注册日期（行驶证）
+        //useCharacter	String	使用性质（行驶证）
+        //username	String	用户真实姓名（身份证）
+        //vehicleNumber	String	车牌号 （行驶证）
+        //vehicleOwner	String	车辆所有人 （行驶证）
+        //vehicleType	String	车辆类型 （行驶证）
+        //vin	String	车辆识别代码 （行驶证）
+        //youxiaoqizhi	String	有效期至 （行驶证）
+        //youxiaoqizi	String	有效期自（行驶证）
+        //zhunjiachexing	String	准驾车型（驾驶证）
+        //energyType	String	车辆能源类型 （行驶证）
+        //grossMass	String	车辆总质量（ 行驶证）
+        //idcardFace	String	身份证正面
+        //idcardBack	String	身份证反面
+        //vehicleFace	String	行驶证正面
+        //vehicleBack	String	行驶证反面
+        //driverLicenseFace	String	驾驶证正面
+        //driverLicenseBack	String	驾驶证反面
+
+        dd.username = usernames;
+        dd.idcardnum = invitePhones;
+        dd.vehicleNumber = chepaihaoma;
+        dd.grossMass = hedingzaizhiliang;
+        dd.jiashizhenghaoma = jiashizhenghaoma;
+
+        Map<String, String> params = new HashMap<>();
+        params.put("address", dd.address);//地址（身份证认证）
+        params.put("idcardnum", dd.idcardnum);//身份证号 （身份证）
+        params.put("username", dd.username);//用户真实姓名（身份证）
+
+        params.put("fazhengjiguan", dd.fazhengjiguan);//发证机关（驾驶证）
+        params.put("jiashizhenghaoma", dd.jiashizhenghaoma);//驾驶证号码
+        params.put("zhunjiachexing", dd.zhunjiachexing);//准驾车型（驾驶证）
+
+        params.put("issueDate", dd.issueDate);//注册日期 （行驶证）
+        params.put("registerDate", dd.registerDate);//注册日期（行驶证）
+        params.put("useCharacter", dd.useCharacter);//使用性质（行驶证）
+        params.put("vehicleNumber", dd.vehicleNumber);//车牌号 （行驶证）
+        params.put("vehicleOwner", dd.vehicleOwner);//车辆所有人 （行驶证）
+        params.put("vehicleType", dd.vehicleType);//车辆类型 （行驶证）
+        params.put("vin", dd.vin);//车辆识别代码 （行驶证）
+        params.put("youxiaoqizhi", dd.youxiaoqizhi);//有效期至 （行驶证）
+        params.put("youxiaoqizi", dd.youxiaoqizi);//有效期自（行驶证）
+        params.put("energyType", dd.energyType);//车辆能源类型 （行驶证）
+        params.put("grossMass", dd.grossMass);//车辆总质量（ 行驶证）
+
+        params.put("idcardFace", dd.idcardFace);//身份证正面
+        params.put("idcardBack", dd.idcardBack);//身份证反面
+        params.put("vehicleFace", dd.vehicleFace);//行驶证正面
+        params.put("vehicleBack", dd.vehicleBack);//行驶证反面
+        params.put("driverLicenseFace", dd.driverLicenseFace);//驾驶证正面
+        params.put("driverLicenseBack", dd.driverLicenseBack);//驾驶证反面
+
+        Map<String, String> postParams = new HashMap<>();
+        for (String key : params.keySet()) {
+            try {
+                String value = params.get(key);
+                if (!TextUtils.isEmpty(value)) {
+                    String encodedParam = URLEncoder.encode(value, "UTF-8");
+                    postParams.put(key, encodedParam);
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mPresenter.postputongData(params);
+    }
+
     //执行操作
     private void doSomeThing(String usernames, String invitePhones, String chepaihaoma,
                              String hedingzaizhiliang, String yingyunzhenghaoma, String cheliangzhoushu,
                              String jiashizhenghaoma, String zigezhenghaoma, String mCategory) {
-        //------------3
-        postType = 3;
+
         Map<String, String> picMaps = new HashMap<>();
 
         Map<String, String> params = new HashMap<>();
@@ -248,7 +325,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
         params.put("category", mCategory);
 
         params.put("zhunjiachexing", dd.vehicle_type);
-        params.put("fazhengjiguan", dd.issue_date);
+
         params.put("youxiaoqizi", dd.start_date);
         params.put("youxiaoqizhi", dd.end_date);
         params.put("cheliangshibiedaima", dd.vin);
@@ -318,9 +395,11 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
                 showToast("请选择配送类型");
             }
 
-            doSomeThing(mNameEt.getText().toString(), mshenfenzhengEt.getText().toString(), mchepaihaomaEt.getText().toString(),
-                    mhedingzaizhiliangEt.getText().toString(), myingyunzhenghaomaEt.getText().toString(), mcheliangzhoushuEt.getText().toString(),
-                    mjiashizhenghaomaEt.getText().toString(), mzigezhenghaomaEt.getText().toString(), mCategory);
+            onSubmit(mNameEt.getText().toString(), mshenfenzhengEt.getText().toString(), mchepaihaomaEt.getText().toString(),
+                    mhedingzaizhiliangEt.getText().toString(),mjiashizhenghaomaEt.getText().toString(), mCategory);
+//            doSomeThing(mNameEt.getText().toString(), mshenfenzhengEt.getText().toString(), mchepaihaomaEt.getText().toString(),
+//                    mhedingzaizhiliangEt.getText().toString(), myingyunzhenghaomaEt.getText().toString(), mcheliangzhoushuEt.getText().toString(),
+//                    mjiashizhenghaomaEt.getText().toString(), mzigezhenghaomaEt.getText().toString(), mCategory);
 
         }
     }
@@ -336,88 +415,55 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mLoadingDialog.dismiss();
     }
 
+
     //认证身份证
-    private void checkPost() {
-        if (TextUtils.isEmpty(mIdPath))
-            return;
-        if (TextUtils.isEmpty(mAvatarPath))
-            return;
-
-
+    private void checkPost(int postType) {
         Map<String, String> picMaps = new HashMap<>();
         Map<String, String> params = new HashMap<>();
 
-        picMaps.put("pic_id", mIdPath);
-        picMaps.put("pic_avatar", mAvatarPath);
-        params.put("type", "10");
+        showLoading("上传中...");
 
-        showLoading("上传身份证...");
-        postType = 0;
-        //------------1
-
-        mPresenter.shenfenzheng(mIdPath, "face_cardimg", "1");
-
-        mPresenter.postData(picMaps, params);
-    }
-
-    //认证驾驶证
-    private void checkPostjiashi() {
-        if (TextUtils.isEmpty(mDriverPath))
-            return;
-        if (TextUtils.isEmpty(mDriverBackPath))
-            return;
-
-        Map<String, String> picMaps = new HashMap<>();
-        Map<String, String> params = new HashMap<>();
-
-        picMaps.put("pic_drive", mDriverPath);
-        picMaps.put("pic_drive_back", mDriverBackPath);
-        params.put("type", "10");
-        showLoading("上传驾驶证...");
-        postType = 1;
-        //------------1
-
-        mPresenter.shenfenzheng(mDriverPath, "driverimg", "2");
-        mPresenter.postData(picMaps, params);
-    }
-
-    //认证行驶证
-    private void checkPostxingshi() {
-        if (TextUtils.isEmpty(mBookPath)) {
-            return;
+        this.postType = postType;
+        if(postType == 10){//身份证-正
+            if (TextUtils.isEmpty(mIdPath))
+                return;
+            picMaps.put("pic_id", mIdPath);
+            params.put("side", "face");
+            params.put("type", "1");
+        } else if(postType == 11){//身份证-反
+            if (TextUtils.isEmpty(mAvatarPath))
+                return;
+            picMaps.put("pic_avatar", mAvatarPath);
+            params.put("side", "back");
+            params.put("type", "1");
+        } else if(postType == 20){//驾驶证-正
+            if (TextUtils.isEmpty(mDriverPath))
+                return;
+            picMaps.put("pic_drive", mDriverPath);
+            params.put("side", "face");
+            params.put("type", "2");
+        } else if(postType == 21){//驾驶证-反
+            if (TextUtils.isEmpty(mDriverBackPath))
+                return;
+            picMaps.put("pic_drive_back", mDriverBackPath);
+            params.put("type", "back");
+            params.put("type", "2");
+        } else if(postType == 30){//行驶证-正
+            if (TextUtils.isEmpty(mBookPath))
+                return;
+            picMaps.put("pic_train", mBookPath);
+            params.put("type", "face");
+            params.put("type", "3");
+        } else if(postType == 31){//行驶证-反
+            if (TextUtils.isEmpty(mBookBackPath))
+                return;
+            picMaps.put("pic_train_back", mBookBackPath);
+            params.put("type", "back");
+            params.put("type", "3");
         }
-        Map<String, String> picMaps = new HashMap<>();
-        Map<String, String> params = new HashMap<>();
-
-        picMaps.put("pic_train", mBookPath);
-        params.put("type", "20");
-
-        showLoading("上传行驶证...");
-        postType = 2;
-        //------------1
-
-        mPresenter.shenfenzheng(mBookPath, "travelimg", "3");
         mPresenter.postData(picMaps, params);
     }
 
-    //认证行驶证-反面
-    private void checkPostxingshiBack() {
-        if (TextUtils.isEmpty(mBookBackPath)) {
-            return;
-        }
-        Map<String, String> picMaps = new HashMap<>();
-        Map<String, String> params = new HashMap<>();
-
-        picMaps.put("pic_train_back", mBookBackPath);
-        params.put("type", "20");
-
-        showLoading("上传行驶证...");
-        postType = 21;
-        //------------1
-
-        mPresenter.shenfenzheng(mBookPath, "travelimgback", "3");
-        mPresenter.postData(picMaps, params);
-    }
 
     @OnClick({R.id.authIdIv, R.id.authIdIvUn,
             R.id.authAvatarIv, R.id.authAvatarIvUn,
@@ -471,8 +517,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mauthIdIvUn.setVisibility(View.GONE);
             mIdIv.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(mIdPath).into(mIdIv);
-            checkPost();
-
+            checkPost(10);
         } else if (requestCode == RESULT_AVATAR) {
             if (lm.isCompressed()) {
                 mAvatarPath = lm.getCompressPath();
@@ -482,7 +527,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mauthAvatarIvUn.setVisibility(View.GONE);
             mAvatarIv.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(mAvatarPath).into(mAvatarIv);
-            checkPost();
+            checkPost(11);
         } else if (requestCode == RESULT_DRIVER) {
             if (lm.isCompressed()) {
                 mDriverPath = lm.getCompressPath();
@@ -492,7 +537,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mauthDriverIvUn.setVisibility(View.GONE);
             mDriverIv.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(mDriverPath).into(mDriverIv);
-            checkPostjiashi();
+            checkPost(20);
         } else if (requestCode == RESULT_DRIVER_BACK) {
             if (lm.isCompressed()) {
                 mDriverBackPath = lm.getCompressPath();
@@ -502,7 +547,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             mauthDriverBackIvUn.setVisibility(View.GONE);
             mDriverBackIv.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(mDriverBackPath).into(mDriverBackIv);
-            checkPostjiashi();
+            checkPost(21);
         } else if (requestCode == RESULT_BOOK) {
             if (lm.isCompressed()) {
                 mBookPath = lm.getCompressPath();
@@ -512,7 +557,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             Glide.with(mContext).load(mBookPath).into(mBookIv);
             mauthBookIvUn.setVisibility(View.GONE);
             mBookIv.setVisibility(View.VISIBLE);
-            checkPostxingshi();
+            checkPost(30);
         } else if (requestCode == RESULT_BOOK_BACK) {
             if (lm.isCompressed()) {
                 mBookBackPath = lm.getCompressPath();
@@ -522,7 +567,7 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             Glide.with(mContext).load(mBookBackPath).into(mBookBackIv);
             mauthBookBackIvUn.setVisibility(View.GONE);
             mBookBackIv.setVisibility(View.VISIBLE);
-            checkPostxingshiBack();
+            checkPost(31);
         } else if (requestCode == RESULT_CAR) {
             if (lm.isCompressed()) {
                 mCarPath = lm.getCompressPath();
@@ -534,50 +579,87 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
     }
 
     @Override
-    public void onPostSuccess(BaseEntity entity) {
-        //------------1.1
+    public void onPostSuccess(BaseEntity<GongAnAuth> entity) {
         showToast("提交成功");
-        dismissLoading();
 
-        //------------2
-        if (postType == 3) {
-            getData();
+        dd = entity.getData();
+
+        //------------2.1
+        if (postType == 10) {
+            dd.idcardnum = dd.num;
+            dd.username = dd.name;
+            dd.idcardFace = dd.path;
+            mNameEt.setText(dd.username);
+            mshenfenzhengEt.setText(dd.idcardnum);
+
+        } else if (postType == 11) {
+            dd.idcardBack = dd.path;
+        } else if (postType == 20) {
+            dd.fazhengjiguan = dd.start_date;
+            dd.jiashizhenghaoma = dd.num;
+            dd.zhunjiachexing = dd.vehicle_type;
+            dd.youxiaoqizhi = dd.start_date;
+            dd.youxiaoqizi = dd.end_date;
+            dd.vehicleFace = dd.path;
+            mjiashizhenghaomaEt.setText(dd.jiashizhenghaoma);
+        } else if (postType == 21) {
+            dd.vehicleBack = dd.path;
+        } else if (postType == 30) {
+            dd.issueDate = dd.issue_date;
+            dd.registerDate = dd.register_date;
+            dd.useCharacter = dd.use_character;
+            dd.vehicleNumber = dd.plate_num;
+            dd.vehicleOwner = dd.owner;
+            dd.vehicleType = dd.vehicle_type;
+            dd.energyType = "A";
+            dd.driverLicenseFace = dd.path;
+            if (dd.plate_num.length() > 0) {
+                mjianchengs.setSelection(getJianchengPos(dd.vehicleNumber.substring(0, 1)));
+                mchepaihaomaEt.setText(dd.vehicleNumber);
+            }
+        } else if (postType == 31) {
+            dd.grossMass = dd.gross_mass;
+            dd.driverLicenseBack = dd.path;
+            mhedingzaizhiliangEt.setText(dd.grossMass);
         }
+        showToast("验证成功");
+
+        dismissLoading();
     }
 
     @Override
     public void onPostError(BaseEntity entity) {
         //------------1.2
-        if (postType == 0) {
+        if (postType == 10) {
             mauthIdIvUn.setVisibility(View.VISIBLE);
             mIdIv.setVisibility(View.GONE);
             mIdPath = "";
+            showToast("上传失败，请重新上传");
+        } else if (postType == 11) {
             mauthAvatarIvUn.setVisibility(View.VISIBLE);
             mAvatarIv.setVisibility(View.GONE);
             mAvatarPath = "";
             showToast("上传失败，请重新上传");
-        } else if (postType == 1) {
+        } else if (postType == 20) {
             mauthDriverIvUn.setVisibility(View.VISIBLE);
             mDriverIv.setVisibility(View.GONE);
             mDriverPath = "";
             showToast("上传失败，请重新上传");
-        } else if (postType == 11) {
+        } else if (postType == 21) {
             mauthDriverBackIvUn.setVisibility(View.VISIBLE);
             mDriverBackIv.setVisibility(View.GONE);
             mDriverBackPath = "";
             showToast("上传失败，请重新上传");
-        } else if (postType == 2) {
+        } else if (postType == 30) {
             mauthBookIvUn.setVisibility(View.VISIBLE);
             mBookIv.setVisibility(View.GONE);
             mBookPath = "";
             showToast("上传失败，请重新上传");
-        } else if (postType == 2) {
+        } else if (postType == 31) {
             mauthBookBackIvUn.setVisibility(View.VISIBLE);
             mBookBackIv.setVisibility(View.GONE);
             mBookBackPath = "";
             showToast("上传失败，请重新上传");
-        } else if (postType == 3) {
-            handleError(entity);
         }
 
         dismissLoading();
@@ -585,6 +667,23 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
 
     @Override
     public void onPostError(Throwable e) {
+        dismissLoading();
+//        showNetworkError();
+    }
+
+    @Override
+    public void onPostputongSuccess(BaseEntity entity) {
+        getData();
+    }
+
+    @Override
+    public void onPostputongError(BaseEntity entity) {
+        handleError(entity);
+        dismissLoading();
+    }
+
+    @Override
+    public void onPostputongError(Throwable e) {
         dismissLoading();
         showNetworkError();
     }

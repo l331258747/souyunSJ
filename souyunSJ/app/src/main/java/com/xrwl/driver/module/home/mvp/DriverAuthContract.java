@@ -19,9 +19,13 @@ import okhttp3.RequestBody;
  */
 public interface DriverAuthContract {
     interface IView extends BaseMVP.IBaseView<Auth> {
-        void onPostSuccess(BaseEntity entity);
+        void onPostSuccess(BaseEntity<GongAnAuth> entity);
         void onPostError(BaseEntity entity);
         void onPostError(Throwable e);
+
+        void onPostputongSuccess(BaseEntity entity);
+        void onPostputongError(BaseEntity entity);
+        void onPostputongError(Throwable e);
 
         void shenfenzhengSuccess(BaseEntity<GongAnAuth> entity);
         void shenfenzhengError(BaseEntity entity);
@@ -43,7 +47,7 @@ public interface DriverAuthContract {
 
     interface IModel {
         Observable<BaseEntity<Auth>> getData(Map<String, String> params);
-        Observable<BaseEntity> postData(Map<String, RequestBody> params);
+        Observable<BaseEntity<GongAnAuth>> postData(Map<String, RequestBody> params);
         Observable<BaseEntity> postputongData(Map<String, String> params);
         Observable<BaseEntity> postputongchexingData(Map<String, String> params);
         Observable<BaseEntity<MsgCode>> getCode(Map<String, String> params);

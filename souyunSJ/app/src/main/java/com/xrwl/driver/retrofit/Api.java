@@ -199,11 +199,11 @@ public interface Api {
 
     /** 司机提交实名认证信息 */
     @Multipart
-    @POST("User/DriverAuthor")
-    Observable<BaseEntity> postDriverAuthInfo(@PartMap Map<String, RequestBody> params);
+    @POST("imgauthentication")
+    Observable<BaseEntity<GongAnAuth>> postDriverAuthInfo(@PartMap Map<String, RequestBody> params);
 
     /** 司机提交实名认证信息普通认证 */
-    @GET("User/DriverAuthenticationputong")
+    @GET("upauthticationinfo")
     Observable<BaseEntity> postputongAuthInfo(@QueryMap Map<String, String> params);
 
 
