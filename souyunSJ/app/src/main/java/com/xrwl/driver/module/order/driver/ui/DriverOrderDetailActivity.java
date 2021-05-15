@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -267,6 +268,13 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
     @BindView(R.id.homeServiceRv)
     RecyclerView mHomeServiceRv;
 
+    @BindView(R.id.rl_qrcode)
+    RelativeLayout rl_qrcode;
+    @BindView(R.id.tv_qrcode_afhuo)
+    TextView tv_qrcode_afhuo;
+    @BindView(R.id.tv_qrcode_daoda)
+    TextView tv_qrcode_daoda;
+
     public double nidayex;
     public double nidayey;
     private OrderDetail od;
@@ -340,24 +348,6 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
         mStartPoint = new LatLonPoint(Double.valueOf(od.startLat), Double.valueOf(od.startLon));
         //终点
         mEndPoint = new LatLonPoint(Double.valueOf(od.endLat), Double.valueOf(od.endLon));
-
-
-
-//        if(od.type.equals("0"))
-//        {
-//
-//        }
-//        else
-//        {
-//            mPresenter.nav(mId);
-//        }
-
-
-//        showToast(od.startLat + od.startLon + od.endLat + od.endLon);
-//
-//
-//        showToast(mStartPoint + "0000000" + mEndPoint);
-
 
         aMap.addMarker(new MarkerOptions()
                 .position(AMapUtil.convertToLatLng(mStartPoint))
@@ -596,6 +586,29 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
         //mLoadingDialog.dismiss();
 
+        if(od.type.equals("0") || od.type.equals("1") || od.type.equals("2")){//0：未接单，1：以接单未运输，2以接单并运输
+            rl_qrcode.setVisibility(View.VISIBLE);
+            tv_qrcode_afhuo.setOnClickListener(view -> {
+                Intent intent = new Intent();
+                intent.putExtra("orderId",mId);
+                intent.putExtra("orderType",0);
+                intent.putExtra("orderStart",od.start_desc);
+                intent.putExtra("orderEnd",od.end_desc);
+                intent.setClass(mContext,OrderQrcodeActivity.class);
+                startActivity(intent);
+            });
+            tv_qrcode_daoda.setOnClickListener(view -> {
+                Intent intent = new Intent();
+                intent.putExtra("orderId",mId);
+                intent.putExtra("orderType",1);
+                intent.putExtra("orderStart",od.start_desc);
+                intent.putExtra("orderEnd",od.end_desc);
+                intent.setClass(mContext,OrderQrcodeActivity.class);
+                startActivity(intent);
+            });
+        }else{
+            rl_qrcode.setVisibility(View.GONE);
+        }
 
         if (od.type.equals("0")) {
             mGrabBtn.setVisibility(View.VISIBLE);
@@ -623,7 +636,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
             mConsignorTv.setText((mConsignorPhone = od.consignorPhone.replace("-", "")));
             mConsigneeTv.setText((mConsigneePhone = od.consigneePhone.replace("-", "")));
 
-        } else if (od.type.equals("2")) {
+        } else if (od.type.equals("2")) {//运输中
             mNavBtn.setVisibility(View.VISIBLE);
             mTransBtn.setVisibility(View.GONE);
             mConfirmBtn.setVisibility(View.VISIBLE);
@@ -635,7 +648,7 @@ public class DriverOrderDetailActivity extends BaseActivity<DriverOrderContract.
 
             openAudioThread();
 
-        } else if (od.type.equals("3")) {
+        } else if (od.type.equals("3")) {//到达
 
             if (od.tixing.equals("2")) {
                 mdetailConfirmxianjinBtn.setVisibility(View.GONE);
