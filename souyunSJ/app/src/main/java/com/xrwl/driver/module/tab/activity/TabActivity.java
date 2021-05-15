@@ -17,6 +17,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.blankj.utilcode.util.LogUtils;
 import com.hdgq.locationlib.LocationOpenApi;
 import com.hdgq.locationlib.listener.OnResultListener;
 import com.ldw.library.bean.BaseEntity;
@@ -85,6 +86,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
         orderId = getIntent().getStringExtra("orderId");
 
+        LogUtils.e("11111111111111:" + orderId);
 
         openGPSSEtting();
         Account account = AccountUtil.getAccount(this);
@@ -122,11 +124,27 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
         getBadgeCount();
 
+        goOrderDetail();
+    }
+
+    private void goOrderDetail(){
         if(!TextUtils.isEmpty(orderId)){
             Intent intent = new Intent(mContext, DriverOrderDetailActivity.class);
             intent.putExtra("id", orderId);
             intent.putExtra("isQrcode",true);
             startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent != null){
+            orderId = intent.getStringExtra("orderId");
+            LogUtils.e("222222222222:" + orderId);
+            if(!TextUtils.isEmpty(orderId)){
+                goOrderDetail();
+            }
         }
     }
 
