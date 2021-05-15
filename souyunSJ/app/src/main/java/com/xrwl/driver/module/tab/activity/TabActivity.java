@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.xrwl.driver.bean.Cljbxx;
 import com.xrwl.driver.bean.Tab;
 import com.xrwl.driver.event.BusinessTabCountEvent;
 import com.xrwl.driver.event.TabCheckEvent;
+import com.xrwl.driver.module.order.driver.ui.DriverOrderDetailActivity;
 import com.xrwl.driver.module.tab.mvp.TabPresenter;
 import com.xrwl.driver.utils.AccountUtil;
 import com.xrwl.driver.utils.BadgeUtil;
@@ -67,6 +69,7 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
     private AMapLocationClient mLocationClient;
 
+    String orderId;
     @Override
     protected TabPresenter initPresenter() {
         return new TabPresenter(this);
@@ -79,6 +82,10 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
 
     @Override
     protected void initViews() {
+
+        orderId = getIntent().getStringExtra("orderId");
+
+
         openGPSSEtting();
         Account account = AccountUtil.getAccount(this);
         try {
@@ -114,6 +121,13 @@ public class TabActivity extends BaseEventActivity<BaseMVP.IBaseView, TabPresent
         initLocation();
 
         getBadgeCount();
+
+        if(!TextUtils.isEmpty(orderId)){
+            Intent intent = new Intent(mContext, DriverOrderDetailActivity.class);
+            intent.putExtra("id", orderId);
+            intent.putExtra("isQrcode",true);
+            startActivity(intent);
+        }
     }
 
     private void initNavBar() {

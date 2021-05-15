@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.ldw.library.bean.BaseEntity;
 import com.ldw.library.utils.Utils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -104,8 +105,23 @@ public class LoadingActivity extends BaseActivity<LoadingContract.IView, Loading
         return info.activityInfo.name;
     }
 
+    String orderId;
+    private  void getScheme(){
+        String action = getIntent().getAction();
+        if(Intent.ACTION_VIEW.equals(action)){
+            Uri uri = getIntent().getData();
+            if(uri != null){
+                orderId = uri.getQueryParameter("uid");
+            }
+        }
+        LogUtils.e(orderId);
+    }
+
     @Override
     protected void initViews() {
+
+        getScheme();
+
         mProgressBar.setVisibility(View.INVISIBLE);
 
         MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.huanying);
@@ -202,7 +218,10 @@ public class LoadingActivity extends BaseActivity<LoadingContract.IView, Loading
     }
     private void go() {
         if (mAccount != null && mAccount.isLogin()) {
-            startActivity(new Intent(mContext, TabActivity.class));
+            Intent intent = new Intent();
+            intent.setClass(mContext,TabActivity.class);
+            intent.putExtra("orderId",orderId);
+            startActivity(intent);
         } else {
             startActivity(new Intent(mContext, LoginActivity.class));
         }
