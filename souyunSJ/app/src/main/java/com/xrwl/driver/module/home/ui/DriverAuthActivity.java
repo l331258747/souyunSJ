@@ -446,19 +446,19 @@ public class DriverAuthActivity extends BaseActivity<DriverAuthContract.IView, D
             if (TextUtils.isEmpty(mDriverBackPath))
                 return;
             picMaps.put("pic_drive_back", mDriverBackPath);
-            params.put("type", "back");
+            params.put("side", "back");
             params.put("type", "2");
         } else if(postType == 30){//行驶证-正
             if (TextUtils.isEmpty(mBookPath))
                 return;
             picMaps.put("pic_train", mBookPath);
-            params.put("type", "face");
+            params.put("side", "face");
             params.put("type", "3");
         } else if(postType == 31){//行驶证-反
             if (TextUtils.isEmpty(mBookBackPath))
                 return;
             picMaps.put("pic_train_back", mBookBackPath);
-            params.put("type", "back");
+            params.put("side", "back");
             params.put("type", "3");
         }
         mPresenter.postData(picMaps, params);
